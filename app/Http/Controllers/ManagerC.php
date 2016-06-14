@@ -1,4 +1,3 @@
-
 <?php
 /*Kontroller ManagerC sadrži funkcije koje se koriste za rad poslovodje*/
 namespace App\Http\Controllers;

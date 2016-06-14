@@ -1,6 +1,7 @@
 <?php
 
 use App\User;
+use App\PravaPristupa;
 use Illuminate\Database\Seeder;
 
 class KorisniciTestPodaci extends Seeder
@@ -12,6 +13,13 @@ class KorisniciTestPodaci extends Seeder
      */
     public function run()
     {
+        PravaPristupa::insert([
+            ['naziv'=>'Blokiran'],
+            ['naziv'=>'Korisnik smeštaja'],
+            ['naziv'=>'Poslovođa'],
+            ['naziv'=>'Vlasnik privatnog smeštaja'],
+            ['naziv'=>'Vlasnik firme']
+        ]);
         User::insert([
             ['ime'=>'BlokiranIme','prezime'=>'BlokiranPrezume','username'=>'blokiranusername','password'=>bcrypt('admin'),'prava_pristupa_id'=>'1'],
             ['ime'=>'KorisnikSmestajaIme','prezime'=>'KorisnikSmestajaPrezime','username'=>'korisniksmestajausername','password'=>bcrypt('admin'),'prava_pristupa_id'=>'2'],
