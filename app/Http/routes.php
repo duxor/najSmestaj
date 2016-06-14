@@ -16,3 +16,6 @@ Route::get('/home', 'HomeController@index');
 Route::get('/proba', function(){
     return view('proba');
 });
+Route::controller('/administration','AdminC');
+Route::controller('/management ','ManagerC');
+Route::controller('/profil','ProfilC');
