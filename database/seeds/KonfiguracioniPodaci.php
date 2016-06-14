@@ -8,17 +8,21 @@ use App\Templejt;
 
 class KonfiguracioniPodaci extends Seeder{
     public function run(){
-        /*PravaPristupa::insert([
+        PravaPristupa::insert([
             ['naziv'=>'Blokiran'],
+            ['naziv'=>'Korisnik smeštaja'],
+            ['naziv'=>'Poslovođa'],
+            ['naziv'=>'Vlasnik privatnog smeštaja'],
+            ['naziv'=>'Vlasnik firme'],
         ]);
-        Grad::insert([
-            ['naziv'=>'Kraljevo'],
-            ['naziv'=>'Beograd'],
-            ['naziv'=>'Vranje'],
-        ]);
-        Templejt::insert([
-            ['naziv'=>'Osnovni izgled','slug'=>'osnovni-izgled'],
-        ]);*/
+        /*  Grad::insert([
+              ['naziv'=>'Kraljevo'],
+              ['naziv'=>'Beograd'],
+              ['naziv'=>'Vranje'],
+          ]);
+          Templejt::insert([
+              ['naziv'=>'Osnovni izgled','slug'=>'osnovni-izgled'],
+          ]);*/
 
     }
 }

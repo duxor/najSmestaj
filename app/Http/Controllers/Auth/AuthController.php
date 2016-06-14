@@ -54,7 +54,7 @@ class AuthController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data){
+  /*  protected function validator(array $data){
         $validArray=[
             [
                 'email' => 'required|email|max:255|unique:korisnici',
@@ -85,7 +85,7 @@ class AuthController extends Controller
 
         return Validator::make($data, $validArray[0], $validArray[1]);
 
-    }
+    }*/
 
     /**
      * Create a new user instance after a valid registration.
@@ -93,7 +93,7 @@ class AuthController extends Controller
      * @param  array  $data
      * @return User
      */
-    protected function create(array $data){
+   /* protected function create(array $data){
         $zubar=$data['zubar_pacijent']==3;
         unset($data['_token']);
         unset($data['password_confirmation']);
@@ -132,5 +132,5 @@ class AuthController extends Controller
     protected function authenticated($request,$user){
         Funkcije::prosiriLogin();
         return redirect()->intended($this->redirectPath());
-    }
+    }*/
 }

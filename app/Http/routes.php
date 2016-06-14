@@ -11,3 +11,8 @@
 |
 */
 Route::get('/',function(){ return 'Spreman!'; });
+Route::auth();
+Route::get('/home', 'HomeController@index');
+Route::get('/proba', function(){
+    return view('proba');
+});

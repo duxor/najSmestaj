@@ -82,7 +82,6 @@ return array(
     'KonfiguracioniPodaci' => $baseDir . '/database/seeds/KonfiguracioniPodaci.php',
     'KorisniciTestPodaci' => $baseDir . '/database/seeds/KorisniciTestPodaci.php',
     'KreiranjeBaze' => $baseDir . '/database/migrations/2016_05_16_214533_kreiranje_baze.php',
-    'OrdinacijaTestPodaci' => $baseDir . '/database/seeds/OrdinacijaTestPodaci.php',
     'PHPUnit_Exception' => $vendorDir . '/phpunit/phpunit/src/Exception.php',
     'PHPUnit_Extensions_GroupTestSuite' => $vendorDir . '/phpunit/phpunit/src/Extensions/GroupTestSuite.php',
     'PHPUnit_Extensions_PhptTestCase' => $vendorDir . '/phpunit/phpunit/src/Extensions/PhptTestCase.php',
