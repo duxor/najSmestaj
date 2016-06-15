@@ -18,7 +18,7 @@ class KreiranjeBaze extends Migration{
             $table->string('ime', 45)->nullable();
             $table->string('prezime', 45)->nullable();
             $table->string('username', 45)->unique();
-            $table->string('password', 150)->default('P@ssw0rd');
+            $table->string('password', 150);
             $table->string('foto',250)->nullable();
             $table->string('pol',45)->nullable();
             $table->string('email', 80)->nullable();

@@ -1,82 +1,97 @@
+<?php if(!isset($korisnik)) $korisnik=null; ?>
 @extends('layouts.app')
-
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Register</div>
-                <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/register') }}">
-                        {!! csrf_field() !!}
-
-                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Name</label>
-
-                            <div class="col-md-6">
-                                <input type="text" class="form-control" name="name" value="{{ old('name') }}">
-
-                                @if ($errors->has('name'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('name') }}</strong>
-                                    </span>
-                                @endif
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">  <ul class="nav nav-tabs" role="tablist" id="myTabs">
+                            <li role="presentation" class="active"><a href="#home" aria-controls="korisnik" role="tab" data-toggle="tab">Korisnik</a></li>
+                            <li role="presentation"><a href="#profile" aria-controls="vlasnik" role="tab" data-toggle="tab">Vlasnik</a></li>
+                            <li role="presentation"><a href="/login">Prijava</a></li>
+                            <li role="presentation"><a href="/password/reset">Oporavak šifre</a></li>
+                        </ul>
+                    </div>
+                    <div class="panel-body">
+                        @if (count($errors) > 0)
+                            <div class="alert alert-danger">
+                                Појавио се проблем приликом покушаја регистрације, проверите следеће:<br><br>
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
                             </div>
-                        </div>
+                        @endif
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">E-Mail Address</label>
+                        <div class="tab-content">
 
-                            <div class="col-md-6">
-                                <input type="email" class="form-control" name="email" value="{{ old('email') }}">
+                            {{--Registracija korisnika--------------------------------------}}
+                            <div role="tabpanel" class="tab-pane active" id="home">
+                                <div class="col-sm-12">
+                                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/register') }}">
+                                        {!! csrf_field() !!}
 
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
+                                        {!! Form::hidden('prava_pristupa_id',2) !!}
+                                        {!! Form::hidden('foto_pomocna',$korisnik ? $korisnik->foto : '') !!}
+
+                                        <div class="col-sm-12 ">{!!Form::label('ime', 'Ime:')!!}</div>
+                                        <div class="col-sm-12 form-group">{!!Form::text('ime',null,['class'=>'form-control','placeholder'=>'Unesite ime'])!!}</div>
+
+                                        <div class="col-sm-12 ">{!!Form::label('prezime', 'Prezime:')!!}</div>
+                                        <div class="col-sm-12 form-group">{!!Form::text('prezime',null,['class'=>'form-control','placeholder'=>'Unesite prezime'])!!}</div>
+
+                                        <div class="col-sm-12 ">{!!Form::label('email', 'E-mail:')!!}</div>
+                                        <div class="col-sm-12 form-group">{!!Form::text('email',null,['class'=>'form-control','placeholder'=>'Unesite e-mail adresu'])!!}</div>
+
+                                        <div class="col-sm-12 ">{!!Form::label('username', 'Korisničko ime:')!!}</div>
+                                        <div class="col-sm-12 form-group">{!!Form::text('username',null,['class'=>'form-control','placeholder'=>'Unesite ime'])!!}</div>
+
+                                        <div class="col-sm-12 ">{!!Form::label('password', 'Šifra:')!!}</div>
+                                        <div class="col-sm-12 form-group">{!!Form::password('password',['class'=>'form-control','placeholder'=>'Unesite šifru'])!!}</div>
+                                        <div class="col-sm-12 ">{!!Form::label('password_confirmation', 'Potvrda šifre:')!!}</div>
+                                        <div class="col-sm-12 form-group">{!!Form::password('password_confirmation',['class'=>'form-control','placeholder'=>'Potvrdite šifru'])!!}</div>
+
+                                        <div class="col-sm-12 form-group"><h4>Pol: Muški {!! Form::radio('pol_id','1',1)!!} Ženski {!! Form::radio('pol_id','2')!!}</h4></div>
+
+                                        <div class="col-sm-4">
+                                            <img id="slika" alt="Slika" class="img-rounded"  width="250" height="250" @if(isset($takmicar['foto'])) src="{{$takmicar['foto']}}" @else src="/img/default/korisnik.jpg" @endif onclick="unesiFoto()">
+                                            {!!Form::file('foto',['onchange'=>'prikaziFoto1(this)','style'=>'display:none'])!!}
+                                        </div>
+
+                                        <div class="col-sm-12 ">{!!Form::label('adresa', 'Adresa:')!!}</div>
+                                        <div class="col-sm-12 form-group">{!!Form::text('adresa',null,['class'=>'form-control','placeholder'=>'Unesite adresu'])!!}</div>
+
+                                        <div class="col-sm-12 ">{!!Form::label('telefon', 'Kontakt telefon:')!!}</div>
+                                        <div class="col-sm-12 form-group">{!!Form::text('telefon',null,['class'=>'form-control','placeholder'=>'Unesite telefon'])!!}</div>
+
+                                        <div class="col-sm-12" align="center">{!!Form::button('<i class="glyphicon glyphicon-floppy-disk"></i> Sačuvaj',['type'=>'submit', 'class'=>'btn btn-lg btn-primary ','data-toggle'=>'tooltip','title'=>'Preporuka: proverite da li ste uneli sve podatke.'])!!}</div>
+                                    </form>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Password</label>
-
-                            <div class="col-md-6">
-                                <input type="password" class="form-control" name="password">
-
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
+                            {{--Registracija vlasnika--------------------------------------}}
+                            <div role="tabpanel" class="tab-pane" id="profile">..asda.
                             </div>
+
                         </div>
-
-                        <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Confirm Password</label>
-
-                            <div class="col-md-6">
-                                <input type="password" class="form-control" name="password_confirmation">
-
-                                @if ($errors->has('password_confirmation'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password_confirmation') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-btn fa-user"></i>Register
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+
+    <script>
+        function unesiFoto(){$('[name=foto]').click()}
+        function prikaziFoto1(fotoFajl){
+            if (fotoFajl.files && fotoFajl.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#slika').attr('src',e.target.result);
+                }
+                reader.readAsDataURL(fotoFajl.files[0]);
+            }
+        }
+    </script>
+
 @endsection
