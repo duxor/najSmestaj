@@ -21,7 +21,7 @@
         </div>
         <div class="form-group margin5">
             <div class="col-sm-12">
-                {!!Form::select('grad',['1'=>'Kraljevo','2'=>'Beograd'],  (Session::has('old'))?Session::get('old'):null, ['id'=>'grad','class'=>'form-control ','placeholder'=>'Izaberi grad'])!!}
+                {!!Form::select('grad',$gradovi,  (Session::has('old'))?Session::get('old'):null, ['id'=>'grad','class'=>'form-control ','placeholder'=>'Izaberi grad'])!!}
             </div>
         </div>
         <div class="input-group margin5">

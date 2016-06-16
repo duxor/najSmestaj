@@ -10,7 +10,7 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-Route::get('/',function(){ return view('index'); });
+Route::get('/',function(){ return view('index')->with(['gradovi'=>\App\Grad::lists('naziv','id')->prepend('Izaberite grad','')]); });
 Route::auth();
 Route::get('/home', 'HomeController@index');
 Route::get('/proba', function(){
