@@ -105,24 +105,6 @@ class AuthController extends Controller
    
         if($data['prava_pristupa_id']==2){ //Obican korisnik
 
-
-
-       /*     //Dodavanje slika
-            if(isset($data['foto'])) {
-                $image = $data['foto'];
-                $image_name = $image->getClientOriginalName();
-                $image->move('img/korisnici', $image_name);
-                $image_final = 'img/korisnici/' . $image_name;
-                $int_image = Image::make($image_final);
-                $int_image->resize(300, null, function ($promenljiva) {
-                    $promenljiva->aspectRatio();
-                });
-                $int_image->save($image_final);
-            }else{
-                $image_final ='img/default/slika-korisnika.jpg';
-            }
-*/
-
             return User::create([
                 'ime'=>$data['prezime'],
                 'prezime'=>$data['ime'],
@@ -134,10 +116,23 @@ class AuthController extends Controller
                 'adresa'=>$data['adresa'],
                 'telefon'=>$data['telefon'],
                 'prava_pristupa_id'=>$data['prava_pristupa_id'],
-                'token'=>$data['_token']
             ]);
-        }elseif($data['prava_pristupa_id']==5){ //Vlasnik fitme
-            dd('vlasnik');
+            dd('nista');
+        }elseif($data['prava_pristupa_id']==5){ //Vlasnik firme
+           if(User::insertGetId([
+                'ime'=>$data['prezime'],
+                'prezime'=>$data['ime'],
+                'username' => $data['username'],
+                'password' => bcrypt($data['password']),
+                'foto'=>$data['foto'],
+                'pol'=>$data['pol_id'],
+                'email' => $data['email'],
+                'adresa'=>$data['adresa'],
+                'telefon'=>$data['telefon'],
+                'prava_pristupa_id'=>$data['prava_pristupa_id'],
+            ])){
+
+           };
         }else{
             dd('svi ostali'); //Svi ostali
         }
