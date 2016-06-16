@@ -10,7 +10,7 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-Route::get('/',function(){ return 'Spreman!'; });
+Route::get('/',function(){ return view('index'); });
 Route::auth();
 Route::get('/home', 'HomeController@index');
 Route::get('/proba', function(){
@@ -19,3 +19,4 @@ Route::get('/proba', function(){
 Route::controller('/administration','AdminC');
 Route::controller('/management ','ManagerC');
 Route::controller('/profil','ProfilC');
+Route::controller('/pretraga','PretragaC');

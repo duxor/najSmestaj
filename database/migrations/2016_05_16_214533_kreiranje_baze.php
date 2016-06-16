@@ -87,7 +87,7 @@ class KreiranjeBaze extends Migration{
         Schema::create('dodaci',function(Blueprint $table){
             $table->bigIncrements('id');
             $table->string('naziv', 45);
-            $table->string('tag', 250)->nullable();
+            $table->text('tag')->nullable();
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->nullable();
         });
