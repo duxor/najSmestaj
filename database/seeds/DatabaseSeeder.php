@@ -10,7 +10,7 @@ class DatabaseSeeder extends Seeder
      * @return void
      */
     public function run(){
-        $this->call(KonfiguracioniPodaci::class);
         $this->call(KorisniciTestPodaci::class);
+        $this->call(KonfiguracioniPodaci::class);
     }
 }

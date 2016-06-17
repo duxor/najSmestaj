@@ -6,6 +6,7 @@ use App\Funkcije;
 use App\Ordinacija;
 use App\UpotrebaTemplejta;
 use App\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
@@ -54,38 +55,44 @@ class AuthController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-  /*  protected function validator(array $data){
-        $validArray=[
-            [
-                'email' => 'required|email|max:255|unique:korisnici',
-                'password' => 'required|min:6|confirmed',
-            ],
-            [
-                'email.required' => 'Polje email je obavezno za unos!',
-                'email.email' => 'Email koji ste uneli nije validan!',
-                'email.max' => 'Maksimalna dužina emaila je :max!',
-                'email.unique' => 'Navedeni email već postoji u evidenciji!',
-                'password.required' => 'Šifra je obavezna za unos!',
-                'password.min' => 'Šifra mora da ima minimum :min karaktera!',
-                'password.confirmed' => 'Unesene šifre se ne poklapaju!',
-            ]
-        ];
-        if($data['zubar_pacijent']==3){
-            $validArray[0]['naziv'] = 'required|max:255';
-            $validArray[1]['naziv.required'] = 'Naziv ordinacije je obavezan za unos!';
-            $validArray[1]['naziv.max'] = 'Dužina naziva ne može biti iznad :max!';
-        }else{
-            $validArray[0]['ime'] = 'required|max:255';
-            $validArray[1]['ime.required'] = 'Ime je obavezno za unos!';
-            $validArray[1]['ime.max'] = 'Dužina imena ne može biti iznad :max!';
-            $validArray[0]['prezime'] = 'required|max:255';
-            $validArray[1]['prezime.required'] = 'Prezime je obavezno za unos!';
-            $validArray[1]['prezime.max'] = 'Dužina prezimena ne može biti iznad :max!';
-        }
+    protected function validator(array $data){
 
-        return Validator::make($data, $validArray[0], $validArray[1]);
-
-    }*/
+            return Validator::make($data, [
+                'ime' => 'required|min:3|max:255',
+                'prezime' => 'required|min:3|max:255',
+                'username' => 'required|min:4|max:255|unique:korisnik',
+                'password' => 'required|confirmed|min:6|max:255',
+                'email' => 'required|email|max:255|unique:korisnik',
+            ], [
+                //ime
+                'ime.required'=>'Ime je obavezno za unos.',
+                'ime.min'=>'Minimalna dužina je :min.',
+                'ime.max'=>'Maksimalna dužina je :max.',
+                //prezime
+                'prezime.required'=>'Prezime je obavezno za unos.',
+                'prezime.min'=>'Minimalna dužina je :min.',
+                'prezime.max'=>'Maksimalna dužina je :max.',
+                //username
+                'username.required'=>'Korisničko ime je obavezno za unos.',
+                'username.min'=>'Minimalna dužina korisničkog imena je :min.',
+                'username.max'=>'МMaksimalna dužina korisničkog imena je :max.',
+                'username.unique'=>'Navedeno korisničko ime je u upotrebi.',
+                //password
+                'password.required'=>'Korisnička šifra je obavezna za unos.',
+                'password.min'=>'Minimalna dužina korisničke šifre je :min.',
+                'password.max'=>'Maksimalna dužina korisničke šifre je :max.',
+                'password.confirmed'=>'Unesene šifre se ne poklapaju.',
+                //pass_conf
+                'password_confirmation.required'=>'Korisnička šifra je obavezna za unos.',
+                'password_confirmation.min'=>'Minimalna dužina korisničke šifre je :min.',
+                //email
+                'email.required'=>'E-mail je obavezan za unos.',
+                'email.email'=>'Pogrešno unesen e-mail.',
+                'email.unique'=>'Navedeni e-mail je u upotrebui.',
+                'email.max'=>'Maksimalna dužina e-mail-a je :max.',
+            ]);
+        
+    }
 
     /**
      * Create a new user instance after a valid registration.
@@ -93,44 +100,41 @@ class AuthController extends Controller
      * @param  array  $data
      * @return User
      */
-   /* protected function create(array $data){
-        $zubar=$data['zubar_pacijent']==3;
-        unset($data['_token']);
-        unset($data['password_confirmation']);
-        $podaci=['korisnik'=>[],'ordinacija'=>[]];
-        if($zubar){
-            $polja=[
-                'korisnik'=>
-                    ['ime','prezime','password','email','pin','bio','telefon','grad_id','prava_pristupa_id','foto','galerija','confirmed','confirmation_code'],
-                'ordinacija'=>
-                    ['naziv','slug','logo','radno_vrijeme','neradni_dani','email','telefon','fax','adresa','galerija','x','y','z','facebook','twitter','skype','rezervacija_termina','templejt_id','templejt_slug','grad_id']
-            ];
-            foreach($data as $i=>$d){
-                if(in_array($i, $polja['korisnik']) && $d) $podaci['korisnik'][$i]=$d;
-                if(in_array($i, $polja['ordinacija']) && $d) $podaci['ordinacija'][$i]=$d;
-            }
-        }else $podaci['korisnik']=$data;
-        $podaci['korisnik']['prava_pristupa_id'] = $data['zubar_pacijent'];
-        $podaci['korisnik']['confirmation_code'] = str_random(30);
-        $podaci['korisnik']['password']=bcrypt($podaci['korisnik']['password']);
+    
+    protected function create(array $data){
+   
+        if($data['prava_pristupa_id']==2){ //Obican korisnik
 
-        $korisnik=User::create($podaci['korisnik']);
-        if($podaci['ordinacija']){
-            $podaci['ordinacija']['korisnici_id']=$korisnik->id;
-            $podaci['ordinacija']['slug']=Funkcije::kreirajSlug($podaci['ordinacija']['naziv'], new Ordinacija());
-            $prazan=json_encode([]);
-            $podaci['ordinacija']['radno_vrijeme']=$prazan;
-            $podaci['ordinacija']['neradni_dani']=$prazan;
-            UpotrebaTemplejta::generisiDefaultPodatke(1,Ordinacija::insertGetId($podaci['ordinacija']));
+            return User::create([
+                'ime'=>$data['prezime'],
+                'prezime'=>$data['ime'],
+                'username' => $data['username'],
+                'password' => bcrypt($data['password']),
+                'foto'=>$data['foto'],
+                'pol'=>$data['pol_id'],
+                'email' => $data['email'],
+                'adresa'=>$data['adresa'],
+                'telefon'=>$data['telefon'],
+                'prava_pristupa_id'=>$data['prava_pristupa_id'],
+            ]);
+            dd('nista');
+        }elseif($data['prava_pristupa_id']==5){ //Vlasnik firme
+           if(User::insertGetId([
+                'ime'=>$data['prezime'],
+                'prezime'=>$data['ime'],
+                'username' => $data['username'],
+                'password' => bcrypt($data['password']),
+                'foto'=>$data['foto'],
+                'pol'=>$data['pol_id'],
+                'email' => $data['email'],
+                'adresa'=>$data['adresa'],
+                'telefon'=>$data['telefon'],
+                'prava_pristupa_id'=>$data['prava_pristupa_id'],
+            ])){
+
+           };
+        }else{
+            dd('svi ostali'); //Svi ostali
         }
-        Mail::send('auth.emails.verify', ['verification'=>$podaci['korisnik']['confirmation_code']], function($message) use($data) {
-            $message->to($data['email'])
-                ->subject('Verifikujte Vašu email adresu');
-        });
-        return $korisnik;
     }
-    protected function authenticated($request,$user){
-        Funkcije::prosiriLogin();
-        return redirect()->intended($this->redirectPath());
-    }*/
 }

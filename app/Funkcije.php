@@ -9,7 +9,7 @@
 namespace App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-
+use App\Rezervacija;
 class Funkcije{
     public static function kreirajSlug($text,$objekat){
         $slug = null;
@@ -37,5 +37,14 @@ class Funkcije{
     public static function ordinacijaID(){
         if(!Session::get('ordinacija.id')) Funkcije::prosiriLogin();
         return Session::get('ordinacija.id');
+    }
+    public static function dostupnostZaRezervaciju($lokali,$od,$do,$ID='id'){
+        foreach($lokali as $k=>$rezultat) {
+            $rezervacija = Rezervacija::where('smestaj_id', $rezultat[$ID])->get(['datum_prijave', 'datum_odjave'])->first();
+            if ($rezervacija)
+                if (strtotime($rezervacija->datum_prijave) >= strtotime($do) || strtotime($rezervacija->datum_odjave) <= strtotime($od));
+                else unset($lokali[$k]);
+        }
+        return $lokali;
     }
 }
