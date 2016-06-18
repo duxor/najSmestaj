@@ -61,5 +61,11 @@ class KonfiguracioniPodaci extends Seeder{
             ['korisnik_id'=>2,'smestaj_id'=>2,'datum_prijave'=>'2016-06-20','datum_odjave'=>'2016-06-22'],
             ['korisnik_id'=>3,'smestaj_id'=>3,'datum_prijave'=>'2016-06-24','datum_odjave'=>'2016-06-26']
         ]);
+        Like::insert([
+            ['korisnik_id'=>1,'smestaj_id'=>1],
+            ['korisnik_id'=>2,'smestaj_id'=>2],
+            ['korisnik_id'=>3,'smestaj_id'=>3]
+
+        ]);
     }
 }

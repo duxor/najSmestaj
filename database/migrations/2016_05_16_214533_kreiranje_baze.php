@@ -114,11 +114,22 @@ class KreiranjeBaze extends Migration{
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->nullable();
         });
+        Schema::create('like', function(Blueprint $table)
+        {
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('smestaj_id');
+            $table->foreign('smestaj_id')->references('id')->on('smestaj');
+            $table->unsignedBigInteger('korisnik_id');
+            $table->foreign('korisnik_id')->references('id')->on('korisnik');
+            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->nullable();
+        });
 
     }
 
 
     public function down(){
+        Schema::drop('like');
         Schema::drop('rezervacija');
         Schema::drop('smestaj');
         Schema::drop('dodaci');
