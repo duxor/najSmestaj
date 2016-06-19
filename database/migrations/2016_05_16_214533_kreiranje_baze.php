@@ -12,7 +12,11 @@ class KreiranjeBaze extends Migration{
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->nullable();
         });
-
+        Schema::create('password_resets', function (Blueprint $table) {
+            $table->string('email')->index();
+            $table->string('token')->index();
+            $table->timestamp('created_at');
+        });
         Schema::create('korisnik', function(Blueprint $table){
             $table->bigIncrements('id');
             $table->string('ime', 45)->nullable();
@@ -53,7 +57,7 @@ class KreiranjeBaze extends Migration{
             $table->bigIncrements('id');
             $table->unsignedBigInteger('korisnik_id');
             $table->foreign('korisnik_id')->references('id')->on('korisnik');
-            $table->unsignedBigInteger('templejt_id');
+            $table->unsignedBigInteger('templejt_id')->default(1);
             $table->foreign('templejt_id')->references('id')->on('templejt');
             $table->unsignedBigInteger('grad_id');
             $table->foreign('grad_id')->references('id')->on('grad');
@@ -131,6 +135,7 @@ class KreiranjeBaze extends Migration{
     public function down(){
         Schema::drop('like');
         Schema::drop('rezervacija');
+        Schema::drop('password_resets');
         Schema::drop('smestaj');
         Schema::drop('dodaci');
         Schema::drop('vrsta_kapaciteta');

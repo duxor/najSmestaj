@@ -1,14 +1,15 @@
 @extends('layouts.app')
 @section('content')
-    <button id="aca">aaaaaaaaaaa</button>
+
+
+<p>Click the button to display an alert box.</p>
+
+    <button onclick="myFunction()">Try it</button>
+
     <script>
-        $(document).ready(function(){
-            $('#aca').click(function () {
-                alert('adasd');
-            });
-        });
-
-
+        function myFunction() {
+            alert("Hello! I am an alert box!");
+        }
     </script>
 @endsection
 
