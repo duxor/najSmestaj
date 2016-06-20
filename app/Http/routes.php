@@ -13,10 +13,8 @@
 Route::get('/',function(){ return view('index')->with(['gradovi'=>\App\Grad::lists('naziv','id')->prepend('Izaberite grad','')]); });
 Route::auth();
 Route::get('/home', 'HomeController@index');
-Route::get('/proba', function(){
-    return view('proba');
-});
 Route::controller('/administration','AdminC');
 Route::controller('/management ','ManagerC');
 Route::controller('/profil','ProfilC');
 Route::controller('/pretraga','PretragaC');
+Route::get('register/verify/{confirmationCode}','Auth\AuthController@confirm');

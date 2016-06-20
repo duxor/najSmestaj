@@ -21,7 +21,6 @@ class KreiranjeBaze extends Migration{
             $table->bigIncrements('id');
             $table->string('ime', 45)->nullable();
             $table->string('prezime', 45)->nullable();
-            $table->string('username', 45)->unique();
             $table->string('password', 150);
             $table->string('foto',250)->nullable();
             $table->string('pol',45)->nullable();
@@ -30,6 +29,8 @@ class KreiranjeBaze extends Migration{
             $table->string('telefon',45)->nullable();
             $table->unsignedBigInteger('prava_pristupa_id')->default(2);
             $table->foreign('prava_pristupa_id')->references('id')->on('prava_pristupa');
+            $table->boolean('confirmed')->default(0);
+            $table->string('confirmation_code')->nullable();
             $table->rememberToken();
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->nullable();

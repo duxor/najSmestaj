@@ -46,7 +46,7 @@ class KonfiguracioniPodaci extends Seeder{
             ['naziv'=>'Za jedanaest osoba'],
             ['naziv'=>'Za dvanaest osoba']
         ]);
-        Objekat::insert([
+       Objekat::insert([
             ['korisnik_id'=>1,'templejt_id'=>1,'grad_id'=>1,'vrsta_objekta_id'=>1,'naziv'=>'Vila promaja'],
             ['korisnik_id'=>2,'templejt_id'=>1,'grad_id'=>2,'vrsta_objekta_id'=>2,'naziv'=>'Smestaj Marković'],
             ['korisnik_id'=>3,'templejt_id'=>1,'grad_id'=>3,'vrsta_objekta_id'=>3,'naziv'=>'Smestaj Petrović'],

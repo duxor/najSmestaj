@@ -39,10 +39,9 @@ class AuthController extends Controller
      *
      * @var string
      */
-    protected $username = 'username';
-    protected $redirectTo = '/after-login';
-    protected $redirectPath = '/after-login';
-    protected $redirectAfterLogout = '/after-logout';
+    protected $redirectTo = '/';
+    protected $redirectPath = '/';
+    protected $redirectAfterLogout = '/login';
 
     /**
      * Create a new authentication controller instance.
@@ -63,25 +62,19 @@ class AuthController extends Controller
 
             return Validator::make($data,
                  [
-               //  'ime' => 'required|min:3|max:255',
-               //  'prezime' => 'required|min:3|max:255',
-                 'username' => 'required|min:4|max:255|unique:korisnik',
-                 'password' => 'required|confirmed|min:6|max:255',
-                 'email' => 'required|email|max:255|unique:korisnik',
+                     'ime' => 'required|min:3|max:255',
+                     'prezime' => 'required|min:3|max:255',
+                     'password' => 'required|confirmed|min:6|max:255',
+                     'email' => 'required|email|max:255|unique:korisnik',
              ], [
                  //ime
-             /*    'ime.required'=>'Ime je obavezno za unos.',
+                'ime.required'=>'Ime je obavezno za unos.',
                  'ime.min'=>'Minimalna dužina je :min.',
                  'ime.max'=>'Maksimalna dužina je :max.',
                  //prezime
                  'prezime.required'=>'Prezime je obavezno za unos.',
                  'prezime.min'=>'Minimalna dužina je :min.',
-                 'prezime.max'=>'Maksimalna dužina je :max.',*/
-                 //username
-                 'username.required'=>'Korisničko ime je obavezno za unos.',
-                 'username.min'=>'Minimalna dužina korisničkog imena je :min.',
-                 'username.max'=>'МMaksimalna dužina korisničkog imena je :max.',
-                 'username.unique'=>'Navedeno korisničko ime je u upotrebi.',
+                 'prezime.max'=>'Maksimalna dužina je :max.',
                  //password
                  'password.required'=>'Korisnička šifra je obavezna za unos.',
                  'password.min'=>'Minimalna dužina korisničke šifre je :min.',
@@ -106,30 +99,46 @@ class AuthController extends Controller
      */
 
     protected function create(array $data){
-
-       /* $foto = isset($data['foto'])?$data['foto']:$foto = $data['foto1'];
-        $foto?$naziv_slike='profilna_'.$foto->getClientOriginalExtension():$naziv_slike='/img/default/korisnik.jpg';
-        $foto->move('img/korisnici', $foto);
-        $putanja_slike='/img/korisnici/'.$naziv_slike;*/
+        //Obrada slike
+        if(isset($data['foto'])){
+            $naziv_slike='profilna_'.$data['foto']->getClientOriginalName();
+            $data['foto']->move('img/korisnici', $data['foto']);
+            $putanja_slike='/img/korisnici/'.$naziv_slike;
+        }elseif(isset($data['foto1'])){
+            $naziv_slike='profilna_'.$data['foto1']->getClientOriginalName();
+            $data['foto1']->move('img/korisnici', $data['foto1']);
+            $putanja_slike='/img/korisnici/'.$naziv_slike;
+        }else{
+            $putanja_slike = '/img/default/korisnik.jpg';
+        }
 
         //Dodavanje novog korisnika
+        $confirmation_code = str_random(30);
         $korisnik = User::create([
                 'ime'=>$data['prezime'],
                 'prezime'=>$data['ime'],
-                'username' => $data['username'],
                 'password' => bcrypt($data['password']),
-                'foto'=>'$putanja_slike',
+                'foto'=>$putanja_slike,
                 'pol'=>$data['pol_id'],
                 'email' => $data['email'],
                 'adresa'=>$data['adresa'],
                 'telefon'=>$data['telefon'],
                 'prava_pristupa_id'=>$data['prava_pristupa_id'],
+                'confirmation_code'=>$confirmation_code,
             ]);
-        
+
+        $podaci = array( 'confirmation_code' => $confirmation_code);
+        Mail::send('emails.verify', $podaci, function($message) {
+            $message->to(Input::get('email'), Input::get('ime'))
+                ->subject('Verifikujte Vašu email adresu');
+            return Redirect::back()->with('poruka', 'Uspešno ste izvršili registraciju. Proverite vaš email i potvrdite registraciju!');
+        });
+
+        //Dodavanje novog objekta ukoliko je pravo pristupa 5 tj ukoliko je vlasnik
         if ($data['prava_pristupa_id']==5){
-                //Dodavanje objekta za kreiranok korisnika
+                //Kreiranje objekta za vlasika
                 $objekat = new Objekat();
-            
+
                 //Provera sluga
                 $slug = null;
                 $text = $data['naziv'];
@@ -141,6 +150,7 @@ class AuthController extends Controller
                     if (!$objekat->where('slug', $tmp . ($i == 0 ? '' : '-' . $i))->exists()) $slug = $tmp . ($i == 0 ? '' : '-' . $i);
                     $i++;
                 }
+
 
                 $objekat->korisnik_id=$korisnik->id;
                 //template defaut 1
@@ -158,8 +168,26 @@ class AuthController extends Controller
                 $objekat->z = $data['z'];
                 $objekat->save();
         }
+        
                 return $korisnik;
 
+    }
+
+    public function confirm($confirmation_code)
+    {
+        if( ! $confirmation_code)
+        {
+            throw new \InvalidConfirmationCodeException;
+        }
+        $user = User::whereConfirmationCode($confirmation_code)->first();
+        if ( ! $user)
+        {
+            throw new InvalidConfirmationCodeException;
+        }
+        $user->confirmed = 1;
+        $user->confirmation_code = null;
+        $user->save();
+        return Redirect::to('/login')->withErrors( 'Uspešno ste se registrovali.Idite na dugme PRIJAVA');
     }
 
 }
