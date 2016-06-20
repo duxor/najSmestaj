@@ -10,6 +10,7 @@ use App\VrstaKapaciteta;
 use App\Objekat;
 use App\Smestaj;
 use App\Rezervacija;
+use App\Like;
 
 class KonfiguracioniPodaci extends Seeder{
     public function run(){
@@ -57,9 +58,9 @@ class KonfiguracioniPodaci extends Seeder{
             ['objekat_id'=>3,'vrsta_smestaja_id'=>2,'vrsta_kapaciteta_id'=>3]
         ]);
         Rezervacija::insert([
-            ['korisnik_id'=>1,'smestaj_id'=>1,'datum_prijave'=>'2016-06-16','datum_odjave'=>'2016-06-18'],
-            ['korisnik_id'=>2,'smestaj_id'=>2,'datum_prijave'=>'2016-06-20','datum_odjave'=>'2016-06-22'],
-            ['korisnik_id'=>3,'smestaj_id'=>3,'datum_prijave'=>'2016-06-24','datum_odjave'=>'2016-06-26']
+            ['korisnik_id'=>1,'smestaj_id'=>1,'broj_osoba'=>'3','datum_prijave'=>'2016-06-16','datum_odjave'=>'2016-06-18'],
+            ['korisnik_id'=>2,'smestaj_id'=>2,'broj_osoba'=>'4','datum_prijave'=>'2016-06-20','datum_odjave'=>'2016-06-22'],
+            ['korisnik_id'=>3,'smestaj_id'=>3,'broj_osoba'=>'5','datum_prijave'=>'2016-06-24','datum_odjave'=>'2016-06-26']
         ]);
         Like::insert([
             ['korisnik_id'=>1,'smestaj_id'=>1],

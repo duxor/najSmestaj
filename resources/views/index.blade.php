@@ -21,7 +21,7 @@
         </div>
         <div class="form-group margin5">
             <div class="col-sm-12">
-                {!!Form::select('grad',$gradovi,  (Session::has('old'))?Session::get('old'):null, ['id'=>'grad','class'=>'form-control ','placeholder'=>'Izaberi grad'])!!}
+                {!!Form::select('grad',$gradovi,  (Session::has('old'))?Session::get('old'):null, ['id'=>'grad','class'=>'form-control '])!!}
             </div>
         </div>
         <div class="input-group margin5">
@@ -29,7 +29,6 @@
                 {!!Form::text('datum_prijave',null,['class'=>'form-control','id'=>'datetimepicker','placeholder'=>'Datum prijave'])!!}
                 <span class="input-group-addon">do</span>
                 {!!Form::text('datum_odjave',null,['class'=>'form-control','id'=>'datetimepicker2','placeholder'=>'Datum odjave'])!!}
-
             </div>
         </div>
         <div class="form-group margin5">

@@ -20,3 +20,4 @@ Route::controller('/administration','AdminC');
 Route::controller('/management ','ManagerC');
 Route::controller('/profil','ProfilC');
 Route::controller('/pretraga','PretragaC');
+

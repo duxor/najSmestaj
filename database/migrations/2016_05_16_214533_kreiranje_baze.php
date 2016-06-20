@@ -106,6 +106,7 @@ class KreiranjeBaze extends Migration{
         Schema::create('rezervacija',function(Blueprint $table){
             $table->bigIncrements('id');
             $table->unsignedBigInteger('korisnik_id');
+            $table->unsignedBigInteger('broj_osoba');
             $table->foreign('korisnik_id')->references('id')->on('korisnik');
             $table->unsignedBigInteger('smestaj_id');
             $table->foreign('smestaj_id')->references('id')->on('smestaj');
@@ -121,6 +122,7 @@ class KreiranjeBaze extends Migration{
             $table->foreign('smestaj_id')->references('id')->on('smestaj');
             $table->unsignedBigInteger('korisnik_id');
             $table->foreign('korisnik_id')->references('id')->on('korisnik');
+            $table->tinyInteger('aktivan')->default(1);
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->nullable();
         });

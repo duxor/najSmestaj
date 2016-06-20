@@ -12,6 +12,9 @@
 
     {!!Html::script('js/jquery-1.9.1.js')!!}
     {!! Html::script('js/bootstrap.min.js') !!}
+    {!! Html::style('/css/datetimepicker.css') !!}
+    {!!Html::script('/js/moment.js')!!}
+    {!! Html::script('/js/datetimepicker.js') !!}
 
 
 </head>
