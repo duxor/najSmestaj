@@ -26,10 +26,14 @@
                                 </ul>
                             </div>
                         @endif
+                            @if (isset($poruka))
+                                <div class="alert alert-success">{{ $poruka }}</div>
+                            @endif
+
                         <div class="tab-content">
                             {{--Registracija vlasnika--------------------------------------}}
                             <div class="tab-pane fade in active" id="tab1default">
-                                <h3 align="center">Podaci o vlasniku</h3>
+                                <h3 align="center"><strong>Podaci o vlasniku</strong></h3>
                                 <div class="col-sm-12" id="content1">
                                     {!! Form::open(['url'=>'/register','class'=>'form-horizontal', 'files'=>'true']) !!}
 
@@ -50,7 +54,7 @@
                                     <div class="col-sm-2 ">{!!Form::label('password_confirmation', 'Potvrda šifre:', ['data-toggle'=>'tooltip','title'=>'Polje je obavezno za unos'])!!}</div>
                                     <div class="col-sm-10 form-group">{!!Form::password('password_confirmation',['class'=>'form-control','placeholder'=>'Potvrdite šifru'])!!}</div>
 
-                                    <div class="col-sm-12 form-group"><h4>Pol: Muški {!! Form::radio('pol_id','1',1)!!} Ženski {!! Form::radio('pol_id','2')!!}</h4></div>
+                                    <div class="col-sm-12 form-group"><h4><strong>Pol:</strong> Muški {!! Form::radio('pol_id','1',1)!!} Ženski {!! Form::radio('pol_id','2')!!}</h4></div>
 
                                     <div class="col-sm-12 form-group"  align="center">
                                         <img id="slika" alt="Slika" class="img-rounded"  width="300"  @if(isset($takmicar['foto'])) src="{{$takmicar['foto']}}" @else src="/img/default/korisnik.jpg" @endif onclick="unesiFoto()">
@@ -63,7 +67,7 @@
                                     <div class="col-sm-2 ">{!!Form::label('telefon', 'Kontakt telefon:')!!}</div>
                                     <div class="col-sm-10 form-group">{!!Form::text('telefon',null,['class'=>'form-control','placeholder'=>'Unesite telefon'])!!}</div>
 
-                                    <h3 align="center">Podaci o objektu</h3>
+                                    <h3 align="center"><strong>Podaci o objektu</strong></h3>
 
                                     <div class="col-sm-2 ">{!! Form::label('grad_id',"Grad:", ['data-toggle'=>'tooltip','title'=>'Polje je obavezno za unos']) !!}</div>
                                     <div class="col-md-10 form-group">{!!Form::select('grad_id',$gradovi,1,['class'=>'form-control'])!!}</div>
@@ -75,7 +79,7 @@
                                     <div class="col-sm-10 form-group">{!!Form::text('naziv',null,['class'=>'form-control','placeholder'=>'Unesite naziv objekta'])!!}</div>
 
                                     <div class="col-sm-2 ">{!!Form::label('opis', 'Opis:')!!}</div>
-                                    <div class="col-sm-10 form-group">{!!Form::textarea('opis',null,['class'=>'form-control','placeholder'=>'Unesite opine podatke'])!!}</div>
+                                    <div class="col-sm-10 form-group">{!!Form::textarea('opis',null,['class'=>'form-control','placeholder'=>'Unesite opisne podatke'])!!}</div>
 
                                     <div class="col-sm-2 ">{!!Form::label('adresa', 'Adresa:', ['data-toggle'=>'tooltip','title'=>'Polje je obavezno za unos'])!!}</div>
                                     <div class="col-sm-10 form-group">{!!Form::text('adresa',null,['class'=>'form-control','placeholder'=>'Unesite adresu objekta'])!!}</div>
@@ -87,7 +91,7 @@
                                     <div class="col-sm-10 form-group">{!!Form::text('emailO',null,['class'=>'form-control','placeholder'=>'Unesite e-mail objekta'])!!}</div>
 
                                     <div class="form-group" align="center">
-                                        <label for="">Mapa (Izaberite lokaciju objekta)</label>
+                                        <label for=""><strong>Mapa (Izaberite lokaciju objekta)</strong></label>
                                         <div id="map-canvas" style="width:500px;height:380px;"></div>
                                         {!! Form::hidden('x',44.78669522814711,['id'=>'x' ]) !!}
                                         {!! Form::hidden('y',20.450384063720662,['id'=>'y' ]) !!}
@@ -100,7 +104,7 @@
                             </div>
                             {{--Registracija korisnika--------------------------------------}}
                             <div class="tab-pane fade"  id="tab2default">
-                                <h3 align="center">Podaci o korisniku</h3>
+                                <h3 align="center"><strong>Podaci o korisniku</strong></h3>
                                 <div class="col-sm-12" id="content2">
                                     {!! Form::open(["url"=>"/register","class"=>"form-horizontal", "files"=>"true"]) !!}
 
@@ -138,37 +142,28 @@
                                     {!! Form::close() !!}
                                 </div>
                             </div>
-
-
-                        </div>
-
-
-
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
     <script>
         $(document).ready(function() {
 
             $('[data-toggle="tooltip"]').tooltip();
+
             //Podesavanje mape
-            var map;
-            var x = $('#x').val();
-            var y = $('#y').val();
-            var z = $('#z').val();
+                var map;
+                var x = $('#x').val();
+                var y = $('#y').val();
+                var z = $('#z').val();
             function initialize() {
                 var myLatlng = new google.maps.LatLng(x, y);
-               /* var myOptions = {
-                    /*zoom: 8,
-                    center: myLatlng,
-                    mapTypeId: google.maps.MapTypeId.ROADMAP
-                }*/
                 var myOptions = {
                     center: myLatlng,
-                    zoom: 12,
+                    zoom: 6,
                     scrollwheel: true,
                     draggable: true,
                     panControl: true,

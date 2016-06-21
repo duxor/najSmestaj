@@ -60,15 +60,25 @@ class AuthController extends Controller
      */
    protected function validator(array $data){
 
-            return Validator::make($data,
-                 [
-                     'ime' => 'required|min:3|max:255',
-                     'prezime' => 'required|min:3|max:255',
-                     'password' => 'required|confirmed|min:6|max:255',
-                     'email' => 'required|email|max:255|unique:korisnik',
-             ], [
+       $podaci_korisnik = [
+           'ime' => 'required|min:3|max:255',
+           'prezime' => 'required|min:3|max:255',
+           'password' => 'required|confirmed|min:6|max:255',
+           'email' => 'required|email|max:255|unique:korisnik',
+       ];
+       $podaci_vlasnik = [
+           'ime' => 'required|min:3|max:255',
+           'prezime' => 'required|min:3|max:255',
+           'password' => 'required|confirmed|min:6|max:255',
+           'email' => 'required|email|max:255|unique:korisnik',
+           'naziv' => 'required|min:3|max:255',
+           'adresa' => 'required|min:3|max:255',
+           'telefon' => 'required|min:3|max:255',
+       ];
+            return Validator::make($data,$data['prava_pristupa_id']==2?$podaci_korisnik:$podaci_vlasnik
+              ,[
                  //ime
-                'ime.required'=>'Ime je obavezno za unos.',
+                 'ime.required'=>'Ime je obavezno za unos.',
                  'ime.min'=>'Minimalna dužina je :min.',
                  'ime.max'=>'Maksimalna dužina je :max.',
                  //prezime
@@ -88,6 +98,18 @@ class AuthController extends Controller
                  'email.email'=>'Pogrešno unesen e-mail.',
                  'email.unique'=>'Navedeni e-mail je u upotrebui.',
                  'email.max'=>'Maksimalna dužina e-mail-a je :max.',
+                    //naziv
+                    'naziv.required'=>'Naziv je obavezno za unos.',
+                    'naziv.min'=>'Minimalna dužina je :min.',
+                    'naziv.max'=>'Maksimalna dužina je :max.',
+                    //adresa
+                    'adresa.required'=>'Adresa je obavezno za unos.',
+                    'adresa.min'=>'Minimalna dužina je :min.',
+                    'adresa.max'=>'Maksimalna dužina je :max.',
+                    //telefon
+                    'telefon.required'=>'Telefon je obavezno za unos.',
+                    'telefon.min'=>'Minimalna dužina je :min.',
+                    'telefon.max'=>'Maksimalna dužina je :max.',
              ]);
      }
 
@@ -127,6 +149,7 @@ class AuthController extends Controller
                 'confirmation_code'=>$confirmation_code,
             ]);
 
+        //Slanje koda za potvrdu korisniku
         $podaci = array( 'confirmation_code' => $confirmation_code);
         Mail::send('emails.verify', $podaci, function($message) {
             $message->to(Input::get('email'), Input::get('ime'))
@@ -151,7 +174,6 @@ class AuthController extends Controller
                     $i++;
                 }
 
-
                 $objekat->korisnik_id=$korisnik->id;
                 //template defaut 1
                 $objekat->grad_id = $data['grad_id'];
@@ -168,11 +190,10 @@ class AuthController extends Controller
                 $objekat->z = $data['z'];
                 $objekat->save();
         }
-        
                 return $korisnik;
-
     }
 
+    //Metoda za potvrdu korisnika
     public function confirm($confirmation_code)
     {
         if( ! $confirmation_code)

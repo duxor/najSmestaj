@@ -8,7 +8,6 @@
     {!!Html::style('/css/bootstrap.min.css')!!}
     {!!Html::script('/js/jquery-1.9.1.js')!!}
     {!!Html::script('/js/bootstrap.min.js')!!}
-
 </head>
 
 <body>
