@@ -1,4 +1,4 @@
 @extends('firmolog.master')
-@section('body')
+@section('container')
 
 @endsection
