@@ -31,11 +31,10 @@ trait RegistersUsers
         if (property_exists($this, 'registerView')) {
             return view($this->registerView);
         }
-        
+
         $gradovi=Grad::lists('naziv','id');
         $vrste_objekta=VrstaObjekta::lists('naziv','id');
         return view('auth.register')->with('gradovi',$gradovi)->with('vrste_objekta',$vrste_objekta);
-       
     }
 
     /**

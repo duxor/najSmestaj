@@ -11,13 +11,18 @@
 |
 */
 Route::get('/',function(){ return view('index')->with(['gradovi'=>\App\Grad::lists('naziv','id')->prepend('Izaberite grad','')]); });
+Route::get('/newsletter',function(){
+    return json_encode(['check'=>1,'poruka'=>'Uspešno ste se prijavili na newsletter listu!']);
+});
+Route::get('/kontakt',function(){
+    return json_encode(['check'=>1,'poruka'=>'Uspešno ste poslali poruku!']);
+});
 Route::auth();
 Route::get('/home', 'HomeController@index');
-Route::get('/proba', function(){
-    return view('proba');
-});
 Route::controller('/administration','AdminC');
 Route::controller('/management ','ManagerC');
 Route::controller('/profil','ProfilC');
 Route::controller('/pretraga','PretragaC');
+
+Route::get('register/verify/{confirmationCode}','Auth\AuthController@confirm');
 
