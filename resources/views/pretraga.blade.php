@@ -1,7 +1,7 @@
 @extends('master')
 @section('body')
 
-    @if(isset($smestaj))
+    @if($smestaj)
         @foreach($smestaj as $sm)
             {{$sm['naziv_objekta']}}{{$sm['naziv_smestaja']}}{{$sm['naziv_kapaciteta']}}{{$sm['dodaci']}}
 
@@ -12,8 +12,6 @@
             @if(Auth::check())
                 <button class="btn btn-sm btn-default _tooltip zelja" @if($sm['zelja'])data-zelja="{{$sm['zelja']}}" style="color:red" title="Izbaci iz liste zelja" @else data-zelja="false" title="Dodaj u listu želja"@endif
                 data-zid="{{$sm['id']}}" data-toggle="tooltip" data-placement="bottom"><i class="glyphicon glyphicon-heart"></i></button>
-
-
             @else
                 <a  href="/login" class="btn btn-sm btn-default _tooltip"  title="Dodaj u listu želja" data-toggle="tooltip" data-placement="bottom">
                     <i class="glyphicon glyphicon-heart"></i>
@@ -53,7 +51,6 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-
                                         @if(!Auth::check())
                                             <div id="izlogovan">
                                                 <a id="imam_nalog_btn" value='hide/show' class="btn btn-lg btn-default _tooltip"  title="Ulogujte se" data-toggle="tooltip" ><i class="glyphicon glyphicon-user"></i>&nbsp Imam nalog</a>
@@ -73,11 +70,8 @@
                                             {!! Form::label('ime','Username')!!}: <div id="lusername"></div><br>
                                             {!! Form::label('ime','Email')!!}:<div id="lemail"></div>
                                         </div>
-
                                     </div>
                             </div>
-
-                            {{--<div id="poruka"></div>--}}
 
                             <div id="imam_nalog" hidden>
                                 <div class="row">
@@ -126,8 +120,6 @@
                             <script>
                                 $('#login').on('click', function(event) {
                                     $('#imam_nalog').toggle('hide');
-                                    //var a=$('input[name=email]').val();
-                                    //console.log (a);
                                     $.post('/pretraga/login',
                                       {
                                           _token:'{{csrf_token()}}',
@@ -147,7 +139,6 @@
                                                         $(".alert-autocloseable-danger").alert('close');
                                                         $('#imam_nalog').toggle('show');
                                                     });
-
                                                 }
                                                 if(rezultati.uspesno){
                                                     $('.modal-body').prepend('<div id="poruka" class="alert alert-success alert-autocloseable-success">Uspešno logovanje. ..</div>');
@@ -161,14 +152,11 @@
                                                     $('#lusername').text(rezultati.korisnik['username']);
                                                     $('#lemail').text(rezultati.korisnik['email']);
                                                 }
-                                            }
-                                    );
+                                            });
                                     $(".alert-autocloseable-success").fadeTo(5000, 500).slideUp(500, function(){
                                         $(".alert-autocloseable-success").alert('close');
                                     });
                                 });
-                                /*------------------------------------------------------------------------------------*/
-
                             </script>
                             <div id="reg" hidden>
                                 <div class="col-sm-12 ">{!!Form::label('ime', 'Ime:')!!}</div>
@@ -179,9 +167,6 @@
 
                                 <div class="col-sm-12 ">{!!Form::label('email', 'E-mail:')!!}</div>
                                 <div class="col-sm-12 form-group">{!!Form::text('email',null,['class'=>'form-control','placeholder'=>'Unesite e-mail adresu'])!!}</div>
-
-                                <div class="col-sm-12 ">{!!Form::label('username', 'Korisničko ime:')!!}</div>
-                                <div class="col-sm-12 form-group">{!!Form::text('username',null,['class'=>'form-control','placeholder'=>'Unesite ime'])!!}</div>
 
                                 <div class="col-sm-12 ">{!!Form::label('password', 'Šifra:')!!}</div>
                                 <div class="col-sm-12 form-group">{!!Form::password('password',['id'=>'password','class'=>'form-control','placeholder'=>'Unesite šifru'])!!}</div>
@@ -205,16 +190,12 @@
                             </div>
                             <script>
                                 $('#register').on('click', function(event) {
-                                   // $('#imam_nalog').toggle('hide');
-                                    //var a=$('input[name=email]').val();
-                                    //console.log (a);
                                     var password = $("#password").val();
                                     password  = password.replace(/./g, '*');
                                     var password_confirmation = $("#password_confirmation").val();
                                     password_confirmation  = password_confirmation.replace(/./g, '*');
                                     $.post('/pretraga/register',
                                             {
-
                                                 _token:'{{csrf_token()}}',
                                                 ime:$('input[name=ime]').val(),
                                                 prezime:$('input[name=prezime]').val(),
@@ -236,7 +217,6 @@
                                                     $( '.modal-body' ).prepend( errors );
                                                     $(".alert-autocloseable-danger").fadeTo(5000, 500).slideUp(500, function(){
                                                         $(".alert-autocloseable-danger").alert('close');
-                                                        //$('#imam_nalog').toggle('show');
                                                     });
                                                 }
                                                 if(rezultati.uspesno){
@@ -262,47 +242,43 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <div class="form-group">
+                    <div id="foot" class="form-group">
                         {!! Form::button('<span class="glyphicon glyphicon-remove"></span> Otkaži',['class'=>'btn btn-lg btn-warning','data-dismiss'=>'modal']) !!}
-
-                        @if(Auth::check())
                         {!! Form::button('<span class="glyphicon glyphicon-ok"></span> Rezerviši',['id'=>'rezervisi','class'=>'btn btn-lg btn-success' ]) !!}
-                    @endif
                     </div>
-                    <script>
-                        $('#rezervisi').on('click', function(event) {
-                            $.post('/pretraga/rezervisi',
-                                    {
-                                        _token:'{{csrf_token()}}',
-                                        datum_prijave:$('input[name=datum_prijave]').val(),
-                                        datum_odjave:$('input[name=datum_odjave]').val(),
-                                        broj_osoba:$('#brojosoba').val(),
-                                        id_smestaja:$('#id_smestaja').val(),
-                                    },function(data){
-                                        var rezultati=JSON.parse(data);
-                                        if(rezultati.validator){
-                                            $('.modal-body').prepend('<div id="poruka" class="alert alert-danger alert-autocloseable-danger">Izaberite datum prijave i odjave!</div>');
-                                            //$('#izlogovan').hide();
-                                            $(".alert-autocloseable-danger").fadeTo(5000, 500).slideUp(500, function(){
-                                                $(".alert-autocloseable-danger").alert('close');
-                                            });
-                                        }
-                                        if(rezultati.uspesno){
-                                            $('.modal-body').prepend('<div id="poruka" class="alert alert-success alert-autocloseable-success">Uspešno izvršena rezervacija</div>');
-                                            $('#izlogovan').hide();
-                                            $(".alert-autocloseable-success").fadeTo(5000, 500).slideUp(500, function(){
-                                                $(".alert-autocloseable-success").alert('close');
-                                            });
-                                        }
-                                    }
-                            );
-                            $(".alert-autocloseable-success").fadeTo(5000, 500).slideUp(500, function(){
-                                $(".alert-autocloseable-success").alert('close');
-                            });
-                        });
-                    </script>
-                </div>
 
+                </div>
+                <script>
+                    $('#rezervisi').on('click', function(event) {
+                        $.post('/pretraga/rezervisi',
+                                {
+                                    _token:'{{csrf_token()}}',
+                                    datum_prijave:$('input[name=datum_prijave]').val(),
+                                    datum_odjave:$('input[name=datum_odjave]').val(),
+                                    broj_osoba:$('#brojosoba').val(),
+                                    id_smestaja:$('#id_smestaja').val(),
+                                },function(data){
+                                    var rezultati=JSON.parse(data);
+                                    if(rezultati.validator){
+                                        $('.modal-body').prepend('<div id="poruka" class="alert alert-danger alert-autocloseable-danger">'+rezultati.validator+'</div>');
+                                        $(".alert-autocloseable-danger").fadeTo(5000, 500).slideUp(500, function(){
+                                            $(".alert-autocloseable-danger").alert('close');
+                                        });
+                                    }
+                                    if(rezultati.uspesno){
+                                        $('.modal-body').prepend('<div id="poruka" class="alert alert-success alert-autocloseable-success">'+rezultati.uspesno+'</div>');
+                                        $('#izlogovan').hide();
+                                        $(".alert-autocloseable-success").fadeTo(5000, 500).slideUp(500, function(){
+                                            $(".alert-autocloseable-success").alert('close');
+                                        });
+                                    }
+                                }
+                        );
+                        $(".alert-autocloseable-success").fadeTo(5000, 500).slideUp(500, function(){
+                            $(".alert-autocloseable-success").alert('close');
+                        });
+                    });
+                </script>
             </div>
         </div>
     </div>
@@ -332,7 +308,6 @@
         });
         $("button.zelja").click(function(){
             $(this).css("color","black");
-            //$(this).html("<i class='icon-spin6 animate-spin'></i>");
             var id=$(this).data("zid");
             $.post('/pretraga/like',
                     {

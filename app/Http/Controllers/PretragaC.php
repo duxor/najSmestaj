@@ -30,6 +30,7 @@ class PretragaC extends Controller
         if(Auth::check()){
             $korisnik=User::where('id',Session::get('id'))->get()->toArray();
         }else $korisnik=null;
+        //return $korisnik;
         $query=Smestaj::join('objekat','objekat.id','=','smestaj.objekat_id')
             //->leftJoin('rezervacija','rezervacija.smestaj_id','=','smestaj.id')
             ->join('grad','grad.id','=','objekat.grad_id')
@@ -73,7 +74,7 @@ class PretragaC extends Controller
     public function getLike(){
         $lista_zelja=Smestaj::where('like.korisnik_id','=',Session::get('id'))
        -> join('objekat','objekat.id','=','smestaj.objekat_id')
-            ->join('rezervacija','rezervacija.smestaj_id','=','smestaj.id')
+            //->join('rezervacija','rezervacija.smestaj_id','=','smestaj.id')
             ->join('grad','grad.id','=','objekat.grad_id')
             ->join('vrsta_kapaciteta','vrsta_kapaciteta.id','=','smestaj.vrsta_kapaciteta_id')
             ->join('vrsta_smestaja','vrsta_smestaja.id','=','smestaj.vrsta_smestaja_id')
@@ -89,7 +90,13 @@ class PretragaC extends Controller
         $validator = Validator::make($request->all(), [
             'email'=>'required|email',
             'password'=>'required'
-        ]);
+        ],
+            [
+                'email.required'=>'E-mail je obavezan za unos.',
+                'email.email'=>'Pogrešno unesen e-mail.',
+                'password.required'=>'Korisnička šifra je obavezna za unos.',
+            ]
+        );
         if($validator->fails()){
             return json_encode(['neuspesno'=>'Neuspešna prijava!','validator'=>$validator->errors()->all()]);
         }
@@ -99,7 +106,7 @@ class PretragaC extends Controller
             'password' => $request['password']
             ];
             if(!Auth::attempt($credentials,true)){
-                return json_encode(['validator'=>['Proverite korisničke podatke!']]);
+                return json_encode(['validator'=>['Neuspešna prijava! Proverite korisničke podatke!']]);
             }
             $user = Auth::user();
             Session::put('id',Auth::user()->getId());
@@ -116,8 +123,8 @@ class PretragaC extends Controller
         $validator = Validator::make($request->all(), [
             'ime' => 'required|min:3|max:255',
             'prezime' => 'required|min:3|max:255',
-            'username' => 'required|min:4|max:255|unique:korisnik',
             'password' => 'required|confirmed|min:6|max:255',
+            'password_confirmation' => 'required|min:3',
             'email' => 'required|email|max:255|unique:korisnik',
             'telefon'=>'required'
         ],
@@ -129,11 +136,6 @@ class PretragaC extends Controller
                 'prezime.required'=>'Ime je obavezno za unos.',
                 'prezime.min'=>'Minimalna dužina je :min.',
                 'prezime.max'=>'Maksimalna dužina je :max.',
-                //username
-                'username.required'=>'Korisničko ime je obavezno za unos.',
-                'username.min'=>'Minimalna dužina korisničkog imena je :min.',
-                'username.max'=>'МMaksimalna dužina korisničkog imena je :max.',
-                'username.unique'=>'Navedeno korisničko ime je u upotrebi.',
                 //password
                 'password.required'=>'Korisnička šifra je obavezna za unos.',
                 'password.min'=>'Minimalna dužina korisničke šifre je :min.',
@@ -145,7 +147,7 @@ class PretragaC extends Controller
                 //email
                 'email.required'=>'E-mail je obavezan za unos.',
                 'email.email'=>'Pogrešno unesen e-mail.',
-                'email.unique'=>'Navedeni e-mail je u upotrebui.',
+                'email.unique'=>'Navedeni e-mail je u upotrebi.',
                 'email.max'=>'Maksimalna dužina e-mail-a je :max.',
                 //
                 'telefon.required'=>'Telefon je obavezan za unos.',
@@ -170,6 +172,10 @@ class PretragaC extends Controller
 
     }
     public function postRezervisi(Request $request){
+        if(!Auth::check()){
+            return  json_encode(['validator'=>'Prvo se ulogujte!!!']);
+            break;
+        }
         if($request['datum_prijave']=='' || $request['datum_odjave']==''){
             return  json_encode(['validator'=>'Izaberite datum prijave i odjave!']);
         }else{
