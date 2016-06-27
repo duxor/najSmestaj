@@ -10,7 +10,7 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-Route::get('/',function(){ return view('index')->with(['gradovi'=>\App\Grad::lists('naziv','id')->prepend('Izaberite grad','')]); });
+Route::get('/',function(){ return view('index')->with(['gradovi'=>\App\Grad::lists('naziv','id')]); });
 Route::get('/newsletter',function(){
     return json_encode(['check'=>1,'poruka'=>'Uspešno ste se prijavili na newsletter listu!']);
 });

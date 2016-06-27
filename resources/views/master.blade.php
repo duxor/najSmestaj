@@ -26,7 +26,19 @@
     <meta name="msapplication-TileImage" content="img/favicon/mstile-144x144.png">
     <meta name="msapplication-config" content="img/favicon/browserconfig.xml">
     <meta name="theme-color" content="#663fb5">
+
+    <script src="/templejt/master/js/jquery.min.js"></script>
+
+
+
+
+
+
     <link rel="stylesheet" href="/templejt/master/css/style.css">
+
+
+
+
 </head>
 <body>
     {{---NAVIGACIJA::START--}}
@@ -176,7 +188,7 @@
     </footer>
     {{---footer:end--}}
 
-    <script src="/templejt/master/js/jquery.min.js"></script>
+
     <script src="/templejt/master/js/landio.min.js"></script>
     @yield('end-script')
     <script>
@@ -212,5 +224,9 @@
             })
         })
     </script>
+
+
+
+
 </body>
 </html>

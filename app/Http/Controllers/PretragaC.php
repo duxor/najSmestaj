@@ -1,5 +1,6 @@
 <?php
-//Kontroler PretragaC sadrži funkcije koje su potrebne za pretragu, kreiranje i prikaz liste želja korisnika
+//Kontroler PretragaC sadrži funkcije koje su potrebne za pretragu, 
+//kreiranje i prikaz liste želja korisnika
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -10,6 +11,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use Validator;
 use DateTime;
+use Illuminate\Support\Facades\Input;
 use App\Smestaj;
 use App\User;
 use App\Grad;
@@ -29,7 +31,7 @@ class PretragaC extends Controller
     public function postIndex(){
         if(Auth::check()){
             $korisnik=User::where('id',Session::get('id'))->get()->toArray();
-        }else $korisnik=null;
+        }else $korisnik=[];
         //return $korisnik;
         $query=Smestaj::join('objekat','objekat.id','=','smestaj.objekat_id')
             //->leftJoin('rezervacija','rezervacija.smestaj_id','=','smestaj.id')
@@ -40,18 +42,18 @@ class PretragaC extends Controller
                 $query->on('like.smestaj_id','=','smestaj.id')
                     ->where('like.korisnik_id','=',Session::get('id'))->where('like.aktivan','=',1);
             });
-        if($_POST['naziv']!== ''){
-            $query->where('objekat.naziv', 'Like','%'.$_POST["naziv"].'%');
+        if(Input::get('naziv')!== ''){
+            $query->where('objekat.naziv', 'Like','%'.Input::get("naziv").'%');
         }
-        if($_POST['grad']!== ''){
-            $query->where('grad.id', '=',$_POST["grad"]);
+        if(Input::get('grad')!== ''){
+            $query->where('grad.id', '=',Input::get('grad'));
         }
-        if($_POST['broj_osoba']){
-            $query->where('vrsta_kapaciteta.id','>=',$_POST["broj_osoba"]);
+        if(Input::get('broj_osoba')){
+            $query->where('vrsta_kapaciteta.id','>=',Input::get('broj_osoba'));
         }
-        if($_POST["datum_prijave"]!== ''&& $_POST["datum_odjave"]!== ''){
-            $datum_prijave= $_POST['datum_prijave'];
-            $datum_odjave= $_POST['datum_odjave'];
+        if(Input::get('datum_prijave')!== ''&& Input::get('datum_odjave')!== ''){
+            $datum_prijave= Input::get('datum_prijave');
+            $datum_odjave= Input::get('datum_odjave');
             $smestaj = $query->get(['smestaj.id','objekat.naziv as naziv_objekta','vrsta_smestaja.naziv as naziv_smestaja','vrsta_kapaciteta.naziv as naziv_kapaciteta','smestaj.dodaci','like.id as zelja'])->toArray();
             $smestaj= Funkcije::dostupnostZaRezervaciju($smestaj,$datum_prijave,$datum_odjave);
             return view('pretraga')->with(['smestaj'=>$smestaj])->with(['korisnik'=>$korisnik]);
@@ -62,14 +64,14 @@ class PretragaC extends Controller
         }
     }
     public function postLike(){
-        if($_POST['zelja'])
-            if($_POST['zelja']=="false") {
+        if(Input::get('zelja'))
+            if(Input::get('zelja')=="false") {
                 $lista=new Like();
-                $lista->smestaj_id=$_POST['smestaj'];
+                $lista->smestaj_id=Input::get('smestaj');
                 $lista->korisnik_id=Session::get('id');
                 $lista->save();
                 return $lista->id;
-            }else return Like::where('id',$_POST['zelja'])->update(['aktivan'=>0]);
+            }else return Like::where('id',Input::get('zelja'))->update(['aktivan'=>0]);
     }
     public function getLike(){
         $lista_zelja=Smestaj::where('like.korisnik_id','=',Session::get('id'))
@@ -174,7 +176,6 @@ class PretragaC extends Controller
     public function postRezervisi(Request $request){
         if(!Auth::check()){
             return  json_encode(['validator'=>'Prvo se ulogujte!!!']);
-            break;
         }
         if($request['datum_prijave']=='' || $request['datum_odjave']==''){
             return  json_encode(['validator'=>'Izaberite datum prijave i odjave!']);

@@ -1,7 +1,9 @@
 @extends('master')
 @section('body')
 
-    @if($smestaj)
+
+
+    @if(isset($smestaj))
         @foreach($smestaj as $sm)
             {{$sm['naziv_objekta']}}{{$sm['naziv_smestaja']}}{{$sm['naziv_kapaciteta']}}{{$sm['dodaci']}}
 
@@ -10,7 +12,7 @@
                     data-naziv_objekta="{{$sm['naziv_objekta']}}"  data-dodaci="{{$sm['dodaci']}}" data-naziv_kapaciteta="{{$sm['naziv_kapaciteta']}}" data-naziv_smestaja"{{$sm['naziv_smestaja']}}">
             <span class="glyphicon glyphicon-check"></span> Rezervacija</button>
             @if(Auth::check())
-                <button class="btn btn-sm btn-default _tooltip zelja" @if($sm['zelja'])data-zelja="{{$sm['zelja']}}" style="color:red" title="Izbaci iz liste zelja" @else data-zelja="false" title="Dodaj u listu želja"@endif
+                <button type="button" class="btn btn-sm btn-default _tooltip zelja" @if($sm['zelja'])data-zelja="{{$sm['zelja']}}" style="color:red" title="Izbaci iz liste zelja" @else data-zelja="false" title="Dodaj u listu želja"@endif
                 data-zid="{{$sm['id']}}" data-toggle="tooltip" data-placement="bottom"><i class="glyphicon glyphicon-heart"></i></button>
             @else
                 <a  href="/login" class="btn btn-sm btn-default _tooltip"  title="Dodaj u listu želja" data-toggle="tooltip" data-placement="bottom">
@@ -36,44 +38,58 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     {!!Form::hidden('id_smestaja',null,['id'=>'id_smestaja'])!!}
-                                    <div class="input-group margin5">
-                                        <div class="input-daterange input-group col-sm-12">
-                                            {!!Form::text('datum_prijave',null,['class'=>'form-control','id'=>'datetimepicker','placeholder'=>'Datum prijave'])!!}
-                                            <span class="input-group-addon">do</span>
-                                            {!!Form::text('datum_odjave',null,['class'=>'form-control','id'=>'datetimepicker2','placeholder'=>'Datum odjave'])!!}
-                                        </div>
+                                    {{---DATUM-PRIJAVE--}}
+                                    <div class="form-group has-icon-left form-control-email">
+                                        <label class="sr-only" for="inputPrijava">Datum prijave</label>
+                                        <input type="text" class="form-control form-control-lg" id="inputPrijava" placeholder="Datum prijave" name="datum_prijave">
+                                    </div>
+                                    {{---DATUM-ODJAVE--}}
+                                    <div class="form-group has-icon-left form-control-email">
+                                        <label class="sr-only" for="inputOdjava">Datum prijave</label>
+                                        <input type="text" class="form-control form-control-lg" id="inputOdjava" placeholder="Datum odjave" name="datum_odjave">
                                     </div>
                                     <div class="form-group">
                                         <div class="col-sm-12">
                                             <label for="brojosoba" class="col-sm-3 control-label">Br.osoba:</label>
-                                            {!!Form::select('broj_osoba',[1=>1,2=>2,3=>3,4=>4,5=>5,6=>6,7=>7,8=>8,9=>9,10=>10,11=>11,12=>12],null,['id'=>'brojosoba','class'=>'form-control'])!!}
+                                            {!!Form::select('broj_osoba',[1=>1,2=>2,3=>3,4=>4,5=>5,6=>6,7=>7,8=>8,9=>9,10=>10,11=>11,12=>12],null,['id'=>'brojosoba','class'=>'form-control','placeholder'=>'Izaberite Broj osoba'])!!}
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="col-md-6">
-                                        @if(!Auth::check())
-                                            <div id="izlogovan">
-                                                <a id="imam_nalog_btn" value='hide/show' class="btn btn-lg btn-default _tooltip"  title="Ulogujte se" data-toggle="tooltip" ><i class="glyphicon glyphicon-user"></i>&nbsp Imam nalog</a>
-                                                <a id="reg_btn"  value='hide/show'class="btn btn-lg btn-default _tooltip"  title="Registrujte se" data-toggle="tooltip" data-placement="bottom"><i class="glyphicon glyphicon-registration-mark"></i>&nbsp Nisam registrovan</a>
-                                             </div>
-                                        @else
-                                        <div id="ulogovan">
-                                           {!! Form::label('ime','Ime')!!}:<div id="lime">{{$korisnik[0]['ime']}}</div> <br>
-                                            {!! Form::label('ime','Prezime')!!}: <div id="lprezime">{{$korisnik[0]['prezime']}}</div> <br>
-                                            {!! Form::label('ime','Username')!!}: <div id="lusername">{{$korisnik[0]['username']}}</div> <br>
-                                            {!! Form::label('ime','Email')!!}: <div id="lemail">{{$korisnik[0]['email']}}</div> <br>
-                                        </div>
-                                        @endif
-                                        <div id="lulogovan" hidden>
-                                            {!! Form::label('ime','Ime')!!}:<div id="lime"></div><br>
-                                            {!! Form::label('ime','Prezime')!!}:<div id="lprezime"></div><br>
-                                            {!! Form::label('ime','Username')!!}: <div id="lusername"></div><br>
-                                            {!! Form::label('ime','Email')!!}:<div id="lemail"></div>
-                                        </div>
+                                    @if(!Auth::check())
+                                        <div id="izlogovan">
+                                            <a id="imam_nalog_btn" value='hide/show' class="btn btn-lg btn-default _tooltip"  title="Ulogujte se" data-toggle="tooltip" ><i class="glyphicon glyphicon-user"></i>&nbsp Imam nalog</a>
+                                            <a id="reg_btn"  value='hide/show'class="btn btn-lg btn-default _tooltip"  title="Registrujte se" data-toggle="tooltip" data-placement="bottom"><i class="glyphicon glyphicon-registration-mark"></i>&nbsp Nisam registrovan</a>
+                                         </div>
+                                    @else
+                                    <div id="ulogovan">
+                                       {!! Form::label('ime','Ime')!!}:<div id="lime">{{$korisnik[0]['ime']}}</div> <br>
+                                        {!! Form::label('ime','Prezime')!!}: <div id="lprezime">{{$korisnik[0]['prezime']}}</div> <br>
+                                        {!! Form::label('ime','Username')!!}: <div id="lusername">{{$korisnik[0]['username']}}</div> <br>
+                                        {!! Form::label('ime','Email')!!}: <div id="lemail">{{$korisnik[0]['email']}}</div> <br>
                                     </div>
+                                    @endif
+                                    <div id="lulogovan" hidden>
+                                        {!! Form::label('ime','Ime')!!}:<div id="lime"></div><br>
+                                        {!! Form::label('ime','Prezime')!!}:<div id="lprezime"></div><br>
+                                        {!! Form::label('ime','Username')!!}: <div id="lusername"></div><br>
+                                        {!! Form::label('ime','Email')!!}:<div id="lemail"></div>
+                                    </div>
+                                    <script>
+                                        $('#imam_nalog_btn').on('click', function(event) {
+                                            $('#reg').fadeOut();
+                                            $('#imam_nalog').toggle('show');
+                                        });
+                                        $('#reg_btn').on('click', function(event) {
+                                            $('#imam_nalog').fadeOut();
+                                            $('#reg').toggle('show');
+                                        });
+                                    </script>
+                                </div>
                             </div>
 
-                            <div id="imam_nalog" hidden>
+                            <div id="imam_nalog" >
                                 <div class="row">
                                     <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                                         <label class="col-md-4 control-label">E-Mail Address</label>
@@ -117,7 +133,11 @@
                                     </div>
                                 </div>
                             </div>
+                            <style>
+                                #imam_nalog{display:none;}
+                            </style>
                             <script>
+
                                 $('#login').on('click', function(event) {
                                     $('#imam_nalog').toggle('hide');
                                     $.post('/pretraga/login',
@@ -158,7 +178,7 @@
                                     });
                                 });
                             </script>
-                            <div id="reg" hidden>
+                            <div id="reg" >
                                 <div class="col-sm-12 ">{!!Form::label('ime', 'Ime:')!!}</div>
                                 <div class="col-sm-12 form-group">{!!Form::text('ime',null,['class'=>'form-control','placeholder'=>'Unesite ime'])!!}</div>
 
@@ -188,6 +208,9 @@
                                     </div>
                                 </div>
                             </div>
+                            <style>
+                                #reg{display:none;}
+                            </style>
                             <script>
                                 $('#register').on('click', function(event) {
                                     var password = $("#password").val();
@@ -248,61 +271,51 @@
                     </div>
 
                 </div>
-                <script>
-                    $('#rezervisi').on('click', function(event) {
-                        $.post('/pretraga/rezervisi',
-                                {
-                                    _token:'{{csrf_token()}}',
-                                    datum_prijave:$('input[name=datum_prijave]').val(),
-                                    datum_odjave:$('input[name=datum_odjave]').val(),
-                                    broj_osoba:$('#brojosoba').val(),
-                                    id_smestaja:$('#id_smestaja').val(),
-                                },function(data){
-                                    var rezultati=JSON.parse(data);
-                                    if(rezultati.validator){
-                                        $('.modal-body').prepend('<div id="poruka" class="alert alert-danger alert-autocloseable-danger">'+rezultati.validator+'</div>');
-                                        $(".alert-autocloseable-danger").fadeTo(5000, 500).slideUp(500, function(){
-                                            $(".alert-autocloseable-danger").alert('close');
-                                        });
+                    <script>
+                        $('#rezervisi').on('click', function(event) {
+                            $.post('/pretraga/rezervisi',
+                                    {
+                                        _token:'{{csrf_token()}}',
+                                        datum_prijave:$('input[name=datum_prijave]').val(),
+                                        datum_odjave:$('input[name=datum_odjave]').val(),
+                                        broj_osoba:$('#brojosoba').val(),
+                                        id_smestaja:$('#id_smestaja').val(),
+                                    },function(data){
+                                        var rezultati=JSON.parse(data);
+                                        if(rezultati.validator){
+                                            $('.modal-body').prepend('<div id="poruka" class="alert alert-danger alert-autocloseable-danger">'+rezultati.validator+'</div>');
+                                            $(".alert-autocloseable-danger").fadeTo(5000, 500).slideUp(500, function(){
+                                                $(".alert-autocloseable-danger").alert('close');
+                                            });
+                                        }
+                                        if(rezultati.uspesno){
+                                            $('.modal-body').prepend('<div id="poruka" class="alert alert-success alert-autocloseable-success">'+rezultati.uspesno+'</div>');
+                                            $('#izlogovan').hide();
+                                            $(".alert-autocloseable-success").fadeTo(5000, 500).slideUp(500, function(){
+                                                $(".alert-autocloseable-success").alert('close');
+                                            });
+                                        }
                                     }
-                                    if(rezultati.uspesno){
-                                        $('.modal-body').prepend('<div id="poruka" class="alert alert-success alert-autocloseable-success">'+rezultati.uspesno+'</div>');
-                                        $('#izlogovan').hide();
-                                        $(".alert-autocloseable-success").fadeTo(5000, 500).slideUp(500, function(){
-                                            $(".alert-autocloseable-success").alert('close');
-                                        });
-                                    }
-                                }
-                        );
-                        $(".alert-autocloseable-success").fadeTo(5000, 500).slideUp(500, function(){
-                            $(".alert-autocloseable-success").alert('close');
+                            );
+                            $(".alert-autocloseable-success").fadeTo(5000, 500).slideUp(500, function(){
+                                $(".alert-autocloseable-success").alert('close');
+                            });
                         });
-                    });
-                </script>
+                    </script>
             </div>
         </div>
     </div>
-    <style>
-
-    </style>
-
     <script>
-        $(function () {
-            $('#imam_nalog_btn').on('click', function(event) {
-                $('#reg').fadeOut();
-                $('#imam_nalog').toggle('show');
-            });
-            $('#reg_btn').on('click', function(event) {
-                $('#imam_nalog').fadeOut();
-                $('#reg').toggle('show');
-            });
+        $(document).ready(function() {
+
+
             $('#datetimepicker').datetimepicker();
             $('#datetimepicker2').datetimepicker();
             $('#datetimepicker').data('DateTimePicker').locale('sr').format('YYYY-MM-DD');
             $('#datetimepicker2').data('DateTimePicker').locale('sr').format('YYYY-MM-DD');
 
         });
-        $(document).ready(function(){$('button').tooltip();$('a').tooltip()});
+
         $('button.m').click(function(){
             $('#id_smestaja').val($(this).data('id'));
         });
@@ -328,5 +341,16 @@
             );
         });
     </script>
+    {!! Html::style('/css/datetimepicker.css') !!}
+    {!!Html::script('/js/moment.js')!!}
+    {!! Html::script('/js/datetimepicker.js') !!}
+    <script>
+        $('#inputPrijava').datetimepicker();
+        $('#inputOdjava').datetimepicker();
+        $('#inputPrijava').data('DateTimePicker').locale('sr').format('YYYY-MM-DD');
+        $('#inputOdjava').data('DateTimePicker').locale('sr').format('YYYY-MM-DD');
+    </script>
+
+
 
 @endsection
