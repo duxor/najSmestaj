@@ -1,3 +1,11 @@
+<?php
+    if(!isset($korisnik[0]['ime']))$korisnik[0]['ime']=null;
+    if(!isset($korisnik[0]['prezime']))$korisnik[0]['prezime']=null;
+    if(!isset($korisnik[0]['username']))$korisnik[0]['username']=null;
+    if(!isset($korisnik[0]['email']))$korisnik[0]['email']=null;
+?>
+
+
 @extends('master')
 @section('body')
 
@@ -51,7 +59,7 @@
                                     <div class="form-group">
                                         <div class="col-sm-12">
                                             <label for="brojosoba" class="col-sm-3 control-label">Br.osoba:</label>
-                                            {!!Form::select('broj_osoba',[1=>1,2=>2,3=>3,4=>4,5=>5,6=>6,7=>7,8=>8,9=>9,10=>10,11=>11,12=>12],null,['id'=>'brojosoba','class'=>'form-control','placeholder'=>'Izaberite Broj osoba'])!!}
+                                            {!!Form::select('broj_osoba',[1=>1,2=>2,3=>3,4=>4,5=>5,6=>6,7=>7,8=>8,9=>9,10=>10,11=>11,12=>12],null,['id'=>'brojosoba','class'=>'form-control'])!!}
                                         </div>
                                     </div>
                                 </div>

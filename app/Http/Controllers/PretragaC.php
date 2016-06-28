@@ -31,7 +31,7 @@ class PretragaC extends Controller
     public function postIndex(){
         if(Auth::check()){
             $korisnik=User::where('id',Session::get('id'))->get()->toArray();
-        }else $korisnik=[];
+        }else $korisnik=null;
         //return $korisnik;
         $query=Smestaj::join('objekat','objekat.id','=','smestaj.objekat_id')
             //->leftJoin('rezervacija','rezervacija.smestaj_id','=','smestaj.id')
@@ -107,7 +107,7 @@ class PretragaC extends Controller
             'email' => $request['email'],
             'password' => $request['password']
             ];
-            if(!Auth::attempt($credentials,true)){
+            if(!Auth::attempt($credentials)){
                 return json_encode(['validator'=>['Neuspešna prijava! Proverite korisničke podatke!']]);
             }
             $user = Auth::user();
