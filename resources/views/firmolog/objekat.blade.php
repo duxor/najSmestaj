@@ -1,7 +1,7 @@
 <?php if(!isset($korisnik)) $korisnik=null; ?>
 <?php if(!isset($objekat)) $objekat=null; ?>
 @extends('firmolog.master')
-@section('body')
+@section('container')
     <script src="http://maps.googleapis.com/maps/api/js"></script>
     <div class="container">
         <div class="row">
@@ -65,7 +65,8 @@
             </div>
         </div>
     </div>
-
+@endsection
+@section('end-script')
     <script>
         $(document).ready(function() {
             //Podesavanje mape

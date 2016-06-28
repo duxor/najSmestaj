@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Grad;
 use App\Objekat;
+use App\Smestaj;
 use App\VrstaObjekta;
 use Illuminate\Http\Request;
 
@@ -32,6 +33,18 @@ class AdminC extends Controller
             $objekat = Objekat::where('slug', $slug)->get()->first();
         }
         return view('firmolog.objekat')->with('gradovi',$gradovi)->with('vrste_objekta',$vrste_objekta)->with('objekat',$objekat);
+    }
+
+    public function getSmestaj($slug = null){
+      //$smestaji = Smestaj::get();
+     $smestaji = DB::table('smestaj')
+            ->join('objekat', 'smestaj.objekat_id','=', 'objekat.id')
+            ->join('vrsta_smestaja', 'smestaj.vrsta_smestaja_id','=', 'vrsta_smestaja.id')
+            ->join('vrsta_kapaciteta', 'smestaj.vrsta_kapaciteta_id','=', 'vrsta_kapaciteta.id')
+            ->where('objekat.slug', '=', $slug)
+            ->select('smestaj.id as id', 'vrsta_smestaja.naziv as vrsta_smestaja', 'vrsta_kapaciteta.naziv as vrsta_kapaciteta')
+           ->get();
+        dd($smestaji);
     }
     
     public function postObjekat(Request $request){

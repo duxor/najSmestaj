@@ -190,6 +190,24 @@
                             <i class="fa fa-suitcase"></i> <span>Objekti</span>
                         </a>
                     </li>
+                    {{---DODAJ OBJEKAT--}}
+                    <li{{Request::is('*/objekat')?' class=active ':''}}>
+                        <a href="/{{$root}}/objekat">
+                            <i class="fa fa-suitcase"></i> <span>Dodaj objekat</span>
+                        </a>
+                    </li>
+                    {{---SMESTAJI--}}
+                    <li{{Request::is('*/objekat')?' class=active ':''}}>
+                        <a href="/{{$root}}/smestaji">
+                            <i class="fa fa-suitcase"></i> <span>Smeštaji</span>
+                        </a>
+                    </li>
+                    {{---DODAJ SMESTAJE--}}
+                    <li{{Request::is('*/objekat')?' class=active ':''}}>
+                        <a href="/{{$root}}/smestaj">
+                            <i class="fa fa-suitcase"></i> <span>Dodaj smeštaj</span>
+                        </a>
+                    </li>
                 </ul>
                 {{---glavni-meni::end--}}
             </section>
