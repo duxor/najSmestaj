@@ -2,7 +2,7 @@
 <?php if(!isset($objekat)) $objekat=null; ?>
 @extends('firmolog.master')
 @section('container')
-    <script src="http://maps.googleapis.com/maps/api/js"></script>
+    <script src="http://maps.google.com/maps/api/js?sensor=false%22%3E%3C/script&gt"></script>
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
@@ -21,10 +21,10 @@
                                 </ul>
                             </div>
                         @endif
-
                                 <div class="col-sm-12">
                                     {!! Form::model($objekat, ['class'=>'form-horizontal', 'files'=>'true']) !!}
 
+                                    {!! Form::hidden('id',$objekat?$objekat->id : null) !!}
                                     {!! Form::hidden('korisnik_id',$korisnik?$korisnik->id : 1) !!}
 
                                         <div class="col-sm-2 ">{!! Form::label('grad_id',"Grad:") !!}</div>
@@ -51,9 +51,9 @@
                                         <div class="form-group" align="center">
                                             <label for="">Mapa (Izaberite lokaciju objekta)</label>
                                             <div id="map-canvas" style="width:500px;height:380px;"></div>
-                                            {!! Form::hidden('x',44.78669522814711,['id'=>'x' ]) !!}
-                                            {!! Form::hidden('y',20.450384063720662,['id'=>'y' ]) !!}
-                                            {!! Form::hidden('z',6,['id'=>'z' ]) !!}
+                                            {!! Form::hidden('x',$objekat?$objekat->x:44.78669522814711,['id'=>'x' ]) !!}
+                                            {!! Form::hidden('y',$objekat?$objekat->y:20.450384063720662,['id'=>'y' ]) !!}
+                                            {!! Form::hidden('z',$objekat?$objekat->z:6,['id'=>'z' ]) !!}
                                         </div>
 
                                         <div class="col-sm-12" align="center">{!!Form::button('<i class="glyphicon glyphicon-floppy-disk"></i> Sačuvaj',['type'=>'submit', 'class'=>'btn btn-lg btn-primary ','data-toggle'=>'tooltip','title'=>'Preporuka: proverite da li ste uneli sve podatke.'])!!}</div>
@@ -69,28 +69,41 @@
 @section('end-script')
     <script>
         $(document).ready(function() {
+
+            $('[data-toggle="tooltip"]').tooltip();
+
             //Podesavanje mape
             var map;
             var x = $('#x').val();
             var y = $('#y').val();
-            var z = $('#z').val();
+            var z = parseInt($('#z').val());
             function initialize() {
                 var myLatlng = new google.maps.LatLng(x, y);
                 var myOptions = {
-                    zoom: 6,
                     center: myLatlng,
-                    mapTypeId: google.maps.MapTypeId.ROADMAP
-                }
+                    zoom: z,
+                    scrollwheel: true,
+                    draggable: true,
+                    panControl: true,
+                    zoomControl: true,
+                    mapTypeControl: true,
+                    scaleControl: true,
+                    streetViewControl: true,
+                    overviewMapControl: true,
+                    rotateControl: true,
+                    styles: [{featureType:"road",elementType:"geometry",stylers:[{lightness:100},{visibility:"simplified"}]},{"featureType":"water","elementType":"geometry","stylers":[{"visibility":"on"},{"color":"#C6E2FF",}]},{"featureType":"poi","elementType":"geometry.fill","stylers":[{"color":"#C5E3BF"}]},{"featureType":"road","elementType":"geometry.fill","stylers":[{"color":"#D1D1B8"}]}]
+                };
                 map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);
                 var marker = new google.maps.Marker({
                     draggable: true,
                     position: myLatlng,
                     map: map,
+                    icon:'/img/gmap_marker.png',
                     title: "Vasa lokacija"
                 });
                 google.maps.event.addListener(map, 'zoom_changed', function() {
                     document.getElementById("z").value = this.getZoom();
-                })
+                });
                 google.maps.event.addListener(marker, 'dragend', function (event) {
                     document.getElementById("x").value = this.getPosition().lat();
                     document.getElementById("y").value = this.getPosition().lng();
@@ -102,7 +115,6 @@
                 });
             }
             google.maps.event.addDomListener(window, 'load', initialize);
-
         });
     </script>
 @endsection

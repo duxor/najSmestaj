@@ -158,12 +158,12 @@
                 var map;
                 var x = $('#x').val();
                 var y = $('#y').val();
-                var z = $('#z').val();
+                var z = parseInt($('#z').val());
             function initialize() {
                 var myLatlng = new google.maps.LatLng(x, y);
                 var myOptions = {
                     center: myLatlng,
-                    zoom: 6,
+                    zoom: z,
                     scrollwheel: true,
                     draggable: true,
                     panControl: true,

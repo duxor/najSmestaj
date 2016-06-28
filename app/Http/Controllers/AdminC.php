@@ -15,16 +15,9 @@ use Illuminate\Support\Facades\DB;
 class AdminC extends Controller
 {
     public function getIndex(){
-        $objekti =  DB::table('objekat')
-            ->join('grad', 'objekat.grad_id','=','grad.id')
-            ->join('vrsta_objekta', 'objekat.vrsta_objekta_id','=','vrsta_objekta.id')
-            ->select('objekat.id as id','grad.naziv as grad', 'vrsta_objekta.naziv as vrsta_objekta','objekat.naziv',
-                    'objekat.opis', 'objekat.adresa','objekat.telefon', 'objekat.email','objekat.x','objekat.y','objekat.z')
-            ->get();//($objekti);
-        return view('firmolog.objekti')->with('objekti', $objekti);
+        return view('firmolog.index');
     }
-
-
+    
     public function getObjekat($slug = null){
         $objekat = null;
         $gradovi=Grad::lists('naziv','id');
@@ -35,8 +28,17 @@ class AdminC extends Controller
         return view('firmolog.objekat')->with('gradovi',$gradovi)->with('vrste_objekta',$vrste_objekta)->with('objekat',$objekat);
     }
 
-    public function getSmestaj($slug = null){
-      //$smestaji = Smestaj::get();
+    public function getObjekti(){
+        $objekti =  DB::table('objekat')
+            ->join('grad', 'objekat.grad_id','=','grad.id')
+            ->join('vrsta_objekta', 'objekat.vrsta_objekta_id','=','vrsta_objekta.id')
+            ->select('objekat.id as id','grad.naziv as grad', 'vrsta_objekta.naziv as vrsta_objekta','objekat.naziv',
+                'objekat.opis', 'objekat.adresa','objekat.telefon', 'objekat.email','objekat.x','objekat.y','objekat.z')
+            ->get();
+        return view('firmolog.objekti')->with('objekti', $objekti);
+    }
+    
+    public function getSmestaji($slug = null){
      $smestaji = DB::table('smestaj')
             ->join('objekat', 'smestaj.objekat_id','=', 'objekat.id')
             ->join('vrsta_smestaja', 'smestaj.vrsta_smestaja_id','=', 'vrsta_smestaja.id')
@@ -44,22 +46,24 @@ class AdminC extends Controller
             ->where('objekat.slug', '=', $slug)
             ->select('smestaj.id as id', 'vrsta_smestaja.naziv as vrsta_smestaja', 'vrsta_kapaciteta.naziv as vrsta_kapaciteta')
            ->get();
-        dd($smestaji);
+        return view('firmolog.smestaji')->with('smestaji',$smestaji);
     }
     
     public function postObjekat(Request $request){
 
-        $objekat = $request->id?Objekat::where('id',$request->id)->get()->first():new Objekat();
+      $objekat = $request->id?Objekat::where('id', $request->id)->get()->first():new Objekat();
 
-        $slug = null;
-        $text = $request->naziv;
-        $tmp=strtr($text,['Š'=>'s','š'=>'s','Đ'=>'d','đ'=>'d','Č'=>'c','č'=>'c','Ć'=>'c','ć'=>'c','Ž'=>'z','ž'=>'z']);
-        $tmp = strtolower(preg_replace("/[^a-zA-Z0-9]+/", "-", $tmp));
-        if ($tmp[strlen($tmp) - 1] == '-') $tmp = substr($tmp, 0, strlen($tmp) - 1);
-        $i = 0;
-        while (!$slug){
-            if (!Objekat::where('slug', $tmp . ($i == 0 ? '' : '-' . $i))->exists()) $slug = $tmp . ($i == 0 ? '' : '-' . $i);
-            $i++;
+        if(!$request->id){
+            $slug = null;
+            $text = $request->naziv;
+            $tmp=strtr($text,['Š'=>'s','š'=>'s','Đ'=>'d','đ'=>'d','Č'=>'c','č'=>'c','Ć'=>'c','ć'=>'c','Ž'=>'z','ž'=>'z']);
+            $tmp = strtolower(preg_replace("/[^a-zA-Z0-9]+/", "-", $tmp));
+            if ($tmp[strlen($tmp) - 1] == '-') $tmp = substr($tmp, 0, strlen($tmp) - 1);
+            $i = 0;
+            while (!$slug){
+                if (!Objekat::where('slug', $tmp . ($i == 0 ? '' : '-' . $i))->exists()) $slug = $tmp . ($i == 0 ? '' : '-' . $i);
+                $i++;
+            }
         }
 
         //template defaut 1
@@ -67,7 +71,7 @@ class AdminC extends Controller
         $objekat->grad_id = $request->grad_id;
         $objekat->vrsta_objekta_id = $request->vrsta_objekta_id;
         $objekat->naziv = $request->naziv;
-        $objekat->slug = $slug;
+        if(!$request->id)$objekat->slug = $slug;
         $objekat->opis = $request->opis;
         $objekat->adresa = $request->adresa;
         $objekat->galerija = 'uradi kanije';
@@ -77,7 +81,9 @@ class AdminC extends Controller
         $objekat->y = $request->y;
         $objekat->z = $request->z;
 
-        $objekat->id?$objekat->update():$objekat->save();
+        $request->id?$objekat->update():$objekat->save();
         
     }
 }
+
+
