@@ -122,14 +122,15 @@ class AuthController extends Controller
      */
 
     protected function create(array $data){
+        
         //Obrada slike
         if(isset($data['foto'])){
             $naziv_slike='profilna_'.$data['foto']->getClientOriginalName();
-            $data['foto']->move('img/korisnici', $data['foto']);
+            $data['foto']->move('img/korisnici', $naziv_slike);
             $putanja_slike='/img/korisnici/'.$naziv_slike;
         }elseif(isset($data['foto1'])){
             $naziv_slike='profilna_'.$data['foto1']->getClientOriginalName();
-            $data['foto1']->move('img/korisnici', $data['foto1']);
+            $data['foto1']->move('img/korisnici', $naziv_slike);
             $putanja_slike='/img/korisnici/'.$naziv_slike;
         }else{
             $putanja_slike = '/img/default/korisnik.jpg';

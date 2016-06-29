@@ -3,9 +3,9 @@
 @extends('firmolog.master')
 @section('container')
     <script src="http://maps.google.com/maps/api/js?sensor=false%22%3E%3C/script&gt"></script>
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+            <div class="col-sm-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 align="center">Podaci o objektu</h3>
@@ -28,10 +28,10 @@
                                     {!! Form::hidden('korisnik_id',$korisnik?$korisnik->id : 1) !!}
 
                                         <div class="col-sm-2 ">{!! Form::label('grad_id',"Grad:") !!}</div>
-                                        <div class="col-md-10 form-group">{!!Form::select('grad_id',$gradovi,$objekat?$objekat->grad_id:1,['class'=>'form-control'])!!}</div>
+                                        <div class="col-sm-10 form-group">{!!Form::select('grad_id',$gradovi,$objekat?$objekat->grad_id:1,['class'=>'form-control'])!!}</div>
 
                                         <div class="col-sm-2 ">{!! Form::label('vrsta_objekta_id',"Vrsta objekta:") !!}</div>
-                                        <div class="col-md-10 form-group">{!!Form::select('vrsta_objekta_id',$vrste_objekta,$objekat?$objekat->vrsta_objekta_id:1,['class'=>'form-control'])!!}</div>
+                                        <div class="col-sm-10 form-group">{!!Form::select('vrsta_objekta_id',$vrste_objekta,$objekat?$objekat->vrsta_objekta_id:1,['class'=>'form-control'])!!}</div>
 
                                         <div class="col-sm-2 ">{!!Form::label('naziv', 'Naziv:')!!}</div>
                                         <div class="col-sm-10 form-group">{!!Form::text('naziv',null,['class'=>'form-control','placeholder'=>'Unesite naziv objekta'])!!}</div>

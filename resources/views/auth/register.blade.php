@@ -1,6 +1,11 @@
 <?php if(!isset($korisnik)) $korisnik=null; ?>
 <?php if(!isset($objekat)) $objekat=null; ?>
 @extends('layouts.jovic')
+<style>
+    .img-rounded {
+        cursor: pointer;
+    }
+</style>
 @section('body')
     <script src="http://maps.googleapis.com/maps/api/js"></script>
     <div class="container">

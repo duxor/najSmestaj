@@ -105,6 +105,8 @@ class KreiranjeBaze extends Migration{
             $table->unsignedBigInteger('vrsta_kapaciteta_id');
             $table->foreign('vrsta_kapaciteta_id')->references('id')->on('vrsta_kapaciteta');
             $table->string('dodaci', 250)->nullable();
+            $table->string('naziv', 45)->nullable();
+            $table->string('slug', 45)->nullable();
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->nullable();
         });
