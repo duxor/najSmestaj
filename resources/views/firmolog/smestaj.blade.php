@@ -21,14 +21,20 @@
                         <div class="col-sm-12">
                             {!! Form::model($smestaj, ['class'=>'form-horizontal', 'files'=>'true']) !!}
 
-                                <div class="col-sm-2 ">{!! Form::label('objekat_id',"Objekat:") !!}</div>
-                                <div class="col-sm-10 form-group">{!!Form::select('grad_id',$objekat,1,['class'=>'form-control'])!!}</div>
+                                {!! Form::hidden('id',$smestaj?$smestaj->id : null) !!}
 
-                                <div class="col-sm-2 ">{!! Form::label('soba_id',"Vrsta smeštaja:") !!}</div>
-                                <div class="col-sm-10 form-group">{!!Form::select('grad_id',$vrsta_smestaja,1,['class'=>'form-control'])!!}</div>
+                                <div class="col-sm-2 ">{!! Form::label('objekat_id',"Objekat:") !!}</div>
+                                <div class="col-sm-10 form-group">{!!Form::select('objekat_id',$objekat,$smestaj?$smestaj->objekat_id:1,['class'=>'form-control'])!!}</div>
+
+                                <div class="col-sm-2 ">{!!Form::label('naziv', 'Naziv smeštaja:')!!}</div>
+                                <div class="col-sm-10 form-group">{!!Form::text('naziv',null,['class'=>'form-control','placeholder'=>'Unesite naziv smeštaja'])!!}</div>
+
+
+                                <div class="col-sm-2 ">{!! Form::label('vrsta_smestaja_id' ,"Vrsta smeštaja:") !!}</div>
+                                <div class="col-sm-10 form-group">{!!Form::select('vrsta_smestaja_id',$vrsta_smestaja,$smestaj?$smestaj->vrsta_smestaja_id:1,['class'=>'form-control'])!!}</div>
 
                                 <div class="col-sm-2 ">{!! Form::label('vrsta_kapaciteta_id',"Vrsta kapaciteta:") !!}</div>
-                                <div class="col-sm-10 form-group">{!!Form::select('grad_id',$vrsta_kapaciteta,1,['class'=>'form-control'])!!}</div>
+                                <div class="col-sm-10 form-group">{!!Form::select('vrsta_kapaciteta_id',$vrsta_kapaciteta,$smestaj?$smestaj->vrsta_kapaciteta_id:1,['class'=>'form-control'])!!}</div>
 
                                <div class="col-sm-12" align="center">{!!Form::button('<i class="glyphicon glyphicon-floppy-disk"></i> Sačuvaj',['type'=>'submit', 'class'=>'btn btn-lg btn-primary ','data-toggle'=>'tooltip','title'=>'Preporuka: proverite da li ste uneli sve podatke.'])!!}</div>
 

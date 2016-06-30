@@ -26,3 +26,7 @@ Route::controller('/pretraga','PretragaC');
 
 Route::get('register/verify/{confirmationCode}','Auth\AuthController@confirm');
 
+Route::get('/nepotvrdjen',function(){
+    return view('errors.nepotvrdjen');
+});
+

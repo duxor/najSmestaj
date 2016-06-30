@@ -15,10 +15,10 @@
                 <li>
                     {!! $smestaj->vrsta_smestaja !!}
                     {!! $smestaj->vrsta_kapaciteta !!}
-                    <a href="#" class="btn btn-info" role="button">Izmeni</a>
+                    <a href="/administration/smestaj/{{$smestaj->slug}}" class="btn btn-info" role="button">Izmeni</a>
                 </li>
             @endforeach
-            <a href="/administracija/smestaj" class="btn btn-info" role="button">Dodaj novi smeštaj</a>
+            <a href="/administration/smestaj" class="btn btn-info" role="button">Dodaj novi smeštaj</a>
         @endif
     @endif
 @endsection

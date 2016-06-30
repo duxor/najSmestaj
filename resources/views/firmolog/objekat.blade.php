@@ -25,7 +25,6 @@
                                     {!! Form::model($objekat, ['class'=>'form-horizontal', 'files'=>'true']) !!}
 
                                     {!! Form::hidden('id',$objekat?$objekat->id : null) !!}
-                                    {!! Form::hidden('korisnik_id',$korisnik?$korisnik->id : 1) !!}
 
                                         <div class="col-sm-2 ">{!! Form::label('grad_id',"Grad:") !!}</div>
                                         <div class="col-sm-10 form-group">{!!Form::select('grad_id',$gradovi,$objekat?$objekat->grad_id:1,['class'=>'form-control'])!!}</div>
