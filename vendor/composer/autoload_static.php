@@ -335,6 +335,7 @@ class ComposerStaticInit8bdb3e13be7aeee750329daa0454f8d3
         'KonfiguracioniPodaci' => __DIR__ . '/../..' . '/database/seeds/KonfiguracioniPodaci.php',
         'KorisniciTestPodaci' => __DIR__ . '/../..' . '/database/seeds/KorisniciTestPodaci.php',
         'KreiranjeBaze' => __DIR__ . '/../..' . '/database/migrations/2016_05_16_214533_kreiranje_baze.php',
+        'ObjektiTestPodaci' => __DIR__ . '/../..' . '/database/seeds/ObjektiTestPodaci.php',
         'PHPUnit_Exception' => __DIR__ . '/..' . '/phpunit/phpunit/src/Exception.php',
         'PHPUnit_Extensions_GroupTestSuite' => __DIR__ . '/..' . '/phpunit/phpunit/src/Extensions/GroupTestSuite.php',
         'PHPUnit_Extensions_PhptTestCase' => __DIR__ . '/..' . '/phpunit/phpunit/src/Extensions/PhptTestCase.php',
@@ -766,6 +767,7 @@ class ComposerStaticInit8bdb3e13be7aeee750329daa0454f8d3
         'SebastianBergmann\\RecursionContext\\Exception' => __DIR__ . '/..' . '/sebastian/recursion-context/src/Exception.php',
         'SebastianBergmann\\RecursionContext\\InvalidArgumentException' => __DIR__ . '/..' . '/sebastian/recursion-context/src/InvalidArgumentException.php',
         'SebastianBergmann\\Version' => __DIR__ . '/..' . '/sebastian/version/src/Version.php',
+        'SmestajiTestPodaci' => __DIR__ . '/../..' . '/database/seeds/SmestajiTestPodaci.php',
         'TestCase' => __DIR__ . '/../..' . '/tests/TestCase.php',
         'Text_Template' => __DIR__ . '/..' . '/phpunit/php-text-template/src/Template.php',
     );

@@ -82,6 +82,7 @@ return array(
     'KonfiguracioniPodaci' => $baseDir . '/database/seeds/KonfiguracioniPodaci.php',
     'KorisniciTestPodaci' => $baseDir . '/database/seeds/KorisniciTestPodaci.php',
     'KreiranjeBaze' => $baseDir . '/database/migrations/2016_05_16_214533_kreiranje_baze.php',
+    'ObjektiTestPodaci' => $baseDir . '/database/seeds/ObjektiTestPodaci.php',
     'PHPUnit_Exception' => $vendorDir . '/phpunit/phpunit/src/Exception.php',
     'PHPUnit_Extensions_GroupTestSuite' => $vendorDir . '/phpunit/phpunit/src/Extensions/GroupTestSuite.php',
     'PHPUnit_Extensions_PhptTestCase' => $vendorDir . '/phpunit/phpunit/src/Extensions/PhptTestCase.php',
@@ -513,6 +514,7 @@ return array(
     'SebastianBergmann\\RecursionContext\\Exception' => $vendorDir . '/sebastian/recursion-context/src/Exception.php',
     'SebastianBergmann\\RecursionContext\\InvalidArgumentException' => $vendorDir . '/sebastian/recursion-context/src/InvalidArgumentException.php',
     'SebastianBergmann\\Version' => $vendorDir . '/sebastian/version/src/Version.php',
+    'SmestajiTestPodaci' => $baseDir . '/database/seeds/SmestajiTestPodaci.php',
     'TestCase' => $baseDir . '/tests/TestCase.php',
     'Text_Template' => $vendorDir . '/phpunit/php-text-template/src/Template.php',
 );

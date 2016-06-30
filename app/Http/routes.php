@@ -18,7 +18,6 @@ Route::get('/kontakt',function(){
     return json_encode(['check'=>1,'poruka'=>'Uspešno ste poslali poruku!']);
 });
 Route::auth();
-Route::get('/home', 'HomeController@index');
 Route::controller('/administration','AdminC');
 Route::controller('/management ','ManagerC');
 Route::controller('/profil','ProfilC');

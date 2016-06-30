@@ -37,7 +37,8 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <span class="close" data-dismiss="modal" style="position: absolute;right: 20px;cursor:
+pointer;font-weight: bold;font-size:40px;top:-10px">&times;</span>
                     <h3 style="text-align:center"><i class="glyphicon glyphicon-edit" style="font-size: 100%"></i> Rezerviši smestaj</h3>
                 </div>
                 <div class="modal-body">

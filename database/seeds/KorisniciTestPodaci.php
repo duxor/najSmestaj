@@ -13,13 +13,6 @@ class KorisniciTestPodaci extends Seeder
      */
     public function run()
     {
-        PravaPristupa::insert([
-            ['naziv'=>'Blokiran'],
-            ['naziv'=>'Korisnik smeštaja'],
-            ['naziv'=>'Poslovođa'],
-            ['naziv'=>'Vlasnik privatnog smeštaja'],
-            ['naziv'=>'Vlasnik firme']
-        ]);
         User::insert([
             ['ime'=>'BlokiranIme','prezime'=>'BlokiranPrezume','password'=>bcrypt('admin'),'prava_pristupa_id'=>'1','email'=>'blokiran@test.com'],
             ['ime'=>'KorisnikSmestajaIme','prezime'=>'KorisnikSmestajaPrezime','password'=>bcrypt('admin'),'prava_pristupa_id'=>'2','email'=>'ph'],

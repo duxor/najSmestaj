@@ -13,12 +13,6 @@ class ObjektiTestPodaci extends Seeder
      */
     public function run()
     {
-        VrstaObjekta::insert([
-            ['naziv'=>'Privatni smeštaj'],
-            ['naziv'=>'Motel'],
-            ['naziv'=>'Hostel'],
-            ['naziv'=>'Hotel']
-        ]);
         Objekat::insert([
             ['korisnik_id'=>1,'templejt_id'=>1,'grad_id'=>1,'vrsta_objekta_id'=>1,'naziv'=>'Vila promaja',
                 'slug'=>'vila-promaja','opis'=>'opis1','adresa'=>'adresa1','galerija'=>'Galerija1',
