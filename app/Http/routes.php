@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +18,6 @@ Route::get('/kontakt',function(){
     return json_encode(['check'=>1,'poruka'=>'Uspešno ste poslali poruku!']);
 });
 Route::auth();
-Route::get('/home', 'HomeController@index');
 Route::controller('/administration','AdminC');
 Route::controller('/management ','ManagerC');
 Route::controller('/profil','ProfilC');
@@ -27,4 +26,7 @@ Route::controller('/pretraga','PretragaC');
 Route::get('register/verify/{confirmationCode}','Auth\AuthController@confirm');
 
 Route::controller('/{slug}/{slug2?}', 'PrezenterC');
+Route::get('/nepotvrdjen',function(){
+    return view('errors.nepotvrdjen');
+});
 

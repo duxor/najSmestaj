@@ -24,6 +24,7 @@ use App\Funkcije;
 
 class PretragaC extends Controller
 {
+    
     public function getIndex(){
 
         return view('pretraga');

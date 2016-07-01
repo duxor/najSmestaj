@@ -15,29 +15,10 @@ class SmestajiTestPodaci extends Seeder
      */
     public function run()
     {
-        VrstaSmestaja::insert([
-            ['naziv'=>'Soba'],
-            ['naziv'=>'Apartman'],
-            ['naziv'=>'Stan']
-        ]);
-        VrstaKapaciteta::insert([
-            ['naziv'=>'Za jednu osobu'],
-            ['naziv'=>'Za dve osobe'],
-            ['naziv'=>'Za tri osobe'],
-            ['naziv'=>'Za četiri osobe'],
-            ['naziv'=>'Za pet osoba'],
-            ['naziv'=>'Za šest osoba'],
-            ['naziv'=>'Za sedam osoba'],
-            ['naziv'=>'Za osam osoba'],
-            ['naziv'=>'Za devet osoba'],
-            ['naziv'=>'Za deset osoba'],
-            ['naziv'=>'Za jedanaest osoba'],
-            ['naziv'=>'Za dvanaest osoba']
-        ]);
         Smestaj::insert([
-            ['objekat_id'=>1,'vrsta_smestaja_id'=>1,'vrsta_kapaciteta_id'=>1],
-            ['objekat_id'=>2,'vrsta_smestaja_id'=>2,'vrsta_kapaciteta_id'=>2],
-            ['objekat_id'=>3,'vrsta_smestaja_id'=>2,'vrsta_kapaciteta_id'=>3]
+            ['objekat_id'=>1,'vrsta_smestaja_id'=>1,'vrsta_kapaciteta_id'=>1,'naziv'=>'nazvi1','slug'=>'slug1'],
+            ['objekat_id'=>2,'vrsta_smestaja_id'=>2,'vrsta_kapaciteta_id'=>2,'naziv'=>'nazvi2','slug'=>'slug2'],
+            ['objekat_id'=>3,'vrsta_smestaja_id'=>2,'vrsta_kapaciteta_id'=>3,'naziv'=>'nazvi3','slug'=>'slug3']
         ]);
         Rezervacija::insert([
             ['korisnik_id'=>1,'smestaj_id'=>1,'broj_osoba'=>'3','datum_prijave'=>'2016-06-16','datum_odjave'=>'2016-06-18'],

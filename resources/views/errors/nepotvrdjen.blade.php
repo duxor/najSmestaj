@@ -1,4 +1,4 @@
-@extends('master-basic')
+@extends('master')
 @section('body')
 <div class="container" style="padding-top: 100px">
     <center>
