@@ -135,8 +135,6 @@ class KreiranjeBaze extends Migration{
         });
 
     }
-
-
     public function down(){
         Schema::drop('like');
         Schema::drop('rezervacija');
