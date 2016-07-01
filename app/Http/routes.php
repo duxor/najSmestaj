@@ -26,3 +26,5 @@ Route::controller('/pretraga','PretragaC');
 
 Route::get('register/verify/{confirmationCode}','Auth\AuthController@confirm');
 
+Route::controller('/{slug}/{slug2?}', 'PrezenterC');
+

@@ -4,41 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>NajSmeštaj</title>
-    <meta name="description" content="Platforma za brzo i lako kreiranje lične web prezentacije i reklamiranje Vašeg smeštaja."/>
-    <meta name="keywords" content="smaštaj, hotel, hostel, sobe"/>
-    <link rel="apple-touch-icon" sizes="57x57" href="/templejt/master/img/favicon/apple-touch-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="/templejt/master/img/favicon/apple-touch-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="/templejt/master/img/favicon/apple-touch-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="/templejt/master/img/favicon/apple-touch-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="/templejt/master/img/favicon/apple-touch-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="/templejt/master/img/favicon/apple-touch-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="/templejt/master/img/favicon/apple-touch-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="/templejt/master/img/favicon/apple-touch-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/templejt/master/img/favicon/apple-touch-icon-180x180.png">
-    <link rel="icon" type="image/png" href="/templejt/master/img/favicon/favicon-32x32.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="/templejt/master/img/favicon/android-chrome-192x192.png" sizes="192x192">
-    <link rel="icon" type="image/png" href="/templejt/master/img/favicon/favicon-96x96.png" sizes="96x96">
-    <link rel="icon" type="image/png" href="/templejt/master/img/favicon/favicon-16x16.png" sizes="16x16">
-    <link rel="manifest" href="/templejt/master/img/favicon/manifest.json">
-    <link rel="shortcut icon" href="/templejt/master/img/favicon/favicon.ico">
-    <meta name="msapplication-TileColor" content="#663fb5">
-    <meta name="msapplication-TileImage" content="img/favicon/mstile-144x144.png">
-    <meta name="msapplication-config" content="img/favicon/browserconfig.xml">
+    <title>najSmeštaj</title>
+    <meta name="description" content="Platforma za brzo i lako kreiranje lične web prezentacije i reklamiranje Vašeg smeštaja. U samo nekoliko koraka registrujte se i iskoristite naš promotivni period testiranja platforme.">
+    <meta name="keywords" content="smaštaj, hotel, hostel, sobe, najsmestaj">
     <meta name="theme-color" content="#663fb5">
-
     <script src="/templejt/master/js/jquery.min.js"></script>
-
-
-
-
-
-
     <link rel="stylesheet" href="/templejt/master/css/style.css">
-
-
-
-
 </head>
 <body>
     {{---NAVIGACIJA::START--}}
@@ -57,15 +28,15 @@
             <div id="collapsingNavbar" class="collapse navbar-toggleable-custom" role="tabpanel" aria-labelledby="collapsingNavbar">
                 <ul class="nav navbar-nav pull-xs-right">
                     <li class="nav-item nav-item-toggable active">
-                        <a class="nav-link scrol" href="#web-platforma">
+                        <a class="nav-link scrol" href="/#web-platforma">
                             <small>WEB</small>
                             Platforma <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item nav-item-toggable">
-                        <a class="nav-link scrol" href="#cene">Cene</a>
+                        <a class="nav-link scrol" href="/#cene">Cene</a>
                     </li>
                     <li class="nav-item nav-item-toggable">
-                        <a class="nav-link scrol" href="#destinacije">Destinacije</a>
+                        <a class="nav-link scrol" href="/#destinacije">Destinacije</a>
                     </li>
                     <li class="nav-item nav-item-toggable hidden-md-up">
                         <form class="navbar-form">
@@ -103,7 +74,7 @@
                             <a href="#" class="dropdown-item text-uppercase">Uputstvo za korištenje</a>
                             <a href="#" class="dropdown-item text-uppercase">Uslovi korištenja</a>
                             <a href="#" class="dropdown-item text-uppercase" data-toggle="modal" data-target="#kontaktModal">Piši nam!</a>
-                            <a href="#" class="dropdown-item text-uppercase text-muted">Log in</a>
+                            <a href="/login" class="dropdown-item text-uppercase text-muted">Log in</a>
                         </div>
                     </li>
                 </ul>
@@ -119,11 +90,11 @@
                         <h6>contact@najsmestaj.com</h6>
                     </div>
                 </div>
-                <a href="#" class="dropdown-item text-uppercase">Najčešća pitanja</a>
+                <a href="#" class="dropdown-item text-uppercase">Često postavljena pitanja</a>
                 <a href="#" class="dropdown-item text-uppercase">Uputstvo za korištenje</a>
                 <a href="#" class="dropdown-item text-uppercase">Uslovi korištenja</a>
                 <a href="#" class="dropdown-item text-uppercase" data-toggle="modal" data-target="#kontaktModal">Piši nam!</a>
-                <a href="#" class="dropdown-item text-uppercase text-muted">Log in</a>
+                <a href="/login" class="dropdown-item text-uppercase text-muted">Log in</a>
             </div>
         </div>
     </nav>
@@ -136,7 +107,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <span class="close" data-dismiss="modal" style="position: absolute;right: 20px;cursor: pointer;font-weight: bold">&times;</span>
+                    <span class="close" data-dismiss="modal" style="position: absolute;right: 20px;cursor: pointer;font-weight: bold;font-size:40px;top:-10px">&times;</span>
                     <h2>Kontaktirajte nas!</h2>
                 </div>
                 <div class="modal-body">
@@ -170,15 +141,15 @@
                 <div class="col-md-6 col-lg-7">
                     <ul class="nav nav-inline">
                         <li class="nav-item nav-item-toggable active">
-                            <a class="nav-link scrol" href="#web-platforma">
+                            <a class="nav-link scrol" href="/#web-platforma">
                                 <small>WEB</small> Platforma <span class="sr-only">(current)</span>
                             </a>
                         </li>
                         <li class="nav-item nav-item-toggable">
-                            <a class="nav-link scrol" href="#cene">Cene</a>
+                            <a class="nav-link scrol" href="/#cene">Cene</a>
                         </li>
                         <li class="nav-item nav-item-toggable">
-                            <a class="nav-link scrol" href="#destinacije">Destinacije</a>
+                            <a class="nav-link scrol" href="/#destinacije">Destinacije</a>
                         </li>
                         <li class="nav-item"><a class="nav-link scroll-top" href="#totop">Na početak <span class="icon-caret-up"></span></a></li>
                     </ul>

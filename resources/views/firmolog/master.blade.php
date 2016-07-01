@@ -1,3 +1,7 @@
+<!DOCTYPE html>
+<html>
+<head>
+
 <!--
          _____ _ _ __\/_____ __ _   ___ ___ ___ _ __\/___ _/___
         |_    | | |  ___/   |  \ | |   | __|   | |  ___/ |  __/
@@ -10,13 +14,9 @@
 
 -->
 
-<!DOCTYPE html>
-<html>
-<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>najSmeštaj | Panel</title>
-    {{-- Tell the browser to be responsive to screen width --}}
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     {{-- Bootstrap 3.3.6 --}}
     <link rel="stylesheet" href="/templejt/admin-lte-v233/bootstrap/css/bootstrap.min.css">
@@ -29,13 +29,11 @@
     {{-- AdminLTE Skins--}}
     <link rel="stylesheet" href="/templejt/admin-lte-v233/css/skins/_all-skins.min.css">
     <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-
     <link rel="stylesheet" href="/css/animation.css">
 </head>
-
 <?php $korisnik=Auth::user(); ?>
 <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
@@ -73,7 +71,7 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li class="footer"><a href="#">Pregledaj sve</a></li>
+                                {{--<li class="footer"><a href="#">Pregledaj sve</a></li>--}}
                             </ul>
                         </li>
                         {{---poruke::end--}}
@@ -89,7 +87,7 @@
                                 <li>
                                     <ul class="menu"></ul>
                                 </li>
-                                <li class="footer"><a href="#">Pregledaj sve</a></li>
+                                {{--<li class="footer"><a href="#">Pregledaj sve</a></li>--}}
                             </ul>
                         </li>
                         {{---notifikacije::end--}}
@@ -119,9 +117,7 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li class="footer">
-                                    <a href="#">Pregledaj sve</a>
-                                </li>
+                                {{--<li class="footer"><a href="#">Pregledaj sve</a></li>--}}
                             </ul>
                         </li>
                         {{--taskovi::end--}}
@@ -141,9 +137,6 @@
                                     </p>
                                 </li>
                                 <li class="user-footer">
-                                    <div class="pull-left">
-                                        <a href="#" class="btn btn-default btn-flat">Izmeni</a>
-                                    </div>
                                     <div class="pull-right">
                                         <a href="/logout" class="btn btn-default btn-flat">Odjava</a>
                                     </div>
@@ -158,9 +151,7 @@
                 </div>
             </nav>
         </header>
-        {{----------------------------------------------------------------------
-            LIJEVI-NAVBAR::START
-        ------------------------------------------------------------------------}}
+        {{---LIJEVI-NAVBAR::START--}}
         <aside class="main-sidebar">
             <section class="sidebar">
                 {{---KORISNIK::START--}}
@@ -212,15 +203,11 @@
                 {{---glavni-meni::end--}}
             </section>
         </aside>
-        {{----------------------------------------------------------------------
-            lijevi-navbar::end
-        ------------------------------------------------------------------------}}
+        {{---lijevi-navbar::end--}}
 
         <div class="content-wrapper">
             <section class="content-header">
-                <h1>
-                    najSmeštaj Panel <small>Verzija 1.0</small>
-                </h1>
+                <h1>najSmeštaj Panel <small>Verzija 1.0</small></h1>
                 <ol class="breadcrumb">
                     <li><a href="/{{$root}}"><i class="fa fa-dashboard"></i> Panel</a></li>
                     <li class="active">{{Request::segment(2)?ucfirst(str_replace('-',' ',Request::segment(2))):'Pregled'}}</li>
@@ -237,7 +224,7 @@
             </div>
             <a href="//najsmestaj.com">najSmeštaj</a> © Copyright {{date('Y')}} Zadržavamo sva prava.
         </footer>
-        {{--AKTIVNOSTI--}}
+        {{---AKTIVNOSTI--}}
         <aside class="control-sidebar control-sidebar-dark">
             <ul class="nav nav-tabs nav-justified control-sidebar-tabs"></ul>
             <div class="tab-content">
@@ -246,24 +233,24 @@
         </aside>
         <div class="control-sidebar-bg"></div>
     </div>
-    {{-- jQuery 2.2.0 --}}
+    {{---jQuery 2.2.0--}}
     <script src="/templejt/admin-lte-v233/plugins/jQuery/jQuery-2.2.0.min.js"></script>
-    {{-- Bootstrap 3.3.6 --}}
+    {{---Bootstrap 3.3.6 --}}
     <script src="/templejt/admin-lte-v233/bootstrap/js/bootstrap.min.js"></script>
-    {{-- FastClick --}}
+    {{---FastClick--}}
     <script src="/templejt/admin-lte-v233/plugins/fastclick/fastclick.js"></script>
-    {{-- AdminLTE App --}}
+    {{---AdminLTE App--}}
     <script src="/templejt/admin-lte-v233/js/app.min.js"></script>
-    {{-- Sparkline --}}
+    {{---Sparkline--}}
     <script src="/templejt/admin-lte-v233/plugins/sparkline/jquery.sparkline.min.js"></script>
-    {{-- jvectormap --}}
+    {{---jvectormap--}}
     <script src="/templejt/admin-lte-v233/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
     <script src="/templejt/admin-lte-v233/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
-    {{-- SlimScroll 1.3.0 --}}
+    {{---SlimScroll 1.3.0--}}
     <script src="/templejt/admin-lte-v233/plugins/slimScroll/jquery.slimscroll.min.js"></script>
-    {{-- ChartJS 1.0.1 --}}
+    {{---ChartJS 1.0.1--}}
     <script src="/templejt/admin-lte-v233/plugins/chartjs/Chart.min.js"></script>
-    {{-- AdminLTE for demo purposes --}}
+    {{---AdminLTE for demo purposes--}}
     <script src="/templejt/admin-lte-v233/js/demo.js"></script>
     @yield('end-script')
 </body>

@@ -233,7 +233,7 @@
                             Demo
                         </div>
                         <div class="card-block">
-                            <p class="card-title">U demo okruženju i isprobajte punu funkcionalnost.</p>
+                            <p class="card-title">U demo okruženju isprobajte punu funkcionalnost.</p>
                             <h4 class="card-text">
                                 <sup class="pricing-box-currency">&euro;</sup>
                                 <span class="pricing-box-price">0</span>
