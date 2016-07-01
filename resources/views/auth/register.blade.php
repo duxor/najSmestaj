@@ -1,6 +1,6 @@
 <?php if(!isset($korisnik)) $korisnik=null; ?>
 <?php if(!isset($objekat)) $objekat=null; ?>
-@extends('layouts.jovic')
+@extends('master')
 <style>
     .img-rounded {
         cursor: pointer;

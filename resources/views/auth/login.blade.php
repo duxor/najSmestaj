@@ -1,4 +1,4 @@
-@extends('layouts.jovic')
+@extends('master')
 @section('body')
 <div class="container">
     <div class="row">
