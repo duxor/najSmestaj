@@ -9,7 +9,14 @@
     <meta name="keywords" content="smaštaj, hotel, hostel, sobe, najsmestaj">
     <meta name="theme-color" content="#663fb5">
     <script src="/templejt/master/js/jquery.min.js"></script>
+
+
+
+
+
+    <link rel="stylesheet" href="/css/glyphicons-alerts.min.css">
     <link rel="stylesheet" href="/templejt/master/css/style.css">
+
 </head>
 <body>
     {{---NAVIGACIJA::START--}}

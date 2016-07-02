@@ -16,6 +16,12 @@ class KreiranjeBaze extends Migration{
             $table->string('token')->index();
             $table->timestamp('created_at');
         });
+        Schema::create('grad',function(Blueprint $table){
+            $table->bigIncrements('id');
+            $table->string('naziv', 45);
+            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->nullable();
+        });
         Schema::create('korisnik', function(Blueprint $table){
             $table->bigIncrements('id');
             $table->string('ime', 45)->nullable();
@@ -28,6 +34,8 @@ class KreiranjeBaze extends Migration{
             $table->string('telefon',45)->nullable();
             $table->unsignedBigInteger('prava_pristupa_id')->default(2);
             $table->foreign('prava_pristupa_id')->references('id')->on('prava_pristupa');
+            $table->unsignedBigInteger('grad_id')->default(1);
+            $table->foreign('grad_id')->references('id')->on('grad');
             $table->boolean('confirmed')->default(0);
             $table->string('confirmation_code')->nullable();
             $table->rememberToken();
@@ -41,12 +49,6 @@ class KreiranjeBaze extends Migration{
             $table->timestamp('updated_at')->nullable();
         });
         Schema::create('vrsta_objekta',function(Blueprint $table){
-            $table->bigIncrements('id');
-            $table->string('naziv', 45);
-            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->timestamp('updated_at')->nullable();
-        });
-        Schema::create('grad',function(Blueprint $table){
             $table->bigIncrements('id');
             $table->string('naziv', 45);
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
@@ -143,10 +145,10 @@ class KreiranjeBaze extends Migration{
         Schema::drop('vrsta_kapaciteta');
         Schema::drop('vrsta_smestaja');
         Schema::drop('objekat');
-        Schema::drop('grad');
         Schema::drop('vrsta_objekta');
         Schema::drop('templejt');
         Schema::drop('korisnik');
+        Schema::drop('grad');
         Schema::drop('prava_pristupa');
     }
 }

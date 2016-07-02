@@ -24,9 +24,7 @@ use App\Funkcije;
 
 class PretragaC extends Controller
 {
-    
     public function getIndex(){
-
         return view('pretraga');
     }
     public function postIndex(){
@@ -52,16 +50,18 @@ class PretragaC extends Controller
         if(Input::get('broj_osoba')){
             $query->where('vrsta_kapaciteta.id','>=',Input::get('broj_osoba'));
         }
+        $gradovi=Grad::lists('naziv','id');
         if(Input::get('datum_prijave')!== ''&& Input::get('datum_odjave')!== ''){
             $datum_prijave= Input::get('datum_prijave');
             $datum_odjave= Input::get('datum_odjave');
-            $smestaj = $query->get(['smestaj.id','objekat.naziv as naziv_objekta','vrsta_smestaja.naziv as naziv_smestaja','vrsta_kapaciteta.naziv as naziv_kapaciteta','smestaj.dodaci','like.id as zelja'])->toArray();
+            $smestaj = $query->get(['smestaj.id','objekat.naziv as naziv_objekta','vrsta_smestaja.naziv as naziv_smestaja','vrsta_kapaciteta.naziv as naziv_kapaciteta','smestaj.vrsta_kapaciteta_id as broj_osoba','smestaj.dodaci','like.id as zelja'])->toArray();
             $smestaj= Funkcije::dostupnostZaRezervaciju($smestaj,$datum_prijave,$datum_odjave);
-            return view('pretraga')->with(['smestaj'=>$smestaj])->with(['korisnik'=>$korisnik]);
+            return view('pretraga')->with(['smestaj'=>$smestaj])->with(['korisnik'=>$korisnik,'gradovi'=>$gradovi]);
         }else{
             $smestaj = $query->get(['smestaj.id','objekat.naziv as naziv_objekta','vrsta_smestaja.naziv as naziv_smestaja',
-                'vrsta_kapaciteta.naziv as naziv_kapaciteta','smestaj.dodaci','like.id as zelja'])->toArray();
-            return view('pretraga')->with(['smestaj'=>$smestaj,'korisnik'=>$korisnik]);
+                'vrsta_kapaciteta.naziv as naziv_kapaciteta','smestaj.vrsta_kapaciteta_id as broj_osoba','smestaj.dodaci','like.id as zelja'])->toArray();
+            $gradovi=Grad::lists('naziv','id');
+            return view('pretraga')->with(['smestaj'=>$smestaj,'korisnik'=>$korisnik,'gradovi'=>$gradovi]);
         }
     }
     public function postLike(){
@@ -122,57 +122,49 @@ class PretragaC extends Controller
             }
         }
     }
-    public function postRegister(Request $request){
-        $validator = Validator::make($request->all(), [
+    public function postRegister(){
+        $validator = Validator::make(Input::all(), [
             'ime' => 'required|min:3|max:255',
             'prezime' => 'required|min:3|max:255',
+            'email' => 'required|email',
             'password' => 'required|confirmed|min:6|max:255',
-            'password_confirmation' => 'required|min:3',
-            'email' => 'required|email|max:255|unique:korisnik',
+            'password_confirmation' => 'required|min:6|max:255',
             'telefon'=>'required'
         ],
             [
                 'ime.required'=>'Ime je obavezno za unos.',
                 'ime.min'=>'Minimalna dužina je :min.',
                 'ime.max'=>'Maksimalna dužina je :max.',
-
-                'prezime.required'=>'Ime je obavezno za unos.',
+                'prezime.required'=>'Prezime je obavezno za unos.',
                 'prezime.min'=>'Minimalna dužina je :min.',
                 'prezime.max'=>'Maksimalna dužina je :max.',
-                //password
                 'password.required'=>'Korisnička šifra je obavezna za unos.',
                 'password.min'=>'Minimalna dužina korisničke šifre je :min.',
                 'password.max'=>'Maksimalna dužina korisničke šifre je :max.',
                 'password.confirmed'=>'Unesene šifre se ne poklapaju.',
-                //pass_conf
-                'password_confirmation.required'=>'Korisnička šifra je obavezna za unos.',
-                'password_confirmation.min'=>'Minimalna dužina korisničke šifre je :min.',
-                //email
+                'password.max'=>'Maksimalna dužina korisničke šifre je :max.',
+                'password_confirmation.required'=>'Potvrda korisničke šifra je obavezna.',
                 'email.required'=>'E-mail je obavezan za unos.',
-                'email.email'=>'Pogrešno unesen e-mail.',
-                'email.unique'=>'Navedeni e-mail je u upotrebi.',
-                'email.max'=>'Maksimalna dužina e-mail-a je :max.',
-                //
+                'email.email'=>'Unesite ispravnu E-mail adresu.',
                 'telefon.required'=>'Telefon je obavezan za unos.',
             ]);
         if($validator->fails()){
             return json_encode(['neuspesno'=>'Neuspešna registracija!','validator'=>$validator->errors()->all()]);
         } else{
             $user=User::create([
-                'ime'=>$request['prezime'],
-                'prezime'=>$request['ime'],
-                'username' => $request['username'],
-                'password' => bcrypt($request['password']),
-                'email' => $request['email'],
-                'adresa'=>$request['adresa'],
-                'telefon'=>$request['telefon'],
+                'ime'=>Input::get('prezime'),
+                'prezime'=>Input::get('ime'),
+                'username' => Input::get('username'),
+                'password' => bcrypt(Input::get('password')),
+                'email' => Input::get('email'),
+                'adresa'=>Input::get('adresa'),
+                'telefon'=>Input::get('telefon'),
                 'prava_pristupa_id'=>2,
+                'grad_id'=>Input::get('grad')
             ]);
-
             $korisnik=User::where('id', $user->id)->get()->toArray();
             return  json_encode(['uspesno'=>'Usešna prijava!','korisnik'=>$korisnik]);
         }
-
     }
     public function postRezervisi(Request $request){
         if(!Auth::check()){
@@ -190,7 +182,5 @@ class PretragaC extends Controller
             ]);
             return  json_encode(['uspesno'=>'Uspešna rezervacija!']);
         }
-
-
     }
 }
