@@ -14,45 +14,45 @@ use App\Like;
 
 class KonfiguracioniPodaci extends Seeder{
     public function run(){
-          Grad::insert([
-              ['naziv'=>'Kraljevo'],
-              ['naziv'=>'Beograd'],
-              ['naziv'=>'Vranje'],
-          ]);
+        Grad::insert([
+            ['naziv' => 'Kraljevo'],
+            ['naziv' => 'Beograd'],
+            ['naziv' => 'Vranje'],
+        ]);
         Templejt::insert([
-            ['naziv'=>'Osnovni izgled']
+            ['naziv' => 'Osnovni izgled']
         ]);
         PravaPristupa::insert([
-            ['naziv'=>'Blokiran'],
-            ['naziv'=>'Korisnik smeštaja'],
-            ['naziv'=>'Poslovođa'],
-            ['naziv'=>'Vlasnik privatnog smeštaja'],
-            ['naziv'=>'Vlasnik firme']
+            ['naziv' => 'Blokiran'],
+            ['naziv' => 'Korisnik smeštaja'],
+            ['naziv' => 'Poslovođa'],
+            ['naziv' => 'Vlasnik privatnog smeštaja'],
+            ['naziv' => 'Vlasnik firme']
         ]);
-         VrstaObjekta::insert([
-            ['naziv'=>'Privatni smeštaj'],
-            ['naziv'=>'Motel'],
-            ['naziv'=>'Hostel'],
-            ['naziv'=>'Hotel']
+        VrstaObjekta::insert([
+            ['naziv' => 'Privatni smeštaj'],
+            ['naziv' => 'Motel'],
+            ['naziv' => 'Hostel'],
+            ['naziv' => 'Hotel']
         ]);
-           VrstaSmestaja::insert([
-            ['naziv'=>'Soba'],
-            ['naziv'=>'Apartman'],
-            ['naziv'=>'Stan']
+        VrstaSmestaja::insert([
+            ['naziv' => 'Soba'],
+            ['naziv' => 'Apartman'],
+            ['naziv' => 'Stan']
         ]);
         VrstaKapaciteta::insert([
-            ['naziv'=>'Za jednu osobu'],
-            ['naziv'=>'Za dve osobe'],
-            ['naziv'=>'Za tri osobe'],
-            ['naziv'=>'Za četiri osobe'],
-            ['naziv'=>'Za pet osoba'],
-            ['naziv'=>'Za šest osoba'],
-            ['naziv'=>'Za sedam osoba'],
-            ['naziv'=>'Za osam osoba'],
-            ['naziv'=>'Za devet osoba'],
-            ['naziv'=>'Za deset osoba'],
-            ['naziv'=>'Za jedanaest osoba'],
-            ['naziv'=>'Za dvanaest osoba']
+            ['naziv' => 'Za jednu osobu',     'broj_osoba' => 1],
+            ['naziv' => 'Za dve osobe',       'broj_osoba' => 2],
+            ['naziv' => 'Za tri osobe',       'broj_osoba' => 3],
+            ['naziv' => 'Za četiri osobe',    'broj_osoba' => 4],
+            ['naziv' => 'Za pet osoba',       'broj_osoba' => 5],
+            ['naziv' => 'Za šest osoba',      'broj_osoba' => 6],
+            ['naziv' => 'Za sedam osoba',     'broj_osoba' => 7],
+            ['naziv' => 'Za osam osoba',      'broj_osoba' => 8],
+            ['naziv' => 'Za devet osoba',     'broj_osoba' => 9],
+            ['naziv' => 'Za deset osoba',     'broj_osoba' => 10],
+            ['naziv' => 'Za jedanaest osoba', 'broj_osoba' => 11],
+            ['naziv' => 'Za dvanaest osoba',  'broj_osoba' => 12]
         ]);
       
     }

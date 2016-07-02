@@ -1,5 +1,11 @@
 <?php
 
+/*
+ * Kontroler PreyenterC koristi se za prezentovanje podataka određenog objekta
+ * Podaci o objektu/smještaju se pripremaju i prosleđuju izabranom templejtu
+ *
+ * */
+
 namespace App\Http\Controllers;
 
 use App\Objekat;
@@ -14,8 +20,5 @@ class PrezenterC extends Controller{
         if(method_exists($this,$slug)) return $this->$slug();
         if(!sizeof($podaci=Objekat::where('slug',$slug)->get()->first())) return view('errors.503');
         return view($slug2?'smestaj':'objekat')->with(compact('podaci'));
-    }
-    public function test(){
-        
     }
 }

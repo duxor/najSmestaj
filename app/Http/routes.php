@@ -17,10 +17,19 @@ Route::get('/newsletter',function(){
 Route::get('/kontakt',function(){
     return json_encode(['check'=>1,'poruka'=>'Uspešno ste poslali poruku!']);
 });
+Route::get('/after-login',function(){
+    switch(Auth::user()->prava_pristupa_id){
+        case 2: return redirect('/profil'); break;
+        case 4: return redirect('/privatni'); break;
+        case 5: return redirect('/administration'); break;
+        default: return redirect('/');
+    }
+});
 Route::auth();
 Route::controller('/administration','AdminC');
 Route::controller('/management ','ManagerC');
 Route::controller('/profil','ProfilC');
+Route::controller('/privatni','PrivatnikC');
 Route::controller('/pretraga','PretragaC');
 
 Route::get('register/verify/{confirmationCode}','Auth\AuthController@confirm');

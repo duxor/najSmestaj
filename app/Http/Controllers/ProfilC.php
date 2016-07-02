@@ -1,5 +1,8 @@
 <?php
-/*Kontroller ProfilC sadrži funkcije potrebne za korisnika koji traži smještaj */
+/*
+ * Kontroller ProfilC sadrži funkcije potrebne za korisnika koji traži smještaj 
+ *
+ * */
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -9,16 +12,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class ProfilC extends Controller
-{
+class ProfilC extends Controller{
     public function __construct(){
-        $this->middleware('PravaPristupaMid:5,1');
+        $this->middleware('PravaPristupaMid:2,1');
     }
-    
     public function getIndex(){
         return view('korisnik.index');
     }
-
     public function getListaZelja(){
         $liste_zelja =  DB::table('like')
             ->join('smestaj', 'like.smestaj_id','=','smestaj.id')

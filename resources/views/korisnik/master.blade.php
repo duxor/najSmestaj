@@ -184,18 +184,14 @@
                             <i class="fa fa-dashboard"></i> <span>Pregled</span></i>
                         </a>
                     </li>
-                    {{---TEST--}}
-                    <li{{Request::is('*/objekat')?' class=active ':''}}>
-                        <a href="/{{$root}}/test">
-                            <i class="fa fa-suitcase"></i> <span>TEST</span>
-                        </a>
-                    </li>
-                    <li{{Request::is('/profil/lista-zelja')?' class=active ':''}}>
+                    {{---LISTA-ZELJA--}}
+                    <li{{Request::is('*/lista-zelja')?' class=active ':''}}>
                         <a href="/{{$root}}/lista-zelja">
                             <i class="fa fa-suitcase"></i> <span>Lista zelja</span>
                         </a>
                     </li>
-                    <li{{Request::is('/profil/rezervacije')?' class=active ':''}}>
+                    {{---REZERVACIJE--}}
+                    <li{{Request::is('*/rezervacije')?' class=active ':''}}>
                         <a href="/{{$root}}/rezervacije">
                             <i class="fa fa-suitcase"></i> <span>Rezervacije</span>
                         </a>

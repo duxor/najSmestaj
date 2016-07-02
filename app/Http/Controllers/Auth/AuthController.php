@@ -39,9 +39,8 @@ class AuthController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
-    protected $redirectPath = '/administration';
-    protected $redirectAfterLogout = '/login';
+    protected $redirectTo = '/after-login';
+    protected $redirectAfterLogout = '/';
 
 
     /**
@@ -59,7 +58,7 @@ class AuthController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-   protected function validator(array $data){
+    protected function validator(array $data){
 
        $podaci_korisnik = [
            'ime' => 'required|min:3|max:255',
@@ -212,7 +211,15 @@ class AuthController extends Controller
         $user->save();
         return Redirect::to('/login')->withErrors( 'Uspešno ste se registrovali.Idite na dugme PRIJAVA');
     }
-
+    
+    protected function validateLogin(Request $request){
+        $this->validate($request, [
+            $this->loginUsername() => 'required|email', 'password' => 'required',
+        ],[
+            $this->loginUsername().'.required' => 'Email je obavezan za unos!',
+            $this->loginUsername().'.email' => 'Email nije validan!'
+        ]);
+    }
 }
 
 

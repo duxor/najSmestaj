@@ -1,5 +1,9 @@
 <?php
-/*Kontroller AdminC sadrži funkcije koje se koriste za administraciju platforme*/
+/*
+ * Kontroller AdminC sadrži funkcije koje se koriste za administraciju platforme
+ * namijenjene vlasnicima objekata i smještaja
+ *
+ * */
 namespace App\Http\Controllers;
 
 use App\Grad;

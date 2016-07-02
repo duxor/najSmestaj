@@ -74,7 +74,7 @@
                             <a href="#" class="dropdown-item text-uppercase">Uputstvo za korištenje</a>
                             <a href="#" class="dropdown-item text-uppercase">Uslovi korištenja</a>
                             <a href="#" class="dropdown-item text-uppercase" data-toggle="modal" data-target="#kontaktModal">Piši nam!</a>
-                            @if($check=Auth::check())
+                            @if(!$check=Auth::check())
                                 <a href="/login" class="dropdown-item text-uppercase text-muted">Log in</a>
                             @else
                                 <a href="/logout" class="dropdown-item text-uppercase text-muted">Log out</a>
@@ -98,7 +98,7 @@
                 <a href="#" class="dropdown-item text-uppercase">Uputstvo za korištenje</a>
                 <a href="#" class="dropdown-item text-uppercase">Uslovi korištenja</a>
                 <a href="#" class="dropdown-item text-uppercase" data-toggle="modal" data-target="#kontaktModal">Piši nam!</a>
-                @if($check)
+                @if(!$check)
                     <a href="/login" class="dropdown-item text-uppercase text-muted">Log in</a>
                     @else
                     <a href="/logout" class="dropdown-item text-uppercase text-muted">Log out</a>

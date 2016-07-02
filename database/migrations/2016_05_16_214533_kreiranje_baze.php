@@ -5,7 +5,6 @@ use Illuminate\Database\Migrations\Migration;
 
 class KreiranjeBaze extends Migration{
     public function up(){
-
         Schema::create('prava_pristupa', function(Blueprint $table){
             $table->bigIncrements('id');
             $table->string('naziv', 45)->unique();
@@ -53,7 +52,6 @@ class KreiranjeBaze extends Migration{
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->nullable();
         });
-
         Schema::create('objekat',function(Blueprint $table){
             $table->bigIncrements('id');
             $table->unsignedBigInteger('korisnik_id');
@@ -85,7 +83,8 @@ class KreiranjeBaze extends Migration{
         });
         Schema::create('vrsta_kapaciteta',function(Blueprint $table){
             $table->bigIncrements('id');
-            $table->string('naziv', 45);
+            $table->string('naziv', 45)->nullable();
+            $table->tinyInteger('broj_osoba')->nullable();
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->nullable();
         });

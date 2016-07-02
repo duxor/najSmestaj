@@ -48,6 +48,19 @@
                                         <a class="btn btn-link" href="{{ url('/password/reset') }}">Zaboravili ste Vašu šifru?</a>
                                     </div>
                                 </div>
+                                {{---TEST-ACCESS::START--}}
+                                <div class="form-group">
+                                    <button type="button" onclick="podaci('dusan.perisic@test.com','admin')">Korisnik smeštaja</button>
+                                    <button type="button" onclick="podaci('milos.milosevic@test.com','admin')">Vlasnik privatnog smeštaja</button>
+                                    <button type="button" onclick="podaci('marko.markovic@test.com','admin')">Vlasnik firme</button>
+                                    <script>
+                                        function podaci(email, pass){
+                                            $('[name=email]').val(email);
+                                            $('[name=password]').val(pass);
+                                        }
+                                    </script>
+                                </div>
+                                {{---test-access::end--}}
                             </form>
                         </div>
                     </div>

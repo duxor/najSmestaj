@@ -176,7 +176,7 @@
                         </a>
                     </li>
                     {{---OBJEKTI--}}
-                    <li{{Request::is('*/objekat')?' class=active ':''}}>
+                    <li{{Request::is('*/objekti')?' class=active ':''}}>
                         <a href="/{{$root}}/objekti">
                             <i class="fa fa-suitcase"></i> <span>Objekti</span>
                         </a>
@@ -188,13 +188,13 @@
                         </a>
                     </li>
                     {{---SMESTAJI--}}
-                    <li{{Request::is('*/objekat')?' class=active ':''}}>
+                    <li{{Request::is('*/smestaji')?' class=active ':''}}>
                         <a href="/{{$root}}/smestaji">
                             <i class="fa fa-suitcase"></i> <span>Smeštaji</span>
                         </a>
                     </li>
                     {{---DODAJ SMESTAJE--}}
-                    <li{{Request::is('*/objekat')?' class=active ':''}}>
+                    <li{{Request::is('*/smestaj')?' class=active ':''}}>
                         <a href="/{{$root}}/smestaj">
                             <i class="fa fa-suitcase"></i> <span>Dodaj smeštaj</span>
                         </a>
