@@ -50,12 +50,13 @@ class PretragaC extends Controller
         if(Input::get('broj_osoba')){
             $query->where('vrsta_kapaciteta.id','>=',Input::get('broj_osoba'));
         }
+        $gradovi=Grad::lists('naziv','id');
         if(Input::get('datum_prijave')!== ''&& Input::get('datum_odjave')!== ''){
             $datum_prijave= Input::get('datum_prijave');
             $datum_odjave= Input::get('datum_odjave');
             $smestaj = $query->get(['smestaj.id','objekat.naziv as naziv_objekta','vrsta_smestaja.naziv as naziv_smestaja','vrsta_kapaciteta.naziv as naziv_kapaciteta','smestaj.vrsta_kapaciteta_id as broj_osoba','smestaj.dodaci','like.id as zelja'])->toArray();
             $smestaj= Funkcije::dostupnostZaRezervaciju($smestaj,$datum_prijave,$datum_odjave);
-            return view('pretraga')->with(['smestaj'=>$smestaj])->with(['korisnik'=>$korisnik]);
+            return view('pretraga')->with(['smestaj'=>$smestaj])->with(['korisnik'=>$korisnik,'gradovi'=>$gradovi]);
         }else{
             $smestaj = $query->get(['smestaj.id','objekat.naziv as naziv_objekta','vrsta_smestaja.naziv as naziv_smestaja',
                 'vrsta_kapaciteta.naziv as naziv_kapaciteta','smestaj.vrsta_kapaciteta_id as broj_osoba','smestaj.dodaci','like.id as zelja'])->toArray();
