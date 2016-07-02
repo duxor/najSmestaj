@@ -190,6 +190,16 @@
                             <i class="fa fa-suitcase"></i> <span>TEST</span>
                         </a>
                     </li>
+                    <li{{Request::is('/profil/lista-zelja')?' class=active ':''}}>
+                        <a href="/{{$root}}/lista-zelja">
+                            <i class="fa fa-suitcase"></i> <span>Lista zelja</span>
+                        </a>
+                    </li>
+                    <li{{Request::is('/profil/rezervacije')?' class=active ':''}}>
+                        <a href="/{{$root}}/rezervacije">
+                            <i class="fa fa-suitcase"></i> <span>Rezervacije</span>
+                        </a>
+                    </li>
                 </ul>
                 {{---glavni-meni::end--}}
             </section>
