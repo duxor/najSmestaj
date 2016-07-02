@@ -33,7 +33,7 @@
 
 
 
-
+    <link rel="stylesheet" href="/css/glyphicons-alerts.min.css">
     <link rel="stylesheet" href="/templejt/master/css/style.css">
 
 
