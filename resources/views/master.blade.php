@@ -1,22 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sr">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>najSmeštaj</title>
-    <meta name="description" content="Platforma za brzo i lako kreiranje lične web prezentacije i reklamiranje Vašeg smeštaja. U samo nekoliko koraka registrujte se i iskoristite naš promotivni period testiranja platforme.">
+    <meta name="description" content="Platforma za brzo i lako kreiranje lične web prezentacije i reklamiranje smeštaja. U samo nekoliko koraka registrujte se i iskoristite besplatan probni period">
     <meta name="keywords" content="smaštaj, hotel, hostel, sobe, najsmestaj">
     <meta name="theme-color" content="#663fb5">
     <script src="/templejt/master/js/jquery.min.js"></script>
-
-
-
-
-
     <link rel="stylesheet" href="/css/glyphicons-alerts.min.css">
     <link rel="stylesheet" href="/templejt/master/css/style.css">
-
 </head>
 <body>
     {{---NAVIGACIJA::START--}}
@@ -210,9 +204,15 @@
             })
         })
     </script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
+        ga('create', 'UA-80215552-1', 'auto');
+        ga('send', 'pageview');
 
-
-
+    </script>
 </body>
 </html>
