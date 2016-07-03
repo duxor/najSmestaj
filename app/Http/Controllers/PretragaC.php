@@ -25,7 +25,23 @@ use App\Funkcije;
 class PretragaC extends Controller
 {
     public function getIndex(){
-        return view('pretraga');
+        if(Auth::check()){
+            $korisnik=User::where('id',Session::get('id'))->get()->toArray();
+        }else $korisnik=null;
+        $gradovi=Grad::lists('naziv','id');
+        $query=Smestaj::join('objekat','objekat.id','=','smestaj.objekat_id')
+            //->leftJoin('rezervacija','rezervacija.smestaj_id','=','smestaj.id')
+            ->join('grad','grad.id','=','objekat.grad_id')
+            ->join('vrsta_kapaciteta','vrsta_kapaciteta.id','=','smestaj.vrsta_kapaciteta_id')
+            ->join('vrsta_smestaja','vrsta_smestaja.id','=','smestaj.vrsta_smestaja_id')
+            ->leftJoin('like',function($query){
+                $query->on('like.smestaj_id','=','smestaj.id')
+                    ->where('like.korisnik_id','=',Session::get('id'))->where('like.aktivan','=',1);
+            });
+        $smestaj = $query->get(['smestaj.id','objekat.naziv as naziv_objekta','vrsta_smestaja.naziv as naziv_smestaja',
+            'vrsta_kapaciteta.naziv as naziv_kapaciteta','smestaj.vrsta_kapaciteta_id as broj_osoba','smestaj.dodaci','like.id as zelja'])->toArray();
+
+        return view('pretraga')->with(['smestaj'=>$smestaj,'korisnik'=>$korisnik,'gradovi'=>$gradovi]);
     }
     public function postIndex(){
         if(Auth::check()){
@@ -129,7 +145,7 @@ class PretragaC extends Controller
             'email' => 'required|email',
             'password' => 'required|confirmed|min:6|max:255',
             'password_confirmation' => 'required|min:6|max:255',
-            'telefon'=>'required'
+            'telefon'=>'required|numeric'
         ],
             [
                 'ime.required'=>'Ime je obavezno za unos.',
@@ -147,6 +163,7 @@ class PretragaC extends Controller
                 'email.required'=>'E-mail je obavezan za unos.',
                 'email.email'=>'Unesite ispravnu E-mail adresu.',
                 'telefon.required'=>'Telefon je obavezan za unos.',
+                'telefon.numeric'=>'Telefon mora biti broj.',
             ]);
         if($validator->fails()){
             return json_encode(['neuspesno'=>'Neuspešna registracija!','validator'=>$validator->errors()->all()]);
@@ -170,7 +187,7 @@ class PretragaC extends Controller
         if(!Auth::check()){
             return  json_encode(['validator'=>'Prvo se ulogujte!!!']);
         }
-        if($request['datum_prijave']=='' || $request['datum_odjave']==''){
+        if(Input::get('datum_prijave')=='' || Input::get('datum_odjave')==''){
             return  json_encode(['validator'=>'Izaberite datum prijave i odjave!']);
         }else{
             $rezervacija=Rezervacija::create([

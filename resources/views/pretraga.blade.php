@@ -1,15 +1,10 @@
 <?php
     if(!isset($korisnik[0]['ime']))$korisnik[0]['ime']=null;
     if(!isset($korisnik[0]['prezime']))$korisnik[0]['prezime']=null;
-    if(!isset($korisnik[0]['username']))$korisnik[0]['username']=null;
     if(!isset($korisnik[0]['email']))$korisnik[0]['email']=null;
 ?>
-
-
-
 @extends('master')
 @section('body')
-
 <div class="container-fluid">
     <div class=" col-sm-3">
         {!!Form::open(['url'=>'/pretraga','class'=>'form-horizontal pretragaForm'])!!}
@@ -26,12 +21,12 @@
             {{---DATUM-PRIJAVE--}}
             <div class="form-group has-icon-left form-control-email">
                 <label class="sr-only" for="inputPrijava">Datum prijave</label>
-                <input type="text" class="form-control form-control-lg" id="inputPrijava" placeholder="Datum prijave" name="datum_prijave">
+                <input type="text" class="form-control form-control-lg" id="inputPrijava" placeholder="Datum prijave" name="datum_prijave1">
             </div>
             {{---DATUM-ODJAVE--}}
             <div class="form-group has-icon-left form-control-email">
                 <label class="sr-only" for="inputOdjava">Datum prijave</label>
-                <input type="text" class="form-control form-control-lg" id="inputOdjava" placeholder="Datum odjave" name="datum_odjave">
+                <input type="text" class="form-control form-control-lg" id="inputOdjava" placeholder="Datum odjave" name="datum_odjave1">
             </div>
             {{---BOJ-OSOBA--}}
             <div class="form-group has-icon-left form-control-name">
@@ -205,28 +200,19 @@ pointer;font-weight: bold;font-size:40px;top:-10px">&times;</span>
                                             </script>
                                         </div>
                                     </div>
+                                    <div class="row">
                                     <div id="imam_nalog" >
                                         <div class="row">
                                             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                                                 <label class="col-md-4 control-label">E-Mail Address</label>
                                                 <div class="col-md-6">
                                                     <input type="email" class="form-control" name="email" value="{{ old('email') }}">
-                                                    @if ($errors->has('email'))
-                                                        <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                                    @endif
                                                 </div>
                                             </div>
                                             <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                                                 <label class="col-md-4 control-label">Password</label>
                                                 <div class="col-md-6">
                                                     <input type="password" class="form-control" name="password">
-                                                    @if ($errors->has('password'))
-                                                        <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                                    @endif
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -291,7 +277,7 @@ pointer;font-weight: bold;font-size:40px;top:-10px">&times;</span>
 
                                         });
                                     </script>
-                                    <div id="reg" >
+                                    <div id="reg">
                                         <div class="col-sm-12 ">{!!Form::label('ime', 'Ime:')!!}</div>
                                         <div class="col-sm-12 form-group">{!!Form::text('ime',null,['class'=>'form-control','placeholder'=>'Unesite ime'])!!}</div>
 
@@ -377,7 +363,7 @@ pointer;font-weight: bold;font-size:40px;top:-10px">&times;</span>
                                             });
                                         });
                                     </script>
-                                </div>
+                                </div></div>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -385,15 +371,14 @@ pointer;font-weight: bold;font-size:40px;top:-10px">&times;</span>
                                 {!! Form::button('<span class="glyphicon glyphicon-remove"></span> Otkaži',['class'=>'btn btn-lg btn-warning','data-dismiss'=>'modal']) !!}
                                 {!! Form::button('<span class="glyphicon glyphicon-ok"></span> Rezerviši',['id'=>'rezervisi','class'=>'btn btn-lg btn-success' ]) !!}
                             </div>
-
                         </div>
                         <script>
                             $('#rezervisi').on('click', function(event) {
                                 $.post('/pretraga/rezervisi',
                                         {
                                             _token:'{{csrf_token()}}',
-                                            datum_prijave:$('input[name=datum_prijave]').val(),
-                                            datum_odjave:$('input[name=datum_odjave]').val(),
+                                            datum_prijave: $('#inputPrijava1').val(),
+                                            datum_odjave: $('#inputOdjava1').val(),
                                             broj_osoba:$('#brojosoba').val(),
                                             id_smestaja:$('#id_smestaja').val(),
                                         },function(data){
@@ -464,20 +449,6 @@ pointer;font-weight: bold;font-size:40px;top:-10px">&times;</span>
                     );
                 });
             </script>
-
-
-
-
     </div>
 </div>
-
-
-
-
-
-
-
-
-
-
 @endsection
