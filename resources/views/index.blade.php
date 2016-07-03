@@ -8,14 +8,14 @@
             <li data-target="#landioCarousel" data-slide-to="1"></li>
         </ol>
         <div class="carousel-inner" role="listbox">
-            <div class="carousel-item active" style="background-image: url(/templejt/master/img/d3.jpg);">
+            <div class="carousel-item active b1">
                 <div class="carousel-caption">
-                    <h1 class="display-3">Brzo i lako kreirajte ličnu web prezentaciju sa brojnim mogućnostima</h1>
+                    <h1 class="display-3">Brzo i lako kreirajte ličnu web prezentaciju za Vaš smeštaj{{--sa brojnim mogućnostima--}}</h1>
                     <h2 class="m-b-3 hidden-sm-down">Ako imate <em>svoj smeštaj</em> registrujte se i u samo 5 minuta kreirajte Vaš sajt!</h2>
                     <a class="btn btn-secondary-outline m-b-2" data-target="#landioCarousel" data-slide-to="1"><span class="pull-xs-left icon-search"></span>Tražim smeštaj!</a>
                 </div>
             </div>
-            <div class="carousel-item" style="background-image: url(/templejt/master/img/d4.jpg);">
+            <div class="carousel-item b2">
                 {!!Form::open(['url'=>'/pretraga','class'=>'form-horizontal pretragaForm'])!!}
                 <div class="carousel-caption">
                     <h1 class="display-3">Pronađi smeštaj po meri!</h1>
@@ -48,7 +48,7 @@
                         </div>
                     </div>
                     <div class="col-sm-3 tagovi">
-                        <h2>Svrha</h2>
+                        <h2>Svrha putovanja</h2>
                         <div class="form-group">
                             <label class="c-input c-checkbox">
                                 <input type="checkbox" data-tag="#turizam">
@@ -75,7 +75,7 @@
                         </div>
                     </div>
                     <div class="col-sm-3 dodaci">
-                        <h2>Dodaci</h2>
+                        <h2>Dodaci za smeštaj</h2>
                         <div class="form-group">
                             <label class="c-input c-checkbox">
                                 <input type="checkbox" data-dodatak="bazen">
@@ -121,9 +121,9 @@
     {{---WEB-PLATFORMA::START--}}
     <section id="web-platforma" class="section-intro bg-faded text-xs-center">
         <div class="container">
-            <h3 class="wp wp-1">Ne morate biti programer da biste kreirali web aplikaciju!</h3>
+            <h3 class="wp wp-1">Ne morate biti programer da biste kreirali web aplikaciju za Vaš smeštaj!</h3>
             <p class="wp wp-2">što predstavlja <b>novitet</b> u web okruženju i <b>pomera granice</b> modernog poslovanje</p>
-            <img src="/templejt/master/img/mock.png" alt="iPad mock" class="img-fluid wp wp-3">
+            <img src="/templejt/master/img/mock.jpg" height="100%" width="100%" alt="iPad mock" class="img-fluid wp wp-3">
         </div>
     </section>
     {{---web-platforma::end--}}
@@ -148,7 +148,7 @@
                             <span class="icon-thunderbolt display-1"></span>
                             <h4 class="card-title">Rezervacije</h4>
                             <h6 class="card-subtitle text-muted">Putem Vašeg sajta</h6>
-                            <p class="card-text">Uključite opciju <u>rezervacije putem sajta</u> i imajte uvid u stanje vaših smeštaja gde god da se nalazite, a sistem će da Vam omogući pregled <b>statističkih</b> podataka, radi donošenja ispravnih <b>odluka</b>.</p>
+                            <p class="card-text">Uključite opciju <span class="u">rezervacije putem sajta</span> i imajte uvid u stanje vaših smeštaja gde god da se nalazite, a sistem će da Vam omogući pregled <b>statističkih</b> podataka, radi donošenja ispravnih <b>odluka</b>.</p>
                         </div>
                     </div>
                 </div>
@@ -208,7 +208,7 @@
             <a id="youtube-trigger" class="icon-play-button" href="#" data-toggle="modal" data-target="#youtubeModal" data-video="https://www.youtube.com/v/X9dsXjIyyrI">
                 <span class="icon-play"></span>
             </a>
-            <img class="img-fluid img-fluid-custom" src="/templejt/master/img/v3.jpg" alt="Video poster">
+            <img class="img-fluid img-fluid-custom" src="/templejt/master/img/v3.jpg" width="100%" height="100%" alt="Video poster za smeštaje">
         </figure>
     </section>
     <div class="modal fade" id="youtubeModal" tabindex="-1" role="dialog" aria-labelledby="youtubeModal" aria-hidden="true">
@@ -304,7 +304,7 @@
                 <div class="carousel-inner" role="listbox">
                     <div class="carousel-item active">
                         <blockquote class="blockquote">
-                            <img src="/templejt/master/img/dusan-perisic.jpg" height="80" width="80" alt="Avatar"
+                            <img src="/templejt/master/img/dusan-perisic.jpg" height="80" width="80" alt="Tim smeštaja - foto"
                                  class="img-circle">
                             <p class="h3">Izgradili smo sistem prilagodljiv tipu korisnika i spojili prezentacioni i biznis model u celinu.</p>
                             <footer>Dušan Perišić dipl.inž.</footer>
@@ -312,7 +312,7 @@
                     </div>
                     <div class="carousel-item">
                         <blockquote class="blockquote">
-                            <img src="/templejt/master/img/sasa-jovic.jpg" height="80" width="80" alt="Avatar"
+                            <img src="/templejt/master/img/sasa-jovic.jpg" height="80" width="80" alt="Tim smeštaja - foto"
                                  class="img-circle">
                             <p class="h3">Funkcionalna organizacija doprinosi izuzetnoj pouzdanosti i skalabilnosti sistema.</p>
                             <footer>Saša Jović dipl.inž.</footer>
@@ -320,7 +320,7 @@
                     </div>
                     <div class="carousel-item">
                         <blockquote class="blockquote">
-                            <img src="/templejt/master/img/aleksandar-jovic.jpg" height="80" width="80" alt="Avatar"
+                            <img src="/templejt/master/img/aleksandar-jovic.jpg" height="80" width="80" alt="Tim smeštaja - foto"
                                  class="img-circle">
                             <p class="h3"><i>User friendly</i> korisnički interfejs građen je prema intuitivnom modeli, pa će se i korisnici sa osnovnim znanjem rada na računaru odlično snalaziti.</p>
                             <footer>Aleksandar Jović dipl.inž.</footer>
@@ -328,7 +328,7 @@
                     </div>
                     <div class="carousel-item">
                         <blockquote class="blockquote">
-                            <img src="/templejt/master/img/goran-spasic.jpg" height="80" width="80" alt="Avatar"
+                            <img src="/templejt/master/img/goran-spasic.jpg" height="80" width="80" alt="Tim smeštaja - foto"
                                  class="img-circle">
                             <p class="h3">Od sada mi brinemo o popularnosti Vašeg sajta.</p>
                             <footer>Goran Spasić dipl.ecc.</footer>
@@ -337,17 +337,17 @@
                 </div>
                 <ol class="carousel-indicators">
                     <li class="active">
-                        <img src="/templejt/master/img/dusan-perisic.jpg" alt="Navigation avatar" data-target="#carousel-testimonials" data-slide-to="0" class="img-fluid img-circle">
+                        <img src="/templejt/master/img/dusan-perisic.jpg" height="45" width="45" alt="Navigation avatar" data-target="#carousel-testimonials" data-slide-to="0" class="img-fluid img-circle">
                     </li>
                     <li>
-                        <img src="/templejt/master/img/sasa-jovic.jpg" alt="Navigation avatar" data-target="#carousel-testimonials" data-slide-to="1" class="img-fluid img-circle">
+                        <img src="/templejt/master/img/sasa-jovic.jpg" height="45" width="45" alt="Navigation avatar" data-target="#carousel-testimonials" data-slide-to="1" class="img-fluid img-circle">
                     </li>
                     <li>
-                        <img src="/templejt/master/img/aleksandar-jovic.jpg" alt="Navigation avatar"
+                        <img src="/templejt/master/img/aleksandar-jovic.jpg" height="45" width="45" alt="Navigation avatar"
                              data-target="#carousel-testimonials" data-slide-to="2" class="img-fluid img-circle">
                     </li>
                     <li>
-                        <img src="/templejt/master/img/goran-spasic.jpg" alt="Navigation avatar"
+                        <img src="/templejt/master/img/goran-spasic.jpg" height="45" width="45" alt="Navigation avatar"
                              data-target="#carousel-testimonials" data-slide-to="3" class="img-fluid img-circle">
                     </li>
                 </ol>
@@ -362,10 +362,10 @@
             <h3 class="text-xs-center">Pronađite smeštaj u najegzotičnijim lokacijama</h3>
             <div class="row p-y-3">
                 <div class="col-md-5">
-                    <p class="wp wp-7">Platforma najSmeštaj raspolaže pojedinim elementima sistema <b>veštačke inteligencije</b> i po određenim kriterijumima se prilagođava tipu korisnika, što je trenutno aktuelni novitet u interakciji platorme sa korisnikom. Pretraga je poboljšana naprednim filterima, gde možete da izaberete šta vaš <u>smeštaj treba da zadovolji</u>, kao i koje <u>znamenitosti i objekti se nalaze u mestu</u> u kojem je lociran. <b>Imate izbora, budite kontrolor svog vremena!</b></p>
+                    <p class="wp wp-7">Platforma najSmeštaj raspolaže pojedinim elementima sistema <b>veštačke inteligencije</b> i po određenim kriterijumima se prilagođava tipu korisnika, što je trenutno aktuelni novitet u interakciji platorme sa korisnikom. Pretraga je poboljšana naprednim filterima, gde možete da izaberete šta vaš <span class="u">smeštaj treba da zadovolji</span>, kao i koje <span class="u">znamenitosti i objekti se nalaze u mestu</span> u kojem je lociran. <b>Imate izbora, budite kontrolor svog vremena!</b></p>
                 </div>
                 <div class="col-md-5 col-md-offset-2 separator-x">
-                    <p class="wp wp-8">Za Vas smo <b>pripremili</b> i konstantno vršimo dogradnju liste destinacija za <u>odmor, rekreaciju, poslovna putovanja, lokalne i međunarodne sastanke</u>. U mestima u kojima se nalazi smeštaj označili smo <u>zanimljive kulturno-istorijske znamenitosti, sportsko rekreativne i druge kapacitete</u>, pa pre nego se odlučite da krenete možete da <b>rezervišete smeštaj</b> i <b>upoznate</b> sa mestom i mogućnostima istog.</p>
+                    <p class="wp wp-8">Za Vas smo <b>pripremili</b> i konstantno vršimo dogradnju liste destinacija za <span class="u">odmor, rekreaciju, poslovna putovanja, lokalne i međunarodne sastanke</span>. U mestima u kojima se nalazi smeštaj označili smo <span class="u">zanimljive kulturno-istorijske znamenitosti, sportsko rekreativne i druge kapacitete</span>, pa pre nego se odlučite da krenete možete da <b>rezervišete smeštaj</b> i <b>upoznate</b> sa mestom i mogućnostima istog.</p>
                 </div>
             </div>
         </div>
@@ -377,8 +377,7 @@
                 <div class="row">
                     <div class="col-md-6 p-r-0">
                         <figure class="has-light-mask m-b-0 image-effect">
-                            <img src="/templejt/master/img/m1.jpg"
-                                 alt="Article thumbnail" class="img-fluid">
+                            <img src="/templejt/master/img/m1.jpg" height="100%" width="100%" alt="Destinacija smeštaja - foto" class="img-fluid">
                         </figure>
                     </div>
                     <div class="col-md-6 p-l-0">
@@ -396,8 +395,7 @@
                 <div class="row">
                     <div class="col-md-6 col-md-push-6 p-l-0">
                         <figure class="has-light-mask m-b-0 image-effect">
-                            <img src="/templejt/master/img/t2.jpg"
-                                 alt="Article thumbnail" class="img-fluid">
+                            <img src="/templejt/master/img/t2.jpg" height="100%" width="100%" alt="Destinacija smeštaja - foto" class="img-fluid">
                         </figure>
                     </div>
                     <div class="col-md-6 col-md-pull-6 p-r-0">
@@ -421,7 +419,7 @@
         <div class="container">
             <h3 class="text-xs-center m-b-3">Prijavi se na mejling listu i prati najposećenija mesta!</h3>
             <form>
-                <div class="row" style="text-align: center">
+                <div class="row text-center">
                     <div class="col-md-6 col-xl-4">
                         <div class="form-group has-icon-left form-control-name">
                             <label class="sr-only" for="inputIme">Ime</label>
@@ -449,8 +447,8 @@
 
 @section('end-script')
     {!! Html::style('/css/datetimepicker.css') !!}
-    {!!Html::script('/js/moment.js')!!}
-    {!! Html::script('/js/datetimepicker.js') !!}
+    <script src="/js/moment.js"></script>
+    <script src="/js/datetimepicker.js"></script>
     <script>
         $(function(){
             $(".scrol a,.scrol").on('click', function(event){
@@ -502,6 +500,6 @@
                     if($(dodaci[i]).prop('checked')) dodaciArray.push($(dodaci[i]).data('dodatak'));
                 $('input[name=dodaci]').val(JSON.stringify(dodaciArray))
             })
-        });
+        })
     </script>
 @endsection

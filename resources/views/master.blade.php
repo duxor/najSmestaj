@@ -4,11 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>najSmeštaj</title>
+    <title>najSmeštaj | Pronađite smeštaj brzo i lako</title>
     <meta name="description" content="Platforma za brzo i lako kreiranje lične web prezentacije i reklamiranje smeštaja. U samo nekoliko koraka registrujte se i iskoristite besplatan probni period">
-    <meta name="keywords" content="smaštaj, hotel, hostel, sobe, najsmestaj">
     <meta name="theme-color" content="#663fb5">
-    <script src="/templejt/master/js/jquery.min.js"></script>
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+	<link rel="icon" href="/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="/css/glyphicons-alerts.min.css">
     <link rel="stylesheet" href="/templejt/master/css/style.css">
 </head>
@@ -58,13 +58,13 @@
                     <li class="nav-item dropdown hidden-sm-down textselect-off">
                         <a class="nav-link dropdown-toggle nav-dropdown-user" id="dropdownMenu2" data-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="false">
-                            <img src="/templejt/master/img/ns-icon.jpg" height="40" width="40" alt="Logo" class="img-circle" style="{{$test==''?'':'opacity:1'}}"> <span class="icon-caret-down"></span>
+                            <img src="/templejt/master/img/ns-icon.jpg" alt="Logo platforme za smeštaj" class="img-circle logo40 {{$test==''?'':' logoO'}}"> <span class="icon-caret-down"></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-user dropdown-menu-animated"
                              aria-labelledby="dropdownMenu2">
                             <div class="media">
                                 <div class="media-left">
-                                    <img src="/templejt/master/img/ns-icon.jpg" height="60" width="60" alt="Logo" class="img-circle">
+                                    <img src="/templejt/master/img/ns-icon.jpg" height="60px" width="60px" alt="Logo smeštaj" class="img-circle{{$test==''?'':' logoO'}}">
                                 </div>
                                 <div class="media-body media-middle">
                                     <h5 class="media-heading">najSmeštaj</h5>
@@ -88,7 +88,7 @@
                  role="tabpanel" aria-labelledby="collapsingMobileUser">
                 <div class="media m-t-1">
                     <div class="media-left">
-                        <img src="/templejt/master/img/ns-icon.jpg" height="60" width="60" alt="Logo" class="img-circle">
+                        <img src="/templejt/master/img/ns-icon.jpg" height="60px" width="60px" alt="Logo smeštaj" class="img-circle{{$test==''?'':' logoO'}}">
                     </div>
                     <div class="media-body media-middle">
                         <h5 class="media-heading">najSmeštaj</h5>
@@ -116,11 +116,11 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <span class="close" data-dismiss="modal" style="position: absolute;right: 20px;cursor: pointer;font-weight: bold;font-size:40px;top:-10px">&times;</span>
+                    <span class="close close-btn" data-dismiss="modal">&times;</span>
                     <h2>Kontaktirajte nas!</h2>
                 </div>
                 <div class="modal-body">
-                    <h2 id="kontaktPoruka" style="display: none"></h2>
+                    <h2 id="kontaktPoruka" hidden></h2>
                     <input name="ime" class="form-control form-control-lg" placeholder="Ime">
                     <input name="email" class="form-control form-control-lg" placeholder="Email">
                     <input name="naslov" class="form-control form-control-lg" placeholder="Naslov">
@@ -168,8 +168,8 @@
     </footer>
     {{---footer:end--}}
 
-
-    <script src="/templejt/master/js/landio.min.js"></script>
+    <script src="/templejt/master/js/jquery.min.js"></script>
+    <script async src="/templejt/master/js/landio.min.js"></script>
     @yield('end-script')
     <script>
         $(function(){
@@ -209,10 +209,8 @@
                     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
                 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
         })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
         ga('create', 'UA-80215552-1', 'auto');
         ga('send', 'pageview');
-
     </script>
 </body>
 </html>

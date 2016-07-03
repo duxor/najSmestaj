@@ -47,11 +47,12 @@
                 <h3 class="box-title">Status smeštaja</h3>
             </div>
             <div class="box-body no-padding">
-                <table class="table">
+                <table class="table text-center">
                     <tbody>
                         <tr>
                             <th style="width: 10px">#</th>
                             <th>Naziv</th>
+                            <th>Kapacitet</th>
                             <th style="width: 40px">Status</th>
                             <th>Datum promene</th>
                             <th></th>
@@ -59,6 +60,7 @@
                         <tr>
                             <td>1.</td>
                             <td>Soba Nina</td>
+                            <td>2</td>
                             <td><span class="label label-success">Slobodan</span></td>
                             <td>10.11.2016.</td>
                             <td><button class="btn btn-xs btn-info"><i class="fa fa-pencil"></i></button></td>
@@ -66,6 +68,7 @@
                         <tr>
                             <td>2.</td>
                             <td>Soba Ultimate</td>
+                            <td>3</td>
                             <td><span class="label label-warning">Rezervisan</span></td>
                             <td>10.11.2016.</td>
                             <td><button class="btn btn-xs btn-info"><i class="fa fa-pencil"></i></button></td>
@@ -73,6 +76,7 @@
                         <tr>
                             <td>3.</td>
                             <td>Soba Mileva</td>
+                            <td>1</td>
                             <td><span class="label label-danger">Zauzet</span></td>
                             <td>10.11.2016.</td>
                             <td><button class="btn btn-xs btn-info"><i class="fa fa-pencil"></i></button></td>
