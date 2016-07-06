@@ -74,6 +74,8 @@ class KreiranjeBaze extends Migration{
             $table->string('x',45)->nullable();
             $table->string('y',45)->nullable();
             $table->string('z',45)->nullable();
+            $table->string('foto',250)->nullable();
+            $table->tinyInteger('aktivan')->default(1);
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->nullable();
         });
@@ -108,6 +110,7 @@ class KreiranjeBaze extends Migration{
             $table->string('dodaci', 250)->nullable();
             $table->string('naziv', 45)->nullable();
             $table->string('slug', 45)->nullable();
+            $table->tinyInteger('aktivan')->default(1);
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->nullable();
         });

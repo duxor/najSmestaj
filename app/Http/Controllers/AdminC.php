@@ -18,6 +18,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 
 class AdminC extends Controller
 {
@@ -31,7 +32,6 @@ class AdminC extends Controller
 
     //Prikaz forme za dodavanje i azuriranje objekata
     public function getObjekat($slug = null){
-        $objekat = null;
         $gradovi=Grad::lists('naziv','id');
         $vrste_objekta=VrstaObjekta::lists('naziv','id');
         $slug?$objekat = Objekat::where('slug', $slug)->get()->first():$objekat = null;
@@ -45,21 +45,34 @@ class AdminC extends Controller
             ->join('vrsta_objekta', 'objekat.vrsta_objekta_id','=','vrsta_objekta.id')
             ->where('objekat.korisnik_id','=',Auth::user()->id)
             ->select('objekat.id as id','grad.naziv as grad', 'vrsta_objekta.naziv as vrsta_objekta','objekat.naziv',
-                'objekat.opis', 'objekat.adresa','objekat.telefon', 'objekat.email','objekat.x','objekat.y','objekat.z')
+                'objekat.opis', 'objekat.adresa','objekat.telefon', 'objekat.email','objekat.x','objekat.y','objekat.z',
+                'objekat.foto','objekat.aktivan','objekat.slug')
             ->get();
+
         return view('firmolog.objekti')->with('objekti', $objekti);
     }
 
     //Prikaz forme za dodavanje i azuriranje smestaja
     public function getSmestaj($slug = null){
-        $slug?$smestaj = Smestaj::where('slug', $slug)->get()->first():$smestaj = null;
-        $objekat = Objekat::lists('naziv','id');
-        $vrsta_smestaja = VrstaSmestaja::lists('naziv','id');
-        $vrsta_kapaciteta = VrstaKapaciteta::lists('naziv','id');
-        return view('firmolog.smestaj')->with('smestaj',$smestaj)->with('vrsta_smestaja',$vrsta_smestaja)
-            ->with('vrsta_kapaciteta',$vrsta_kapaciteta)->with('objekat',$objekat);
-    }
-
+    $slug?$smestaj = Smestaj::where('slug', $slug)->get()->first():$smestaj = null;
+    $objekat = Objekat::lists('naziv','id');
+    $vrsta_smestaja = VrstaSmestaja::lists('naziv','id');
+    $vrsta_kapaciteta = VrstaKapaciteta::lists('naziv','id');
+    return view('firmolog.smestaj')->with('smestaj',$smestaj)->with('vrsta_smestaja',$vrsta_smestaja)
+        ->with('vrsta_kapaciteta',$vrsta_kapaciteta)->with('objekat',$objekat);
+}
+    //Promena statusa pbjekata
+    public function postStatusObjekta(Request $request){
+            if ($request->ajax()) {
+                $objekat = Objekat::where('slug', $request->slug)->get()->first();
+               if ($objekat->aktivan == 1) {
+                   $objekat->update(['aktivan' =>0]);
+                } elseif ($objekat->aktivan == 0)
+                   $objekat->update(['aktivan' =>1]);
+            }
+        Redirect::back();
+        }
+    
     //Prikaz svuh smestaja odredjenog objekta
     public function getSmestaji($slug = null){
         $objekat =  DB::table('objekat')
@@ -149,6 +162,11 @@ class AdminC extends Controller
         $objekat = Objekat::where('id', $smestaj->objekat_id)->get()->first();
         return $this->getSmestaji($objekat->slug);
 
+    }
+
+    public function post()
+    {
+        return $this->validatesRequestErrorBag;
     }
 }
 

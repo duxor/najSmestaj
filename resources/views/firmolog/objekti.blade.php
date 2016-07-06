@@ -7,11 +7,17 @@
         <div class="col-sm-4">
             <div class="box box-success">
                 <div class="box-header with-border">
-                    <h3 class="box-title">{!! $objekat->naziv !!} <span class="badge bg-green">aktivan</span></h3>
+                    <h3 class="box-title">{!! $objekat->naziv !!}
+                        @if($objekat->aktivan ==1)
+                                <span class="badge bg-green">aktivan</span>
+                            @else
+                                <span class="badge bg-red">nije</span></h3>
+                         @endif
+                    </h3>
                     <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-danger btn-xs"><i class="fa fa-check-square-o"></i></button>
-                        <button type="button" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i></button>
-                        <button type="button" class="btn btn-success btn-xs"><i class="fa fa-plus"></i></button>
+                        <button type="button" value="{{$objekat->slug}}" class="aca btn btn-danger btn-xs"><i class="fa fa-check-square-o" ></i></button>
+                        <a href="/administration/objekat/{{$objekat->slug}}"><button type="button" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i></button></a>
+                        <a href="/administration/smestaj"><button type="button" class="btn btn-success btn-xs"><i class="fa fa-plus"></i></button></a>
                     </div>
                 </div>
                 <div class="box-body">
@@ -25,6 +31,9 @@
                     {!! $objekat->x!!}
                     {!! $objekat->y!!}
                     {!! $objekat->z!!}
+                    {!! $objekat->foto!!}
+                    {!! $objekat->aktivan!!}
+                    {!! $objekat->slug!!}
                 </div>
                 <div class="box-footer">
                     LISTA SVIH SMEŠTAJA OBJEKTA: link>nazivSmještaja
@@ -32,6 +41,16 @@
             </div>
         </div>
     @endforeach
+@endsection
+@section('end-script')
+    <script>
+        $('.aca').each(function (index ) {
+            $(this).click(function () {
+                var slug  = $( this ).attr('value');
+                $.post('/administration/status-objekta', {slug: slug,  _token: '{{csrf_token()}}'})
+        })
+        })
+    </script>
 @endsection
 
 
