@@ -9,8 +9,8 @@
     <meta name="theme-color" content="#663fb5">
 	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 	<link rel="icon" href="/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="/css/glyphicons-alerts.min.css">
-    <link rel="stylesheet" href="/templejt/master/css/style.css">
+    <link rel="stylesheet" href="/templejt/master/css/index.css">
+    @yield('head')
 </head>
 <body>
     {{---NAVIGACIJA::START--}}
@@ -58,7 +58,7 @@
                     <li class="nav-item dropdown hidden-sm-down textselect-off">
                         <a class="nav-link dropdown-toggle nav-dropdown-user" id="dropdownMenu2" data-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="false">
-                            <img src="/templejt/master/img/ns-icon.jpg" alt="Logo platforme za smeštaj" class="img-circle logo40 {{$test==''?'':' logoO'}}"> <span class="icon-caret-down"></span>
+                            <img src="/templejt/master/img/ns-icon.jpg" height="60px" width="60px" alt="Logo platforme za smeštaj" class="img-circle logo40 {{$test==''?'':' logoO'}}"> <span class="icon-caret-down"></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-user dropdown-menu-animated"
                              aria-labelledby="dropdownMenu2">
@@ -167,50 +167,7 @@
         </div>
     </footer>
     {{---footer:end--}}
-
-    <script src="/templejt/master/js/jquery.min.js"></script>
-    <script async src="/templejt/master/js/landio.min.js"></script>
+    <script async src="/templejt/master/js/index.js"></script>
     @yield('end-script')
-    <script>
-        $(function(){
-            $('.kontaktBtn').click(function(){
-                $('#kontaktPoruka').slideUp();
-                var ime=$('#kontaktModal input[name=ime]').val(),
-                    email=$('#kontaktModal input[name=email]').val(),
-                    naslov=$('#kontaktModal input[name=naslov]').val(),
-                    poruka=$('#kontaktModal textarea[name=poruka]').val();
-                if(!email || !poruka){
-                    $('#kontaktPoruka').html('Dogodila se greška! Proverite podatke i pokušajte ponovo!');
-                    $('#kontaktPoruka').slideDown();
-                    return
-                }
-                $.post('/kontakt',{
-                    _token:'{{csrf_token()}}',
-                    ime:ime,
-                    email:email,
-                    naslov:naslov,
-                    poruka:poruka
-                },function(data){
-                    data=JSON.parse(data);
-                    $('#kontaktPoruka').html(+data.poruka);
-                    $('#kontaktPoruka').slideDown();
-                    if(data.check==1){
-                        $('#kontaktModal input[name=ime]').val('');
-                        $('#kontaktModal input[name=email]').val('');
-                        $('#kontaktModal input[name=naslov]').val('');
-                        $('#kontaktModal textarea[name=poruka]').val('')
-                    }
-                })
-            })
-        })
-    </script>
-    <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-        ga('create', 'UA-80215552-1', 'auto');
-        ga('send', 'pageview');
-    </script>
 </body>
 </html>

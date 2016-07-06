@@ -11,13 +11,24 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class ProfilC extends Controller{
     public function __construct(){
         $this->middleware('PravaPristupaMid:2,1');
     }
+    public function _tab(){
+        if(Session::has('tab')){
+            $tab=Session::get('tab');
+            Session::forget('tab');
+        }else $tab=null;
+        return $tab;
+    }
     public function getIndex(){
-        return view('korisnik.index');
+        return view('korisnik.index')->with(['tab'=>$this->_tab(),'omeni'=>Auth::user()]);
+    }
+    public function postIndex(){
+        return redirect('/profil')->with(['tab'=>'settings']);
     }
     public function getListaZelja(){
         $liste_zelja =  DB::table('like')

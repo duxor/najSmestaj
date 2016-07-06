@@ -2,7 +2,9 @@
 @section('container')
     <?php $korisnik=Auth::user(); ?>
     <div class="row">
+        {{---PROFILE::START--}}
         <div class="col-md-3">
+            {{---BASIC-PROFILE::START--}}
             <div class="box box-primary">
                 <div class="box-body box-profile">
                     <img class="profile-user-img img-responsive img-circle" src="{{$korisnik->foto?$korisnik->foto:'/img/default/korisnik.jpg'}}" alt="Fotografija korisnika">
@@ -10,14 +12,23 @@
                     <p class="text-muted text-center">Registrovan od {{date('d.m.Y. H:i',strtotime($korisnik->created_at))}}</p>
                     <ul class="list-group list-group-unbordered">
                         <li class="list-group-item">
-                            <b>Rezervacije</b> <a class="pull-right">3</a>
+                            <b>Aktivne rezervacije</b> <a class="pull-right" href="/profil/rezervacije">0</a>
                         </li>
                         <li class="list-group-item">
-                            <b>Posećene destinacije</b> <a class="pull-right">2</a>
+                            <b>Lista želja</b> <a class="pull-right" href="/profil/lista-zelja">7</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Rezervacije</b> <a class="pull-right" href="/profil/rezervacije">3</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Posećene destinacije</b> <a class="pull-right" href="/profil/destinacije">2</a>
                         </li>
                     </ul>
                 </div>
             </div>
+            {{---basic-profile::end--}}
+
+            {{---ABOUT::START--}}
             <div class="box box-primary">
                 <div class="box-header with-border">
                     <h3 class="box-title">O meni</h3>
@@ -28,7 +39,7 @@
                     <strong><i class="fa fa-map-marker margin-r-5"></i> Lokacija</strong>
                     <p class="text-muted">Beograd, Srbija</p>
                     <hr>
-                    <strong><i class="fa fa-pencil margin-r-5"></i> Tagovi smeštaja</strong>
+                    <strong><i class="fa fa-pencil margin-r-5"></i> Interesovanja</strong>
                     <p>
                         <span class="label label-danger">#posao</span>
                         <span class="label label-success">#priroda</span>
@@ -41,17 +52,23 @@
                     <p>Ovde ću upisati ukratko o meni da bi vlasnik smeštaja znao o kome se radi.</p>
                 </div>
             </div>
+            {{---about::end--}}
         </div>
+        {{---profile::end--}}
+
+        {{---ACTIVITY-TABS::START--}}
         <div class="col-md-9">
             <div class="nav-tabs-custom">
+                {{---NAV-TAB::START--}}
                 <ul class="nav nav-tabs">
-                    <li class="active"><a href="#activity" data-toggle="tab">Aktivnosti</a></li>
-                    <li><a href="#timeline" data-toggle="tab">Vremenska linija</a></li>
-                    <li><a href="#settings" data-toggle="tab">Osnovni podaci</a></li>
+                    <li{!!isset($tab)?($tab=='activity'?' class="active"':''):' class="active"'!!}><a href="#activity" data-toggle="tab">Aktivnosti</a></li>
+                    <li{!!isset($tab)?($tab=='timeline'?' class="active"':''):''!!}><a href="#timeline" data-toggle="tab">Vremenska linija</a></li>
+                    <li{!!isset($tab)?($tab=='settings'?' class="active"':''):''!!}><a href="#settings" data-toggle="tab">Osnovni podaci</a></li>
                 </ul>
+                {{---nav-tab::end--}}
                 <div class="tab-content">
                     {{---AKTIVNOSTI::START--}}
-                    <div class="active tab-pane" id="activity">
+                    <div class="{{isset($tab)?($tab=='activity'?'active ':''):'active '}}tab-pane" id="activity">
                         <div class="post">
                             <div class="user-block">
                                 <img class="img-circle img-bordered-sm" src="/img/default/korisnik.jpg" alt="Fotografija vlasnika smeštaja">
@@ -92,20 +109,10 @@
                     {{---aktivnosti::end--}}
 
                     {{---VREMENSKA-LINIJA::START--}}
-                    <div class="tab-pane" id="timeline">
+                    <div class="{{isset($tab)?($tab=='timeline'?'active ':''):''}}tab-pane" id="timeline">
                         <ul class="timeline timeline-inverse">
                             <li class="time-label">
                                 <span class="bg-red">02.07.2016.</span>
-                            </li>
-                            <li>
-                                <i class="fa fa-envelope bg-blue"></i>
-                                <div class="timeline-item">
-                                    <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
-                                    <h3 class="timeline-header"><a href="#">Milan Perić</a> vas je odjavio iz <a href="#">smeštaja</a></h3>
-                                    <div class="timeline-body">
-                                        Naš stalni gost, izuzetna saradnja i ove godine, rezervacija odrađena i ispoštovana putem web-a, svaka preporuka.
-                                    </div>
-                                </div>
                             </li>
                             <li>
                                 <i class="fa fa-camera bg-purple"></i>
@@ -117,6 +124,16 @@
                                         <img src="http://placehold.it/150x100" alt="..." class="margin">
                                         <img src="http://placehold.it/150x100" alt="..." class="margin">
                                         <img src="http://placehold.it/150x100" alt="..." class="margin">
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="fa fa-envelope bg-blue"></i>
+                                <div class="timeline-item">
+                                    <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
+                                    <h3 class="timeline-header"><a href="#">Milan Perić</a> vas je odjavio iz <a href="#">smeštaja</a></h3>
+                                    <div class="timeline-body">
+                                        Naš stalni gost, izuzetna saradnja i ove godine, rezervacija odrađena i ispoštovana putem web-a, svaka preporuka.
                                     </div>
                                 </div>
                             </li>
@@ -145,6 +162,15 @@
                             <li class="time-label">
                                 <span class="bg-red">15.06.2015.</span>
                             </li>
+                            {{---DODAJ-NOVE-FOTOGRAFIJE--}}
+                            <li>
+                                <i class="fa fa-camera bg-gray"></i>
+                                <div class="timeline-item col-sm-4">
+                                    <span class="time"><button class="btn btn-circle btn-xs bg-gray"><i class="fa fa-plus"></i></button></span>
+                                    <h3 class="timeline-header"><a href="#">{{$korisnik->ime||$korisnik->prezime?$korisnik->ime.' '.$korisnik->prezime:$korisnik->email}}</a></h3>
+                                    <div class="timeline-body">Dodaj nove fotografije</div>
+                                </div>
+                            </li>
                             <li>
                                 <i class="fa fa-envelope bg-blue"></i>
                                 <div class="timeline-item">
@@ -157,19 +183,6 @@
                             </li>
                             <li class="time-label">
                                 <span class="bg-green">10.06.2015.</span>
-                            </li>
-                            <li>
-                                <i class="fa fa-camera bg-purple"></i>
-                                <div class="timeline-item">
-                                    <span class="time"><i class="fa fa-clock-o"></i> 17:42</span>
-                                    <h3 class="timeline-header"><a href="#">{{$korisnik->ime||$korisnik->prezime?$korisnik->ime.' '.$korisnik->prezime:$korisnik->email}}</a> postavili ste nove fotografije</h3>
-                                    <div class="timeline-body">
-                                        <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                        <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                        <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                        <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                    </div>
-                                </div>
                             </li>
                             <li>
                                 <i class="fa fa-user bg-aqua"></i>
@@ -192,6 +205,19 @@
                             </li>
                             <li class="time-label">
                                 <span class="bg-red">11.02.2015.</span>
+                            </li>
+                            <li>
+                                <i class="fa fa-camera bg-purple"></i>
+                                <div class="timeline-item">
+                                    <span class="time"><i class="fa fa-clock-o"></i> 17:42</span>
+                                    <h3 class="timeline-header"><a href="#">{{$korisnik->ime||$korisnik->prezime?$korisnik->ime.' '.$korisnik->prezime:$korisnik->email}}</a> postavili ste nove fotografije</h3>
+                                    <div class="timeline-body">
+                                        <img src="http://placehold.it/150x100" alt="..." class="margin">
+                                        <img src="http://placehold.it/150x100" alt="..." class="margin">
+                                        <img src="http://placehold.it/150x100" alt="..." class="margin">
+                                        <img src="http://placehold.it/150x100" alt="..." class="margin">
+                                    </div>
+                                </div>
                             </li>
                             <li>
                                 <i class="fa fa-envelope bg-blue"></i>
@@ -233,43 +259,56 @@
                     {{---vremenska-linija::end--}}
 
                     {{---OSNOVNI-PODACI-EDIT::START--}}
-                    <div class="tab-pane" id="settings">
-                        <form class="form-horizontal">
-                            <div class="form-group">
-                                <label for="inputName" class="col-sm-2 control-label">Ime</label>
-                                <div class="col-sm-10">
-                                    {!! Form::text('ime',null,['class'=>'form-control','id'=>'inputName','placeholder'=>'Ime']) !!}
-                                </div>
+                    <div class="{{isset($tab)?($tab=='settings'?'active ':''):''}}tab-pane" id="settings">
+                        {!! Form::model($omeni,['class'=>'form-horizontal']) !!}
+                        {{csrf_field()}}
+                        <div class="form-group">
+                            <label for="inputName" class="col-sm-2 control-label">Ime</label>
+                            <div class="col-sm-10">
+                                {!! Form::text('ime',null,['class'=>'form-control','id'=>'inputName','placeholder'=>'Ime']) !!}
                             </div>
-                            <div class="form-group">
-                                <label for="inputSurname" class="col-sm-2 control-label">Prezime</label>
-                                <div class="col-sm-10">
-                                    {!! Form::text('prezime',null,['class'=>'form-control','id'=>'inputSurname','placeholder'=>'Prezime']) !!}
-                                </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputSurname" class="col-sm-2 control-label">Prezime</label>
+                            <div class="col-sm-10">
+                                {!! Form::text('prezime',null,['class'=>'form-control','id'=>'inputSurname','placeholder'=>'Prezime']) !!}
                             </div>
-                            <div class="form-group">
-                                <label for="inputAbout" class="col-sm-2 control-label">Ukratko o meni</label>
-                                <div class="col-sm-10">
-                                    {!! Form::textarea('prezime',null,['class'=>'form-control','id'=>'inputAbout','placeholder'=>'Ukratko o meni']) !!}
-                                </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputAbout" class="col-sm-2 control-label">Ukratko o meni</label>
+                            <div class="col-sm-10">
+                                {!! Form::textarea('bio',null,['class'=>'form-control','id'=>'inputAbout','placeholder'=>'Ukratko o meni']) !!}
                             </div>
-                            <div class="form-group">
-                                <label for="inputTags" class="col-sm-2 control-label">Tagovi</label>
-                                <div class="col-sm-10">
-                                    {!! Form::text('prezime',null,['class'=>'form-control','id'=>'inputTags','placeholder'=>'Tagovi']) !!}
-                                </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputTags" class="col-sm-2 control-label">Tagovi</label>
+                            <div class="col-sm-10">
+                                {!! Form::text('tagovi',null,['class'=>'form-control','id'=>'inputTags','placeholder'=>'Tagovi']) !!}
                             </div>
-                            <div class="form-group">
-                                <div class="col-sm-offset-2 col-sm-10">
-                                    <button type="submit" class="btn btn-danger">Sačuvaj</button>
-                                </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputTags" class="col-sm-2 control-label">Šifra</label>
+                            <div class="col-sm-10">
+                                {!! Form::password('password',['class'=>'form-control','id'=>'inputTags','placeholder'=>'Nova šifra']) !!}
                             </div>
-                        </form>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassConfirm" class="col-sm-2 control-label">Potvrda šifre</label>
+                            <div class="col-sm-10">
+                                {!! Form::password('password_confirmation',['class'=>'form-control','id'=>'inputPassConfirm','placeholder'=>'Potvrda nove šifre']) !!}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-danger">Sačuvaj</button>
+                            </div>
+                        </div>
+                        {!! Form::close() !!}
                     </div>
                     {{---osnovni-podaci-edit::end--}}
                 </div>
             </div>
         </div>
+        {{---activity-tabs::end--}}
     </div>
-    </section>
 @endsection
