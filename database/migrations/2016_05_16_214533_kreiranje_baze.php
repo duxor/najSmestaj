@@ -101,6 +101,19 @@ class KreiranjeBaze extends Migration{
             $table->bigIncrements('id');
             $table->string('naziv', 45);
             $table->text('tag')->nullable();
+            $table->string('slug', 45);
+            $table->unsignedBigInteger('prioritet')->default(0);
+            $table->unsignedBigInteger('potraznja')->default(0);
+            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->nullable();
+        });
+        Schema::create('dodaci_upotreba',function(Blueprint $table){
+            $table->bigIncrements('id');
+            $table->bigInteger('objekat_id');
+            $table->bigInteger('smestaj_id');
+            $table->unsignedBigInteger('dodaci_id');
+            $table->foreign('dodaci_id')->references('id')->on('dodaci');
+            $table->string('napomena', 250)->nullable();
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->nullable();
         });
@@ -182,6 +195,7 @@ class KreiranjeBaze extends Migration{
         Schema::drop('password_resets');
         Schema::drop('smestaj');
         Schema::drop('dodaci');
+        Schema::drop('dodaci_upotreba');
         Schema::drop('vrsta_kapaciteta');
         Schema::drop('vrsta_smestaja');
         Schema::drop('objekat');

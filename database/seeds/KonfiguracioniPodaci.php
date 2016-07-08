@@ -1,5 +1,7 @@
 <?php
 
+use App\Dodaci;
+use App\Funkcije;
 use Illuminate\Database\Seeder;
 use App\PravaPristupa;
 use App\Grad;
@@ -62,6 +64,12 @@ class KonfiguracioniPodaci extends Seeder{
             ['naziv' => 'Turizam',       'slug' => Funkcije::kreirajSlug('Turizam',new SvrhaPutovanja())],
             ['naziv' => 'Posao',    'slug' => Funkcije::kreirajSlug('Posao',new SvrhaPutovanja())],
             ['naziv' => 'Odmor',       'slug' => Funkcije::kreirajSlug('Odmor',new SvrhaPutovanja())]
+        Dodaci::insert([
+            ['naziv' => 'klima uredjaj', 'tag' => 'klima uredjaj', 'slug'=>Funkcije::kreirajSlug('klima uredjaj',new Dodaci()) ],
+            ['naziv' => 'bezicni internet',  'tag' => 'internet', 'slug'=>Funkcije::kreirajSlug('bezicni internet',new Dodaci())],
+            ['naziv' => 'pribor za peglanje',  'tag' => 'peglanje', 'slug'=>Funkcije::kreirajSlug('pribor za peglanje',new Dodaci())],
+            ['naziv' => 'telefon',  'tag' => 'telefon', 'slug'=>Funkcije::kreirajSlug('telefon',new Dodaci())],
+            ['naziv' => 'cajna kuhinja',  'tag' => 'kuhinja', 'slug'=>Funkcije::kreirajSlug('cajna kuhinja',new Dodaci())],
         ]);
       
     }
