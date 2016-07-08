@@ -19,6 +19,10 @@ class KreiranjeBaze extends Migration{
         Schema::create('grad',function(Blueprint $table){
             $table->bigIncrements('id');
             $table->string('naziv', 45);
+            $table->string('x',45)->nullable();
+            $table->string('y',45)->nullable();
+            $table->tinyInteger('z')->nullable();
+            $table->string('foto',250)->nullable();
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->nullable();
         });
@@ -45,6 +49,7 @@ class KreiranjeBaze extends Migration{
         Schema::create('templejt',function(Blueprint $table){
             $table->bigIncrements('id');
             $table->string('naziv', 45);
+            $table->string('slug', 128)->nullable();
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->nullable();
         });
@@ -110,6 +115,8 @@ class KreiranjeBaze extends Migration{
             $table->string('dodaci', 250)->nullable();
             $table->string('naziv', 45)->nullable();
             $table->string('slug', 45)->nullable();
+            $table->string('foto',250)->nullable();
+            $table->string('galerija',250)->nullable();
             $table->tinyInteger('aktivan')->default(1);
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->nullable();
@@ -123,6 +130,8 @@ class KreiranjeBaze extends Migration{
             $table->foreign('smestaj_id')->references('id')->on('smestaj');
             $table->date('datum_prijave')->nullable();
             $table->date('datum_odjave')->nullable();
+            $table->string('foto',250)->nullable();
+            $table->string('galerija',250)->nullable();
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->nullable();
         });
@@ -137,9 +146,37 @@ class KreiranjeBaze extends Migration{
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->nullable();
         });
+        Schema::create('svrha_putovanja',function(Blueprint $table){
+            $table->bigIncrements('id');
+            $table->string('naziv', 45)->nullable();
+            $table->string('slug', 128)->nullable();
+            $table->unsignedBigInteger('prioritet')->default(0);
+            $table->unsignedBigInteger('potraznja')->default(0);
+        });
+        Schema::create('destinacija',function(Blueprint $table){
+            $table->bigIncrements('id');
+            $table->string('naziv', 45)->nullable();
+            $table->string('slug', 45)->nullable();
+            $table->text('opis')->nullable();
+            $table->string('x',45)->nullable();
+            $table->string('y',45)->nullable();
+            $table->tinyInteger('z')->nullable();
+            $table->text('tagovi')->nullable();
+            $table->string('foto',250)->nullable();
+        });
+        Schema::create('destinacija_upotreba',function(Blueprint $table){
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('objekat_id');
+            $table->unsignedBigInteger('grad_id');
+        });
+
+
 
     }
     public function down(){
+        Schema::drop('destinacija_upotreba');
+        Schema::drop('destinacija');
+        Schema::drop('svrha_putovanja');
         Schema::drop('like');
         Schema::drop('rezervacija');
         Schema::drop('password_resets');

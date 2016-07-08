@@ -21,10 +21,12 @@ use App\Rezervacija;
 use App\VrstaSmestaja;
 use App\Like;
 use App\Funkcije;
+use App\SvrhaPutovanja;
 
 class PretragaC extends Controller
 {
     public function getIndex(){
+        $svrha_putovanja=SvrhaPutovanja::dajPrioritete();
         if(Auth::check()){
             $korisnik=User::where('id',Session::get('id'))->get()->toArray();
         }else $korisnik=null;
@@ -41,9 +43,10 @@ class PretragaC extends Controller
         $smestaj = $query->get(['smestaj.id','objekat.naziv as naziv_objekta','vrsta_smestaja.naziv as naziv_smestaja',
             'vrsta_kapaciteta.naziv as naziv_kapaciteta','smestaj.vrsta_kapaciteta_id as broj_osoba','smestaj.dodaci','like.id as zelja'])->toArray();
 
-        return view('pretraga')->with(['smestaj'=>$smestaj,'korisnik'=>$korisnik,'gradovi'=>$gradovi]);
+        return view('pretraga')->with(['smestaj'=>$smestaj,'korisnik'=>$korisnik,'gradovi'=>$gradovi,'svrha_putovanja'=>$svrha_putovanja]);
     }
     public function postIndex(){
+        $svrha_putovanja=SvrhaPutovanja::dajPrioritete();
         if(Auth::check()){
             $korisnik=User::where('id',Session::get('id'))->get()->toArray();
         }else $korisnik=null;
@@ -72,12 +75,12 @@ class PretragaC extends Controller
             $datum_odjave= Input::get('datum_odjave');
             $smestaj = $query->get(['smestaj.id','objekat.naziv as naziv_objekta','vrsta_smestaja.naziv as naziv_smestaja','vrsta_kapaciteta.naziv as naziv_kapaciteta','smestaj.vrsta_kapaciteta_id as broj_osoba','smestaj.dodaci','like.id as zelja'])->toArray();
             $smestaj= Funkcije::dostupnostZaRezervaciju($smestaj,$datum_prijave,$datum_odjave);
-            return view('pretraga')->with(['smestaj'=>$smestaj])->with(['korisnik'=>$korisnik,'gradovi'=>$gradovi]);
+            return view('pretraga')->with(['smestaj'=>$smestaj])->with(['korisnik'=>$korisnik,'gradovi'=>$gradovi,'svrha_putovanja'=>$svrha_putovanja]);
         }else{
             $smestaj = $query->get(['smestaj.id','objekat.naziv as naziv_objekta','vrsta_smestaja.naziv as naziv_smestaja',
                 'vrsta_kapaciteta.naziv as naziv_kapaciteta','smestaj.vrsta_kapaciteta_id as broj_osoba','smestaj.dodaci','like.id as zelja'])->toArray();
             $gradovi=Grad::lists('naziv','id');
-            return view('pretraga')->with(['smestaj'=>$smestaj,'korisnik'=>$korisnik,'gradovi'=>$gradovi]);
+            return view('pretraga')->with(['smestaj'=>$smestaj,'korisnik'=>$korisnik,'gradovi'=>$gradovi,'svrha_putovanja'=>$svrha_putovanja]);
         }
     }
     public function postLike(){

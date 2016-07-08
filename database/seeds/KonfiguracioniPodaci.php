@@ -11,6 +11,8 @@ use App\Objekat;
 use App\Smestaj;
 use App\Rezervacija;
 use App\Like;
+use App\SvrhaPutovanja;
+use App\Funkcije;
 
 class KonfiguracioniPodaci extends Seeder{
     public function run(){
@@ -53,6 +55,13 @@ class KonfiguracioniPodaci extends Seeder{
             ['naziv' => 'Za deset osoba',     'broj_osoba' => 10],
             ['naziv' => 'Za jedanaest osoba', 'broj_osoba' => 11],
             ['naziv' => 'Za dvanaest osoba',  'broj_osoba' => 12]
+        ]);
+        SvrhaPutovanja::insert([
+            ['naziv' => 'Letovanje',     'slug' => Funkcije::kreirajSlug('Letovanje',new SvrhaPutovanja())],
+            ['naziv' => 'Zimovanje',       'slug' => Funkcije::kreirajSlug('Zimovanje',new SvrhaPutovanja())],
+            ['naziv' => 'Turizam',       'slug' => Funkcije::kreirajSlug('Turizam',new SvrhaPutovanja())],
+            ['naziv' => 'Posao',    'slug' => Funkcije::kreirajSlug('Posao',new SvrhaPutovanja())],
+            ['naziv' => 'Odmor',       'slug' => Funkcije::kreirajSlug('Odmor',new SvrhaPutovanja())]
         ]);
       
     }

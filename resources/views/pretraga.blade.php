@@ -37,30 +37,14 @@
         <div class="row">
             <div class="col-sm-6">
                 <h2>Svrha</h2>
-                <div class="form-group">
-                    <label class="c-input c-checkbox">
-                        <input type="checkbox" data-tag="#turizam">
-                        <span class="c-indicator"></span> Turizam</a>
-                    </label>
-                </div>
-                <div class="form-group">
-                    <label class="c-input c-checkbox">
-                        <input type="checkbox" data-tag="#posao">
-                        <span class="c-indicator"></span> Posao</a>
-                    </label>
-                </div>
-                <div class="form-group">
-                    <label class="c-input c-checkbox">
-                        <input type="checkbox" data-tag="#odmor">
-                        <span class="c-indicator"></span> Odmor</a>
-                    </label>
-                </div>
-                <div class="form-group">
-                    <label class="c-input c-checkbox">
-                        <input type="checkbox" data-tag="#zimovanje">
-                        <span class="c-indicator"></span> Zimovanje</a>
-                    </label>
-                </div>
+                @foreach($svrha_putovanja as $svrha)
+                    <div class="form-group">
+                        <label class="c-input c-checkbox">
+                            <input type="checkbox" data-tag="{{$svrha['id']}}">
+                            <span class="c-indicator"></span> {{$svrha['naziv']}}</a>
+                        </label>
+                    </div>
+                @endforeach
             </div>
             <div class="col-sm-6">
                 <h2>Dodaci</h2>

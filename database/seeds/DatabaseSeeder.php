@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
         $this->call(KorisniciTestPodaci::class);
         $this->call(ObjektiTestPodaci::class);
         $this->call(SmestajiTestPodaci::class);
+        $this->call(DestinacijaTest::class);
 
     }
 }
