@@ -99,6 +99,18 @@ class AdminC extends Controller
             }
         Redirect::back();
         }
+
+
+    public function getPrikaziDodatke(Request $request){
+        if ($request->ajax()) {
+            $dodaci = DB::table('dodaci')
+                ->join('dodaci_upotreba','dodaci.id','=','dodaci_upotreba.dodaci_id')
+                ->where('dodaci_upotreba.objekat_id','=',$request->objekat_id)
+                ->whereNull('dodaci.id')
+                ->get();
+            return json_encode($dodaci);
+        }
+    }
     
     //Prikaz svuh smestaja odredjenog objekta
     public function getSmestaji($slug = null){

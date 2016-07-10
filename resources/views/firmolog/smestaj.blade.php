@@ -24,7 +24,7 @@
                                 {!! Form::hidden('id',$smestaj?$smestaj->id : null) !!}
 
                                 <div class="col-sm-2 ">{!! Form::label('objekat_id',"Objekat:") !!}</div>
-                                <div class="col-sm-10 form-group">{!!Form::select('objekat_id',$objekat,$smestaj?$smestaj->objekat_id:1,['class'=>'form-control'])!!}</div>
+                                <div class="col-sm-10 form-group">{!!Form::select('objekat_id',$objekat,$smestaj?$smestaj->objekat_id:1,['class'=>'form-control', 'id'=>'objekti'])!!}</div>
 
                                 <div class="col-sm-2 ">{!!Form::label('naziv', 'Naziv smeštaja:')!!}</div>
                                 <div class="col-sm-10 form-group">{!!Form::text('naziv',null,['class'=>'form-control','placeholder'=>'Unesite naziv smeštaja'])!!}</div>
