@@ -48,8 +48,29 @@ class AdminC extends Controller
                 'objekat.opis', 'objekat.adresa','objekat.telefon', 'objekat.email','objekat.x','objekat.y','objekat.z',
                 'objekat.foto','objekat.aktivan','objekat.slug')
             ->get();
-
-        return view('firmolog.objekti')->with('objekti', $objekti);
+        $i=0;
+        foreach ($objekti as $id=>$objekat){
+          $smestaji_objekta = DB::table('smestaj')
+                ->join('objekat', 'smestaj.objekat_id','=', 'objekat.id')
+                ->join('vrsta_smestaja', 'smestaj.vrsta_smestaja_id','=', 'vrsta_smestaja.id')
+                ->join('vrsta_kapaciteta', 'smestaj.vrsta_kapaciteta_id','=', 'vrsta_kapaciteta.id')
+                ->where('objekat.id', '=', $objekat->id)
+                ->select('smestaj.id as id','smestaj.objekat_id as objekat_id', 'vrsta_smestaja.naziv as vrsta_smestaja',
+                    'vrsta_kapaciteta.naziv as vrsta_kapaciteta', 'smestaj.slug as slug', 'smestaj.naziv as naziv')
+                ->get();
+            foreach ($smestaji_objekta as $id=>$smestaj){
+                $smestaji[$i]['id'] = $smestaj->id;
+                $smestaji[$i]['objekat_id'] = $smestaj->objekat_id;
+                $smestaji[$i]['vrsta_smestaja'] =$smestaj->vrsta_smestaja;
+                $smestaji[$i]['vrsta_kapaciteta'] =$smestaj->vrsta_kapaciteta;
+                $smestaji[$i]['slug'] =$smestaj->slug;
+                $smestaji[$i]['naziv'] =$smestaj->naziv;
+                $i++;
+            }
+        }
+        $smestaji = json_encode($smestaji);
+        $smestaji =  json_decode($smestaji);
+        return view('firmolog.objekti')->with('objekti', $objekti)->with('smestaji', $smestaji);
     }
 
     //Prikaz forme za dodavanje i azuriranje smestaja
