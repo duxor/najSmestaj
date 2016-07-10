@@ -6,6 +6,9 @@
  * */
 namespace App\Http\Controllers;
 
+use App\Dodaci;
+use App\DodaciUpotreba;
+use App\Funkcije;
 use App\Grad;
 use App\Objekat;
 use App\Smestaj;
@@ -18,6 +21,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 
 class AdminC extends Controller
@@ -32,10 +36,12 @@ class AdminC extends Controller
 
     //Prikaz forme za dodavanje i azuriranje objekata
     public function getObjekat($slug = null){
+        $dodaci = Dodaci::all();
         $gradovi=Grad::lists('naziv','id');
         $vrste_objekta=VrstaObjekta::lists('naziv','id');
         $slug?$objekat = Objekat::where('slug', $slug)->get()->first():$objekat = null;
-        return view('firmolog.objekat')->with('gradovi',$gradovi)->with('vrste_objekta',$vrste_objekta)->with('objekat',$objekat);
+        return view('firmolog.objekat')->with('gradovi',$gradovi)->with('vrste_objekta',$vrste_objekta)
+            ->with('objekat',$objekat)->with('dodaci',$dodaci);
     }
 
     //Prikaz svuh objekata
@@ -115,22 +121,8 @@ class AdminC extends Controller
 
     //Dodavanje i azuriranje objekata
     public function postObjekat(Request $request){
-
       $objekat = $request->id?Objekat::where('id', $request->id)->get()->first():new Objekat();
-
-        if(!$request->id){
-            $slug = null;
-            $text = $request->naziv;
-            $tmp=strtr($text,['Š'=>'s','š'=>'s','Đ'=>'d','đ'=>'d','Č'=>'c','č'=>'c','Ć'=>'c','ć'=>'c','Ž'=>'z','ž'=>'z']);
-            $tmp = strtolower(preg_replace("/[^a-zA-Z0-9]+/", "-", $tmp));
-            if ($tmp[strlen($tmp) - 1] == '-') $tmp = substr($tmp, 0, strlen($tmp) - 1);
-            $i = 0;
-            while (!$slug){
-                if (!Objekat::where('slug', $tmp . ($i == 0 ? '' : '-' . $i))->exists()) $slug = $tmp . ($i == 0 ? '' : '-' . $i);
-                $i++;
-            }
-        }
-
+        if(!$request->id)$slug = Funkcije::kreirajSlug($request->naziv,new Objekat());
         //template defaut 1
         $objekat->korisnik_id = Auth::user()->id;
         $objekat->grad_id = $request->grad_id;
@@ -145,30 +137,24 @@ class AdminC extends Controller
         $objekat->x = $request->x;
         $objekat->y = $request->y;
         $objekat->z = $request->z;
-
         $request->id?$objekat->update():$objekat->save();
 
+        $dodaci = $request->dodatak;
+        foreach ($dodaci as $dodatak) {
+           if(!$dodaj_dodatak = DodaciUpotreba::where('dodaci_id',$dodatak)->where('objekat_id',$objekat->id)->first()) {
+               $dodaj_dodatak = new DodaciUpotreba();
+               $dodaj_dodatak->dodaci_id = $dodatak;
+               $dodaj_dodatak->objekat_id = $objekat->id;
+               $dodaj_dodatak->save();
+           }
+        }
         return $this->getObjekti();
     }
 
     //Dodavanje i azuriranje objekata
     public function postSmestaj(Request $request){
-
         $smestaj = $request->id?Smestaj::where('id', $request->id)->get()->first():new Smestaj();
-
-        if(!$request->id){
-            $slug = null;
-            $text = $request->naziv;
-            $tmp=strtr($text,['Š'=>'s','š'=>'s','Đ'=>'d','đ'=>'d','Č'=>'c','č'=>'c','Ć'=>'c','ć'=>'c','Ž'=>'z','ž'=>'z']);
-            $tmp = strtolower(preg_replace("/[^a-zA-Z0-9]+/", "-", $tmp));
-            if ($tmp[strlen($tmp) - 1] == '-') $tmp = substr($tmp, 0, strlen($tmp) - 1);
-            $i = 0;
-            while (!$slug){
-                if (!Smestaj::where('slug', $tmp . ($i == 0 ? '' : '-' . $i))->exists()) $slug = $tmp . ($i == 0 ? '' : '-' . $i);
-                $i++;
-            }
-        }
-
+        if(!$request->id)$slug = Funkcije::kreirajSlug($request->naziv,new Smestaj());
         //template defaut 1
         $smestaj->objekat_id = $request->objekat_id;
         $smestaj->vrsta_smestaja_id = $request->vrsta_smestaja_id;
@@ -176,13 +162,9 @@ class AdminC extends Controller
         $smestaj->dodaci = $request->dodaci;
         $smestaj->naziv = $request->naziv;
         if(!$request->id)$smestaj->slug = $slug;
-
-
         $request->id?$smestaj->update():$smestaj->save();
-
         $objekat = Objekat::where('id', $smestaj->objekat_id)->get()->first();
         return $this->getSmestaji($objekat->slug);
-
     }
 
     public function post()

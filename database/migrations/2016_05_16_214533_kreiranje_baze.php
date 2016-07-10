@@ -104,8 +104,8 @@ class KreiranjeBaze extends Migration{
         });
         Schema::create('dodaci_upotreba',function(Blueprint $table){
             $table->bigIncrements('id');
-            $table->bigInteger('objekat_id');
-            $table->bigInteger('smestaj_id');
+            $table->bigInteger('objekat_id')->nullable();
+            $table->bigInteger('smestaj_id')->nullable();
             $table->unsignedBigInteger('dodaci_id');
             $table->foreign('dodaci_id')->references('id')->on('dodaci');
             $table->string('napomena', 250)->nullable();

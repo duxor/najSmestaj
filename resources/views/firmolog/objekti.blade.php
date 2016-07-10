@@ -58,6 +58,7 @@
             $(this).click(function () {
                 var slug  = $( this ).attr('value');
                 $.post('/administration/status-objekta', {slug: slug,  _token: '{{csrf_token()}}'})
+                location.reload();
         })
         })
     </script>
