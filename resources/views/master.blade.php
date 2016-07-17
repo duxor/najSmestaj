@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>najSmeštaj | Pronađite smeštaj brzo i lako</title>
-    <meta name="description" content="Platforma za brzo i lako kreiranje lične web prezentacije i reklamiranje smeštaja. U samo nekoliko koraka registrujte se i iskoristite besplatan probni period">
+    <meta name="description" content="Platforma za brzo i lako kreiranje web stranice i reklamiranje smeštaja. U samo nekoliko koraka registrujte se i iskoristite besplatan probni period">
     <meta name="theme-color" content="#663fb5">
 	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 	<link rel="icon" href="/favicon.ico" type="image/x-icon">
@@ -68,7 +68,7 @@
                                 </div>
                                 <div class="media-body media-middle">
                                     <h5 class="media-heading">najSmeštaj</h5>
-                                    <h6>contact@najsmestaj.com</h6>
+                                    <h6>contact&commat;najsmestaj&period;com</h6>
                                 </div>
                             </div>
                             <a href="#" class="dropdown-item text-uppercase">Često postavljena pitanja</a>
@@ -92,7 +92,7 @@
                     </div>
                     <div class="media-body media-middle">
                         <h5 class="media-heading">najSmeštaj</h5>
-                        <h6>contact@najsmestaj.com</h6>
+                        <h6>contact&commat;najsmestaj&period;com</h6>
                     </div>
                 </div>
                 <a href="#" class="dropdown-item text-uppercase">Često postavljena pitanja</a>
@@ -167,6 +167,17 @@
         </div>
     </footer>
     {{---footer:end--}}
+    <script>var __token='{{csrf_token()}}';</script>
+    {{--
+    MASTER:
+        1 - jQuery
+        2 - landilo
+        3 - master-contact-form
+    INDEX:
+        1 - moment
+        2 - datetimepicker
+        3 - index-basic-function
+    --}}
     <script async src="/templejt/master/js/index.js"></script>
     @yield('end-script')
 </body>
