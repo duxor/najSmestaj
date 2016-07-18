@@ -178,7 +178,9 @@
         2 - datetimepicker
         3 - index-basic-function
     --}}
-    <script async src="/templejt/master/js/index.js"></script>
+    {{--<script async src="/templejt/master/js/index.js"></script>
+    <script async src="/templejt/master/js/el/master.min.js"></script>
+    <script async src="/templejt/master/js/el/onlyIndex.min.js"></script>--}}
     @yield('end-script')
 </body>
 </html>

@@ -45,6 +45,7 @@ class KreiranjeBaze extends Migration{
         Schema::create('templejt',function(Blueprint $table){
             $table->bigIncrements('id');
             $table->string('naziv', 45);
+            $table->string('slug', 150);
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->nullable();
         });
@@ -60,13 +61,14 @@ class KreiranjeBaze extends Migration{
             $table->foreign('korisnik_id')->references('id')->on('korisnik');
             $table->unsignedBigInteger('templejt_id')->default(1);
             $table->foreign('templejt_id')->references('id')->on('templejt');
+            $table->string('templejt_slug', 250)->nullable();
             $table->unsignedBigInteger('grad_id');
             $table->foreign('grad_id')->references('id')->on('grad');
             $table->unsignedBigInteger('vrsta_objekta_id');
             $table->foreign('vrsta_objekta_id')->references('id')->on('vrsta_objekta');
             $table->string('naziv', 45);
             $table->string('slug', 128);
-            $table->string('opis', 256)->nullable();
+            $table->text('opis')->nullable();
             $table->string('adresa', 128)->nullable();
             $table->string('galerija',250)->nullable();
             $table->string('telefon',45)->nullable();
@@ -157,8 +159,8 @@ class KreiranjeBaze extends Migration{
         Schema::drop('rezervacija');
         Schema::drop('password_resets');
         Schema::drop('smestaj');
-        Schema::drop('dodaci');
         Schema::drop('dodaci_upotreba');
+        Schema::drop('dodaci');
         Schema::drop('vrsta_kapaciteta');
         Schema::drop('vrsta_smestaja');
         Schema::drop('objekat');

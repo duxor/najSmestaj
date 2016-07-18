@@ -1,7 +1,6 @@
 <?php
 
 use App\Dodaci;
-use App\Funkcije;
 use Illuminate\Database\Seeder;
 use App\PravaPristupa;
 use App\Grad;
@@ -13,6 +12,7 @@ use App\Objekat;
 use App\Smestaj;
 use App\Rezervacija;
 use App\Like;
+use App\Funkcije;
 
 class KonfiguracioniPodaci extends Seeder{
     public function run(){
@@ -22,7 +22,7 @@ class KonfiguracioniPodaci extends Seeder{
             ['naziv' => 'Vranje'],
         ]);
         Templejt::insert([
-            ['naziv' => 'Osnovni izgled']
+            ['naziv' => 'Plavi izgled', 'slug'=>Funkcije::kreirajSlug('Plavi izgled', new Templejt())]
         ]);
         PravaPristupa::insert([
             ['naziv' => 'Blokiran'],

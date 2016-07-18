@@ -444,3 +444,6 @@
     </section>
     {{---newsletter:end--}}
 @endsection
+@section('end-script')
+    <script async src="/templejt/master/js/min/index.js"></script>
+@endsection
