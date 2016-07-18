@@ -19,9 +19,9 @@ class DestinacijaTest  extends Seeder
             ['naziv'=>'Haiti','slug'=>'haiti','opis'=>'Divno mesto za odmor.','x'=>'-72.13623047','y'=>'19.05173367','z'=>'10','tagovi'=>'haiti']
         ]);
         DestinacijaUpotreba::insert([
-            ['objekat_id'=>'1','grad_id'=>'1'],
-            ['objekat_id'=>'1','grad_id'=>'1'],
-            ['objekat_id'=>'1','grad_id'=>'1'],
+            [destinacija_id=>1, objekat_id=>1, grad_id=>null],
+            [destinacija_id=>2, objekat_id=>null, grad_id=>1],
+            [destinacija_id=>3, objekat_id=>null, grad_id=>2],
 
            ]);
 

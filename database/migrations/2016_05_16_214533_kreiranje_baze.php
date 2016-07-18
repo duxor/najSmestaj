@@ -179,6 +179,7 @@ class KreiranjeBaze extends Migration{
         });
         Schema::create('destinacija_upotreba',function(Blueprint $table){
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('destinacija_id');
             $table->unsignedBigInteger('objekat_id');
             $table->unsignedBigInteger('grad_id');
         });
