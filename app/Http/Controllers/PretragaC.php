@@ -107,8 +107,7 @@ class PretragaC extends Controller
 
         return view('korisnik.like',compact('lista_zelja'));
     }
-    public function postLogin(Request $request)
-    {
+    public function postLogin(Request $request){
         $validator = Validator::make($request->all(), [
             'email'=>'required|email',
             'password'=>'required'

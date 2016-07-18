@@ -25,6 +25,7 @@ Route::get('/after-login',function(){
         default: return redirect('/');
     }
 });
+
 Route::auth();
 Route::controller('/administration','AdminC');
 Route::controller('/management ','ManagerC');

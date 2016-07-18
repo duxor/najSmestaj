@@ -37,6 +37,16 @@
                 </div>
                 <div class="box-footer">
                     LISTA SVIH SMEŠTAJA OBJEKTA: link>nazivSmještaja
+                    @foreach($smestaji as $smestaj)
+                      @if($smestaj->objekat_id == $objekat->id)
+                            <a href="#">{!! $smestaj->naziv!!}</a>
+                        <ul>
+                            <li>{!! $smestaj->vrsta_smestaja!!}</li>
+                            <li>{!! $smestaj->vrsta_kapaciteta!!}</li>
+                            <li>{!! $smestaj->slug!!}</li>
+                        </ul>
+                        @endif
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -48,6 +58,7 @@
             $(this).click(function () {
                 var slug  = $( this ).attr('value');
                 $.post('/administration/status-objekta', {slug: slug,  _token: '{{csrf_token()}}'})
+                location.reload();
         })
         })
     </script>

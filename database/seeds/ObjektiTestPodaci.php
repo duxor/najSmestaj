@@ -2,6 +2,7 @@
 
 use App\Objekat;
 use App\VrstaObjekta;
+use App\Templejt;
 use Illuminate\Database\Seeder;
 
 class ObjektiTestPodaci extends Seeder
@@ -17,6 +18,7 @@ class ObjektiTestPodaci extends Seeder
             [
                 'korisnik_id'=>4,
                 'templejt_id'=>1,
+                'templejt_slug'=>Templejt::getSlug(1),
                 'grad_id'=>1,
                 'vrsta_objekta_id'=>2,
                 'naziv'=>'Vila promaja',
@@ -33,6 +35,7 @@ class ObjektiTestPodaci extends Seeder
             [
                 'korisnik_id'=>5,
                 'templejt_id'=>1,
+                'templejt_slug'=>Templejt::getSlug(1),
                 'grad_id'=>2,
                 'vrsta_objekta_id'=>3,
                 'naziv'=>'Smestaj Marković',
@@ -49,6 +52,7 @@ class ObjektiTestPodaci extends Seeder
             [
                 'korisnik_id'=>4,
                 'templejt_id'=>1,
+                'templejt_slug'=>Templejt::getSlug(1),
                 'grad_id'=>3,
                 'vrsta_objekta_id'=>4,
                 'naziv'=>'Smestaj Petrović',

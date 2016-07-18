@@ -55,6 +55,13 @@
                                             {!! Form::hidden('z',$objekat?$objekat->z:6,['id'=>'z' ]) !!}
                                         </div>
 
+                                        <h1 class="col-sm-12">Dodaci:</h1>
+                                        @foreach($dodaci as $dodatak)
+                                            <div class="col-sm-3">
+                                                <h4><strong>{{$dodatak->naziv}}</strong></h4>
+                                                {!! Form::checkbox("dodatak[]",$dodatak->id) !!}
+                                            </div>
+                                        @endforeach
                                         <div class="col-sm-12" align="center">{!!Form::button('<i class="glyphicon glyphicon-floppy-disk"></i> Sačuvaj',['type'=>'submit', 'class'=>'btn btn-lg btn-primary ','data-toggle'=>'tooltip','title'=>'Preporuka: proverite da li ste uneli sve podatke.'])!!}</div>
                                     {!! Form::close() !!}
                                 </div>
