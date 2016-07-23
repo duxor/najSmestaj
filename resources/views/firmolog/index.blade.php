@@ -312,7 +312,6 @@
 
                 },function(data){
                     var data=JSON.parse(data);
-                   console.log(data.prijava);
                     console.log(data.odjava);
                     $('#lista_smestaja').empty();
                     $('#lista_smestaja').html('<h3>Izaberite datum!</h3>');

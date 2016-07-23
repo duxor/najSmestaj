@@ -199,10 +199,11 @@ class AdminC extends Controller
         return view("firmolog.templejt-izmeni-{$slug}");
     }
     public function postPretraga(Request $request){
-        $query=Smestaj::where('objekat.korisnik_id','=',Auth::user()->id)
-            ->join('objekat','objekat.id','=','smestaj.objekat_id')
+        $query=Smestaj::join('objekat','objekat.id','=','smestaj.objekat_id')
             ->leftJoin('rezervacija','rezervacija.smestaj_id','=','smestaj.id')
-            ->join('vrsta_kapaciteta','vrsta_kapaciteta.id','=','smestaj.vrsta_kapaciteta_id');
+            ->leftJoin('vrsta_kapaciteta','vrsta_kapaciteta.id','=','smestaj.vrsta_kapaciteta_id')
+            ->groupby('smestaj.id')
+            ->where('objekat.korisnik_id','=',Auth::user()->id);
 
         $datum_od=substr($request->start_date,0,-13);
         $datum_od=Funkcije::convertDate($datum_od);
