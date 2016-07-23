@@ -50,7 +50,6 @@ class KreiranjeBaze extends Migration{
             $table->bigIncrements('id');
             $table->string('naziv', 45);
             $table->string('slug', 128)->nullable();
-            $table->string('slug', 150);
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->nullable();
         });

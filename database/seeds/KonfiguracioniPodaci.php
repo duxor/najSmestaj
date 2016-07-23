@@ -65,6 +65,7 @@ class KonfiguracioniPodaci extends Seeder{
             ['naziv' => 'Turizam',       'slug' => Funkcije::kreirajSlug('Turizam',new SvrhaPutovanja())],
             ['naziv' => 'Posao',    'slug' => Funkcije::kreirajSlug('Posao',new SvrhaPutovanja())],
             ['naziv' => 'Odmor',       'slug' => Funkcije::kreirajSlug('Odmor',new SvrhaPutovanja())]
+        ]);
         Dodaci::insert([
             ['naziv' => 'klima uredjaj', 'tag' => 'klima uredjaj', 'slug'=>Funkcije::kreirajSlug('klima uredjaj',new Dodaci()) ],
             ['naziv' => 'bezicni internet',  'tag' => 'internet', 'slug'=>Funkcije::kreirajSlug('bezicni internet',new Dodaci())],
