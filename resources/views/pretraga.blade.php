@@ -2,6 +2,7 @@
     if(!isset($korisnik[0]['ime']))$korisnik[0]['ime']=null;
     if(!isset($korisnik[0]['prezime']))$korisnik[0]['prezime']=null;
     if(!isset($korisnik[0]['email']))$korisnik[0]['email']=null;
+    if(!isset($pretraga)) $pretraga=[];
 ?>
 @extends('master')
 @section('body')
@@ -11,27 +12,27 @@
         <div class="row">
             <div class="form-group has-icon-left form-control-name">
                 <label class="sr-only" for="inputNaziv">Naziv</label>
-                <input type="text" class="form-control form-control-lg" id="inputNaziv" placeholder="Naziv" name="naziv">
+                <input type="text" class="form-control form-control-lg" id="inputNaziv" placeholder="Naziv" name="naziv" value="{{isset($pretraga['naziv'])?$pretraga['naziv']:null}}">
             </div>
             {{---GRAD--}}
             <div class="form-group has-icon-left form-control-email">
                 <label class="sr-only" for="inputGrad">Grad</label>
-                {!!Form::select('grad', $gradovi, null, ['id'=>'inputGrad','class'=>'form-control form-control-lg','placeholder'=>'Izaberi grad'])!!}
+                {!!Form::select('grad', $gradovi, isset($pretraga['grad'])?$pretraga['grad']:null, ['id'=>'inputGrad','class'=>'form-control form-control-lg','placeholder'=>'Izaberi grad'])!!}
             </div>
             {{---DATUM-PRIJAVE--}}
             <div class="form-group has-icon-left form-control-email">
                 <label class="sr-only" for="inputPrijava">Datum prijave</label>
-                <input type="text" class="form-control form-control-lg" id="inputPrijava" placeholder="Datum prijave" name="datum_prijave1">
+                <input type="text" class="form-control form-control-lg" id="inputPrijava" placeholder="Datum prijave" name="datum_prijave1" value="{{isset($pretraga['datum_prijave'])?$pretraga['datum_prijave']:null}}">
             </div>
             {{---DATUM-ODJAVE--}}
             <div class="form-group has-icon-left form-control-email">
-                <label class="sr-only" for="inputOdjava">Datum prijave</label>
-                <input type="text" class="form-control form-control-lg" id="inputOdjava" placeholder="Datum odjave" name="datum_odjave1">
+                <label class="sr-only" for="inputOdjava">Datum odjave</label>
+                <input type="text" class="form-control form-control-lg" id="inputOdjava" placeholder="Datum odjave" name="datum_odjave1" value="{{isset($pretraga['datum_odjave'])?$pretraga['datum_odjave']:null}}">
             </div>
             {{---BOJ-OSOBA--}}
             <div class="form-group has-icon-left form-control-name">
                 <label class="sr-only" for="inputBrojosoba">Broj osoba</label>
-                {!!Form::select('broj_osoba',[1=>1,2=>2,3=>3,4=>4,5=>5,6=>6,7=>7,8=>8,9=>9,10=>10,11=>11,12=>12],null,['id'=>'inputBrojosoba','class'=>'form-control form-control-lg','placeholder'=>'Broj osoba'])!!}
+                {!!Form::select('broj_osoba',[1=>1,2=>2,3=>3,4=>4,5=>5,6=>6,7=>7,8=>8,9=>9,10=>10,11=>11,12=>12],isset($pretraga['broj_osoba'])?$pretraga['broj_osoba']:null,['id'=>'inputBrojosoba','class'=>'form-control form-control-lg','placeholder'=>'Broj osoba'])!!}
             </div>
         </div>
         <div class="row">

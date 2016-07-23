@@ -1,5 +1,8 @@
 @extends('firmolog.master')
 @section('container')
+        <!-- daterange picker -->
+        <link rel="stylesheet" href="/templejt/admin-lte-v233/plugins/daterangepicker/daterangepicker-bs3.css">
+
     <div class="box" style="border:none">
         <div class="col-md-3 col-sm-6 col-xs-12">
             <div class="info-box">
@@ -84,7 +87,57 @@
                     </tbody>
                 </table>
             </div>
-            <!-- /.box-body -->
+        </div>
+
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Pregled slobodnih smeštaja</h3>
+                <div class="form-group">
+                    <label>Date range:</label>
+
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        <input type="text" class="form-control pull-right active" id="reservation">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+            <div class="box-body no-padding">
+                <table class="table text-center">
+                    <tbody>
+                    <tr>
+                        <th style="width: 10px">#</th>
+                        <th>Naziv</th>
+                        <th>Kapacitet</th>
+                        <th style="width: 40px">Cena</th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <td>1.</td>
+                        <td>Soba Nina</td>
+                        <td>2</td>
+                        <td>100</td>
+                        <td><button class="btn btn-xs btn-info"><i class="fa fa-pencil"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td>2.</td>
+                        <td>Soba Ultimate</td>
+                        <td>3</td>
+                        <td>100</td>
+                        <td><button class="btn btn-xs btn-info"><i class="fa fa-pencil"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td>3.</td>
+                        <td>Soba Mileva</td>
+                        <td>1</td>
+                        <td>100</td>
+                        <td><button class="btn btn-xs btn-info"><i class="fa fa-pencil"></i></button></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
     {{---trenutno-stanje-smještaja::end--}}
@@ -129,6 +182,9 @@
     <!-- Morris.js charts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
     <script src="/templejt/admin-lte-v233/plugins/morris/morris.min.js"></script>
+    <!-- date-range-picker -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+    <script src="/templejt/admin-lte-v233/plugins/daterangepicker/daterangepicker.js"></script>
     <script>
         /* jQueryKnob */
         $(".knob").knob();
@@ -164,5 +220,28 @@
             gridTextFamily: "Open Sans",
             gridTextSize: 10
         });
+        //Date range picker
+        $('#reservation').daterangepicker();
+        //Date range picker with time picker
+        $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A'});
+        //Date range as a button
+        $('#daterange-btn').daterangepicker(
+                {
+                    ranges: {
+                        'Today': [moment(), moment()],
+                        'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                        'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                        'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                        'This Month': [moment().startOf('month'), moment().endOf('month')],
+                        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                    },
+                    startDate: moment().subtract(29, 'days'),
+                    endDate: moment()
+                },
+                function (start, end) {
+                    $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+                }
+        );
+
     </script>
 @endsection

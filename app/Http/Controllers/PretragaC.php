@@ -73,13 +73,23 @@ class PretragaC extends Controller
         if(Input::get('datum_prijave')!== ''&& Input::get('datum_odjave')!== ''){
             $datum_prijave= Input::get('datum_prijave');
             $datum_odjave= Input::get('datum_odjave');
-            $smestaj = $query->get(['smestaj.id','objekat.naziv as naziv_objekta','vrsta_smestaja.naziv as naziv_smestaja','vrsta_kapaciteta.naziv as naziv_kapaciteta','smestaj.vrsta_kapaciteta_id as broj_osoba','smestaj.dodaci','like.id as zelja'])->toArray();
-            $smestaj= Funkcije::dostupnostZaRezervaciju($smestaj,$datum_prijave,$datum_odjave);
-            return view('pretraga')->with(['smestaj'=>$smestaj])->with(['korisnik'=>$korisnik,'gradovi'=>$gradovi,'svrha_putovanja'=>$svrha_putovanja]);
+            $smestaj = $query->get(['smestaj.id','smestaj.slug as slug_smestaj','objekat.naziv as naziv_objekta','objekat.slug as slug_objekat','vrsta_smestaja.naziv as naziv_smestaja','vrsta_kapaciteta.naziv as naziv_kapaciteta','smestaj.vrsta_kapaciteta_id as broj_osoba','smestaj.dodaci','like.id as zelja'])->toArray();
+            $smestaj= Funkcije::dostupnostZaRezervaciju($smestaj,$datum_prijave,$datum_odjave);dd(Input::all());
+            return view('pretraga')
+                ->with(['smestaj'=>$smestaj])
+                ->with(['korisnik'=>$korisnik,'gradovi'=>$gradovi,'svrha_putovanja'=>$svrha_putovanja])
+                ->with('pretraga',Input::except('_token'));
         }else{
             $smestaj = $query->get(['smestaj.id','smestaj.slug as slug_smestaj','objekat.naziv as naziv_objekta','objekat.slug as slug_objekat','vrsta_smestaja.naziv as naziv_smestaja', 'vrsta_kapaciteta.naziv as naziv_kapaciteta','smestaj.vrsta_kapaciteta_id as broj_osoba','smestaj.dodaci','like.id as zelja'])->toArray();
             $gradovi=Grad::lists('naziv','id');
-            return view('pretraga')->with(['smestaj'=>$smestaj,'korisnik'=>$korisnik,'gradovi'=>$gradovi,'svrha_putovanja'=>$svrha_putovanja]);
+            return view('pretraga')
+                ->with([
+                    'smestaj'=>$smestaj,
+                    'korisnik'=>$korisnik,
+                    'gradovi'=>$gradovi,
+                    'svrha_putovanja'=>$svrha_putovanja,
+                    'pretraga'=>Input::except('_token')
+                ]);
         }
     }
     public function postLike(){
