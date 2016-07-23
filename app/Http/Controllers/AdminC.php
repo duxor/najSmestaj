@@ -6,6 +6,8 @@
  * */
 namespace App\Http\Controllers;
 
+use App\User;
+use App\Rezervacija;
 use App\Dodaci;
 use App\DodaciUpotreba;
 use App\Funkcije;
@@ -17,13 +19,14 @@ use App\VrstaKapaciteta;
 use App\VrstaObjekta;
 use App\VrstaSmestaja;
 use Illuminate\Http\Request;
-
+use Validator;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
+use DateTime;
 
 class AdminC extends Controller
 {
@@ -32,7 +35,8 @@ class AdminC extends Controller
     }
     
     public function getIndex(){
-        return view('firmolog.index');
+        $gradovi=Grad::lists('naziv','id');
+        return view('firmolog.index')->with(['gradovi'=>$gradovi]);
     }
 
     //Prikaz forme za dodavanje i azuriranje objekata
@@ -193,6 +197,75 @@ class AdminC extends Controller
     public function getIzmeniSadrzaj($slug=null){
         $slug=Templejt::checkExist($slug);
         return view("firmolog.templejt-izmeni-{$slug}");
+    }
+    public function postPretraga(Request $request){
+        $query=Smestaj::where('objekat.korisnik_id','=',Auth::user()->id)
+            ->join('objekat','objekat.id','=','smestaj.objekat_id')
+            ->leftJoin('rezervacija','rezervacija.smestaj_id','=','smestaj.id')
+            ->join('vrsta_kapaciteta','vrsta_kapaciteta.id','=','smestaj.vrsta_kapaciteta_id');
+
+        $datum_od=substr($request->start_date,0,-13);
+        $datum_od=Funkcije::convertDate($datum_od);
+        $datum_do=substr($request->start_date,-10);
+        $datum_do=Funkcije::convertDate($datum_do);
+
+        $smestaj = $query->get(['smestaj.id','smestaj.naziv','smestaj.cena','vrsta_kapaciteta.broj_osoba','smestaj.slug as slug_smestaj','objekat.naziv as naziv_objekta'])->toArray();
+        $smestaj= Funkcije::dostupnostZaRezervaciju($smestaj,$datum_od,$datum_do);
+        return json_encode(['smestaj'=>$smestaj,'prijava'=>$datum_od,'odjava'=>$datum_do]);
+    }
+    public function postRezervacija(Request $request){
+        $validator = Validator::make(Input::all(), [
+            'ime' => 'required|min:3|max:255',
+            'prezime' => 'required|min:3|max:255',
+            'email' => 'required|email',
+            'password' => 'required|confirmed|min:6|max:255',
+            'password_confirmation' => 'required|min:6|max:255',
+            'telefon'=>'required|numeric'
+        ],
+            [
+                'ime.required'=>'Ime je obavezno za unos.',
+                'ime.min'=>'Minimalna dužina je :min.',
+                'ime.max'=>'Maksimalna dužina je :max.',
+                'prezime.required'=>'Prezime je obavezno za unos.',
+                'prezime.min'=>'Minimalna dužina je :min.',
+                'prezime.max'=>'Maksimalna dužina je :max.',
+                'password.required'=>'Korisnička šifra je obavezna za unos.',
+                'password.min'=>'Minimalna dužina korisničke šifre je :min.',
+                'password.max'=>'Maksimalna dužina korisničke šifre je :max.',
+                'password.confirmed'=>'Unesene šifre se ne poklapaju.',
+                'password.max'=>'Maksimalna dužina korisničke šifre je :max.',
+                'password_confirmation.required'=>'Potvrda korisničke šifra je obavezna.',
+                'email.required'=>'E-mail je obavezan za unos.',
+                'email.email'=>'Unesite ispravnu E-mail adresu.',
+                'telefon.required'=>'Telefon je obavezan za unos.',
+                'telefon.numeric'=>'Telefon mora biti broj.',
+            ]);
+        if($validator->fails()){
+            return json_encode(['neuspesno'=>'Neuspešna registracija i rezervacija!','validator'=>$validator->errors()->all()]);
+        } else{
+            $user=User::create([
+                'ime'=>Input::get('prezime'),
+                'prezime'=>Input::get('ime'),
+                'username' => Input::get('username'),
+                'password' => bcrypt(Input::get('password')),
+                'email' => Input::get('email'),
+                'adresa'=>Input::get('adresa'),
+                'telefon'=>Input::get('telefon'),
+                'prava_pristupa_id'=>2,
+                'grad_id'=>Input::get('grad'),
+                'confirmed'=>1
+            ]);
+            $korisnik_id= $user->id;
+            $rezervacija=Rezervacija::create([
+                'korisnik_id'=>$korisnik_id,
+                'smestaj_id'=>Input::get('smestajID'),
+                'broj_osoba'=>3,
+                'datum_prijave' =>Funkcije::convertDate(Input::get('datum_prijave')),
+                'datum_odjave' => Funkcije::convertDate(Input::get('datum_odjave'))
+            ]);
+
+            return  json_encode(['uspesno'=>'Usešna prijava i rezervacija!']);
+        }
     }
 }
 

@@ -102,46 +102,85 @@
                         <input type="text" class="form-control pull-right active" id="reservation">
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button id="pretraga_za_rezervaciju" type="submit" class="btn btn-primary">Submit</button>
             </div>
-            <div class="box-body no-padding">
-                <table class="table text-center">
-                    <tbody>
-                    <tr>
-                        <th style="width: 10px">#</th>
-                        <th>Naziv</th>
-                        <th>Kapacitet</th>
-                        <th style="width: 40px">Cena</th>
-                        <th></th>
-                    </tr>
-                    <tr>
-                        <td>1.</td>
-                        <td>Soba Nina</td>
-                        <td>2</td>
-                        <td>100</td>
-                        <td><button class="btn btn-xs btn-info"><i class="fa fa-pencil"></i></button></td>
-                    </tr>
-                    <tr>
-                        <td>2.</td>
-                        <td>Soba Ultimate</td>
-                        <td>3</td>
-                        <td>100</td>
-                        <td><button class="btn btn-xs btn-info"><i class="fa fa-pencil"></i></button></td>
-                    </tr>
-                    <tr>
-                        <td>3.</td>
-                        <td>Soba Mileva</td>
-                        <td>1</td>
-                        <td>100</td>
-                        <td><button class="btn btn-xs btn-info"><i class="fa fa-pencil"></i></button></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+            <div id="lista_smestaja"></div>
         </div>
     </div>
     {{---trenutno-stanje-smještaja::end--}}
 
+    {{--MODAL ZA REZERVACIJU--}}
+    <div class=" modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div style="width:100%; border-top:5px solid #269ABC; opacity: 0.9;" class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="glyphicon glyphicon-remove"></span></button>
+                    <h3 style="text-align:center"><i class="glyphicon glyphicon-edit"></i> Rezerviši smestaj</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="col-sm-12"><div id="poruka_neuspesna_reg"></div></div>
+                    <div id="forma" class="form-horizontal">
+                        {!! Form::hidden('_token',csrf_token()) !!}
+                        <input type="hidden" name="smestajID" id="smestajID" value="" />
+                        <input type="hidden" name="datum_prijave" id="datum_prijave" value="" />
+                        <input type="hidden" name="datum_odjave" id="datum_odjave" value="" />
+
+                        <div class="col-sm-12 ">{!!Form::label('ime', 'Ime:')!!}</div>
+                        <div class="col-sm-12 form-group">{!!Form::text('ime',null,['class'=>'form-control','placeholder'=>'Unesite ime'])!!}</div>
+
+                        <div class="col-sm-12 ">{!!Form::label('prezime', 'Prezime:')!!}</div>
+                        <div class="col-sm-12 form-group">{!!Form::text('prezime',null,['class'=>'form-control','placeholder'=>'Unesite prezime'])!!}</div>
+
+                        <div class="col-sm-12 ">{!!Form::label('email', 'E-mail:')!!}</div>
+                        <div class="col-sm-12 form-group">{!!Form::text('email',null,['class'=>'form-control','placeholder'=>'Unesite e-mail adresu'])!!}</div>
+
+                        <div class="col-sm-12 ">{!!Form::label('password', 'Šifra:')!!}</div>
+                        <div class="col-sm-12 form-group">{!!Form::password('password',['id'=>'password','class'=>'form-control','placeholder'=>'Unesite šifru'])!!}</div>
+
+                        <div class="col-sm-12 ">{!!Form::label('password_confirmation', 'Potvrda šifre:')!!}</div>
+                        <div class="col-sm-12 form-group">{!!Form::password('password_confirmation',['id'=>'password_confirmation','class'=>'form-control','placeholder'=>'Potvrdite šifru'])!!}</div>
+
+                        <div class="col-sm-12 ">{!!Form::label('adresa', 'Adresa:')!!}</div>
+                        <div class="col-sm-12 form-group">{!!Form::text('adresa',null,['class'=>'form-control','placeholder'=>'Unesite adresu'])!!}</div>
+
+                        <div class="col-sm-12 ">{!!Form::label('telefon', 'Kontakt telefon:')!!}</div>
+                        <div class="col-sm-12 form-group">{!!Form::text('telefon',null,['class'=>'form-control','placeholder'=>'Unesite telefon'])!!}</div>
+
+                        <div class="col-sm-12">{!!Form::label('grad','Grad:')!!}</div>
+                        <div class="col-sm-12 form-group">{!!Form::select('grad',$gradovi,1,['id'=>'grad','class'=>'form-control','placeholder'=>'Izaberite grad'])!!}</div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                     <div class="col-sm-12 form-group">
+                         {!! Form::button('<span class="glyphicon glyphicon-remove"></span>&nbsp Otkaži',['class'=>'btn btn-lg btn-warning','data-dismiss'=>'modal']) !!}
+                         <button id="register" class="btn btn-lg btn-primary">
+                                <i class="fa fa-btn fa-sign-in"></i>Rezerviši
+                         </button>
+                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{--Kraj modal rezervacija--}}
+
+    {{--MODAL USPEŠNA REZERVACIJA--}}
+    <div class="modal fade" id="uspesna_rezervacija" tabindex="-1" role="dialog" >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-bodya">
+                    <br>
+                    <h3 style="text-align:center"><i class="glyphicon glyphicon-edit" style="font-size: 100%"></i> Uspešno izvršena registracija korisnika i rezervacija</h3>
+                </div>
+                <div class="modal-footer">
+                    <div id="foot" class="form-group">
+                        {!! Form::button('<span class="glyphicon glyphicon-remove"></span> Zatvori',['class'=>'btn btn-lg btn-warning','data-dismiss'=>'modal']) !!}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{--Kraj modal uspešna rezervacija--}}
     {{---ZARADA::START--}}
     <div class="col-sm-5">
         <div class="box box-solid bg-teal-gradient">
@@ -185,6 +224,17 @@
     <!-- date-range-picker -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
     <script src="/templejt/admin-lte-v233/plugins/daterangepicker/daterangepicker.js"></script>
+<script>
+    $('#myModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var id =button.data('id');
+        $(".modal-body #smestajID").val( id );
+        var prijava = button.data('prijava');
+        $(".modal-body #datum_prijave").val( prijava );
+        var odjava = button.data('odjava');
+        $(".modal-body #datum_odjave").val( odjava );
+    });
+</script>
     <script>
         /* jQueryKnob */
         $(".knob").knob();
@@ -221,7 +271,14 @@
             gridTextSize: 10
         });
         //Date range picker
-        $('#reservation').daterangepicker();
+        //$('#reservation').daterangepicker();
+        $('#reservation').daterangepicker(
+                {
+                    locale: {
+                        format: 'YYYY-MM-DD'
+                    }
+                }
+        );
         //Date range picker with time picker
         $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A'});
         //Date range as a button
@@ -244,4 +301,92 @@
         );
 
     </script>
+<script>
+    $('#pretraga_za_rezervaciju').on('click', function(event) {
+        $.post('/administration/pretraga',
+                {
+                    _token:'{{csrf_token()}}',
+                    datum:$('#reservation').val(),
+                    start_date: $('#reservation').val(),
+                    end_date: $('#reservation').data('daterangepicker').end
+
+                },function(data){
+                    var data=JSON.parse(data);
+                   console.log(data.prijava);
+                    console.log(data.odjava);
+                    $('#lista_smestaja').empty();
+                    $('#lista_smestaja').html('<h3>Izaberite datum!</h3>');
+
+                    var ispis='<div class="box-body no-padding">'+
+                            '<table class="table text-center">'+
+                                '<tbody>'+
+                                    '<tr>'+
+                                        '<th style="width: 10px">#</th>'+
+                                        '<th>Naziv</th>'+
+                                        '<th>Kapacitet</th>'+
+                                        '<th style="width: 40px">Cena</th>'+
+                                        '<th></th>'+
+                                    '</tr>';
+
+                    for(var i=0;i<data.smestaj.length;i++){
+                        ispis+='<tr>'+
+                                    '<td>1.</td>'+
+                                    '<td>'+data.smestaj[i].naziv+'</td>'+
+                                    '<td>'+data.smestaj[i].broj_osoba+'</td>'+
+                                    '<td>'+data.smestaj[i].cena+'</td>'+
+                                    '<td><button data-id='+data.smestaj[i].id+'  data-prijava='+data.prijava+' data-odjava='+data.odjava+' data-toggle="modal" data-target="#myModal" class="btn btn-xs btn-info"><i class="fa fa-pencil"></i></button></td>'+
+                                '</tr>';
+                    }
+                    ispis+='</tbody>'+
+                            '</table>'+
+                            '</div>';
+                    $('#lista_smestaja').html(ispis);
+                }
+
+        );
+    });
+    $('#register').on('click', function(event) {
+        var password = $("#password").val();
+        password  = password.replace(/./g, '*');
+        var password_confirmation = $("#password_confirmation").val();
+        password_confirmation  = password_confirmation.replace(/./g, '*');
+        $.post('/administration/rezervacija',
+                {
+                    _token:'{{csrf_token()}}',
+                    ime:$('input[name=ime]').val(),
+                    prezime:$('input[name=prezime]').val(),
+                    username:$('input[name=username]').val(),
+                    password:password,
+                    password_confirmation:password_confirmation,//$('input[name=password_confirmation]').val(),
+                    email:$('input[name=email]').val(),
+                    telefon:$('input[name=telefon]').val(),
+                    adresa:$('input[name=adresa]').val(),
+                    grad:$('#grad').val(),
+                    smestajID:$('input[name=smestajID]').val(),
+                    datum_od:$('input[name=datum_prijave]').val(),
+                    datum_do:$('input[name=datum_odjave]').val(),
+                },function(data){
+                    var rezultati=JSON.parse(data);
+                    console.log(rezultati);
+                    if(rezultati.validator){
+                        $( '#poruka_neuspesna_reg' ).empty();
+                        errors = '<div class="alert alert-danger alert-autocloseable-danger"><ul>';
+                        $.each( rezultati.validator, function( key, value ) {
+                            errors += '<li>' + value + '</li>';
+                        });
+                        errors += '</ul></div>';
+                        $( '#poruka_neuspesna_reg' ).append( errors );
+                    }
+                    if(rezultati.uspesno){
+                        $('#myModal').modal('toggle');
+                        $('#uspesna_rezervacija').modal('toggle');
+                    }
+                }
+        );
+        $(".alert-autocloseable-success").fadeTo(5000, 500).slideUp(500, function(){
+            $(".alert-autocloseable-success").hide();
+        });
+    });
+
+</script>
 @endsection

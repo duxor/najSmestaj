@@ -10,6 +10,7 @@ namespace App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\Rezervacija;
+use DateTime;
 class Funkcije{
     public static function kreirajSlug($text,$objekat){
         $slug = null;
@@ -46,5 +47,10 @@ class Funkcije{
                 else unset($lokali[$k]);
         }
         return $lokali;
+    }
+    public static function convertDate($date) {
+        $datum = new DateTime($date);
+        $datum= date_format($datum,"Y-m-d");
+        return $datum;
     }
 }

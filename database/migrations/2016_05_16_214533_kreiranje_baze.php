@@ -132,6 +132,7 @@ class KreiranjeBaze extends Migration{
             $table->string('foto',250)->nullable();
             $table->string('galerija',250)->nullable();
             $table->tinyInteger('aktivan')->default(1);
+            $table->float('cena')->nullable();
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->nullable();
         });
