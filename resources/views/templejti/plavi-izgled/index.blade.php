@@ -255,7 +255,7 @@
             <section class="with-bg bg-image bg-image-1 skew__deg-1_after-inset">
                 <div class="container well-md text-center">
                     <h2 class="text-primary dobro" data-pocetna="1">
-                        Dobro nam doošli!
+                        Dobro nam došli!
                     </h2>
                     <h6 class="text-regular"><span class="text-grayscale-darker">Ukoliko ne nađete sve potrebne informacije na našoj web platformi budite slobodni da nas pozovete na broj</span><a href="callto:#" class="preffix-2 text-primary">+381 00 000000</a></h6>
                     <p>

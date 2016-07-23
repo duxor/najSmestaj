@@ -77,8 +77,7 @@ class PretragaC extends Controller
             $smestaj= Funkcije::dostupnostZaRezervaciju($smestaj,$datum_prijave,$datum_odjave);
             return view('pretraga')->with(['smestaj'=>$smestaj])->with(['korisnik'=>$korisnik,'gradovi'=>$gradovi,'svrha_putovanja'=>$svrha_putovanja]);
         }else{
-            $smestaj = $query->get(['smestaj.id','objekat.naziv as naziv_objekta','vrsta_smestaja.naziv as naziv_smestaja',
-                'vrsta_kapaciteta.naziv as naziv_kapaciteta','smestaj.vrsta_kapaciteta_id as broj_osoba','smestaj.dodaci','like.id as zelja'])->toArray();
+            $smestaj = $query->get(['smestaj.id','smestaj.slug as slug_smestaj','objekat.naziv as naziv_objekta','objekat.slug as slug_objekat','vrsta_smestaja.naziv as naziv_smestaja', 'vrsta_kapaciteta.naziv as naziv_kapaciteta','smestaj.vrsta_kapaciteta_id as broj_osoba','smestaj.dodaci','like.id as zelja'])->toArray();
             $gradovi=Grad::lists('naziv','id');
             return view('pretraga')->with(['smestaj'=>$smestaj,'korisnik'=>$korisnik,'gradovi'=>$gradovi,'svrha_putovanja'=>$svrha_putovanja]);
         }

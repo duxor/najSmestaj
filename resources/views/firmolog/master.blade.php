@@ -199,6 +199,12 @@
                             <i class="fa fa-suitcase"></i> <span>Dodaj smeštaj</span>
                         </a>
                     </li>
+                    {{---IZGLED--}}
+                    <li{{Request::is('*/templejti')?' class=active ':''}}>
+                        <a href="/{{$root}}/templejti">
+                            <i class="fa fa-suitcase"></i> <span>Templejti</span>
+                        </a>
+                    </li>
                 </ul>
                 {{---glavni-meni::end--}}
             </section>

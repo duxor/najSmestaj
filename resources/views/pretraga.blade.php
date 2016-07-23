@@ -87,7 +87,10 @@
     <div class=" col-sm-9">
         @if(isset($smestaj))
             @foreach($smestaj as $sm)
-                {{$sm['naziv_objekta']}}{{$sm['naziv_smestaja']}}{{$sm['naziv_kapaciteta']}}{{$sm['dodaci']}}
+                <a href="/{{$sm['slug_objekat']}}">{{$sm['naziv_objekta']}}</a>
+                <a href="/{{$sm['slug_objekat']}}/{{$sm['slug_smestaj']}}">{{$sm['naziv_smestaja']}}</a>
+                {{$sm['naziv_kapaciteta']}}
+                {{$sm['dodaci']}}
                 <button class="btn btn-sm btn-info m" data-toggle="modal" data-target="#rezervacija" data-id="{{$sm['id']}}"
                         data-naziv_objekta="{{$sm['naziv_objekta']}}"  data-dodaci="{{$sm['dodaci']}}" data-broj_osoba="{{$sm['broj_osoba']}}" data-naziv_kapaciteta="{{$sm['naziv_kapaciteta']}}" data-naziv_smestaja="{{$sm['naziv_smestaja']}}">
                 <span class="glyphicon glyphicon-check"></span> Rezervacija</button>
