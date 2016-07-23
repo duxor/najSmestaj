@@ -13,6 +13,13 @@ var elixir = require('laravel-elixir');
 
 elixir(function(mix){
 //JS::
+    //LOGIN
+    mix.scripts([
+            'master-jquery.min.js',
+            'master-landio.min.js'
+        ],
+        'public/templejt/master/js/min/login.js'
+    );
     //MASTER:master
     mix.scripts([
             'master-jquery.min.js',

@@ -12,6 +12,7 @@ use App\Funkcije;
 use App\Grad;
 use App\Objekat;
 use App\Smestaj;
+use App\Templejt;
 use App\VrstaKapaciteta;
 use App\VrstaObjekta;
 use App\VrstaSmestaja;
@@ -179,9 +180,19 @@ class AdminC extends Controller
         return $this->getSmestaji($objekat->slug);
     }
 
-    public function post()
-    {
+    public function post(){
         return $this->validatesRequestErrorBag;
+    }
+
+    public function getTemplejti(){
+        return view('firmolog.templejti');
+    }
+    public function getTemplejt(){
+        return view('firmolog.templejt');
+    }
+    public function getIzmeniSadrzaj($slug=null){
+        $slug=Templejt::checkExist($slug);
+        return view("firmolog.templejt-izmeni-{$slug}");
     }
 }
 

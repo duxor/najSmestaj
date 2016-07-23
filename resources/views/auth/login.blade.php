@@ -70,3 +70,12 @@
     </div>
 </div>
 @endsection
+@section('end-script')
+    <script async src="/templejt/master/js/min/login.js"></script>
+    <script>
+        function podaci(email, pass){
+            $('[name=email]').val(email);
+            $('[name=password]').val(pass);
+        }
+    </script>
+@endsection
