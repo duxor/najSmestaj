@@ -1,7 +1,7 @@
 <?php
-    if(!isset($korisnik[0]['ime']))$korisnik[0]['ime']=null;
-    if(!isset($korisnik[0]['prezime']))$korisnik[0]['prezime']=null;
-    if(!isset($korisnik[0]['email']))$korisnik[0]['email']=null;
+    if(!isset($korisnik['ime']))$korisnik['ime']=null;
+    if(!isset($korisnik['prezime']))$korisnik['prezime']=null;
+    if(!isset($korisnik['email']))$korisnik['email']=null;
     if(!isset($pretraga)) $pretraga=[];
 ?>
 @extends('master')
@@ -22,12 +22,12 @@
             {{---DATUM-PRIJAVE--}}
             <div class="form-group has-icon-left form-control-email">
                 <label class="sr-only" for="inputPrijava">Datum prijave</label>
-                <input type="text" class="form-control form-control-lg" id="inputPrijava" placeholder="Datum prijave" name="datum_prijave1" value="{{isset($pretraga['datum_prijave'])?$pretraga['datum_prijave']:null}}">
+                <input type="text" class="form-control form-control-lg datepicker" id="inputPrijava" placeholder="Datum prijave" name="datum_prijave1" value="{{isset($pretraga['datum_prijave'])?$pretraga['datum_prijave']:null}}">
             </div>
             {{---DATUM-ODJAVE--}}
             <div class="form-group has-icon-left form-control-email">
                 <label class="sr-only" for="inputOdjava">Datum odjave</label>
-                <input type="text" class="form-control form-control-lg" id="inputOdjava" placeholder="Datum odjave" name="datum_odjave1" value="{{isset($pretraga['datum_odjave'])?$pretraga['datum_odjave']:null}}">
+                <input type="text" class="form-control form-control-lg datepicker" id="inputOdjava" placeholder="Datum odjave" name="datum_odjave1" value="{{isset($pretraga['datum_odjave'])?$pretraga['datum_odjave']:null}}">
             </div>
             {{---BOJ-OSOBA--}}
             <div class="form-group has-icon-left form-control-name">
@@ -83,27 +83,45 @@
         {!!Form::close()!!}
     </div>
     {!! Html::style('/css/datetimepicker.css') !!}
-    {{--{!!Html::script('/js/moment.js')!!}
-    {!! Html::script('/js/datetimepicker.js') !!}--}}
-    <div class=" col-sm-9">
+    <div class="col-sm-9">
         @if(isset($smestaj))
             @foreach($smestaj as $sm)
-                <a href="/{{$sm['slug_objekat']}}">{{$sm['naziv_objekta']}}</a>
-                <a href="/{{$sm['slug_objekat']}}/{{$sm['slug_smestaj']}}">{{$sm['naziv_smestaja']}}</a>
-                {{$sm['naziv_kapaciteta']}}
-                {{$sm['dodaci']}}
-                <button class="btn btn-sm btn-info m" data-toggle="modal" data-target="#rezervacija" data-id="{{$sm['id']}}"
-                        data-naziv_objekta="{{$sm['naziv_objekta']}}"  data-dodaci="{{$sm['dodaci']}}" data-broj_osoba="{{$sm['broj_osoba']}}" data-naziv_kapaciteta="{{$sm['naziv_kapaciteta']}}" data-naziv_smestaja="{{$sm['naziv_smestaja']}}">
-                <span class="glyphicon glyphicon-check"></span> Rezervacija</button>
-                @if(Auth::check())
-                   <button type="button" class="btn btn-sm btn-default _tooltip zelja" @if($sm['zelja'])data-zelja="{{$sm['zelja']}}" style="color:red" title="Izbaci iz liste zelja" @else data-zelja="false" title="Dodaj u listu želja"@endif
-                    data-zid="{{$sm['id']}}" data-toggle="tooltip" data-placement="bottom"><i class="glyphicon glyphicon-heart"></i></button>
-                @else
-                    <a  href="/login" class="btn btn-sm btn-default _tooltip"  title="Dodaj u listu želja" data-toggle="tooltip" data-placement="bottom">
-                        <i class="glyphicon glyphicon-heart"></i>
-                    </a>
-                @endif
-                <br>
+                <div class="col-sm-6 col-md-4">
+                    <div class="thumbnail">
+                        <img src="/img/default/smestaj.jpg" alt="{{$sm['naziv_smestaja']}}">
+                        <div class="caption">
+                            <h3><a href="/{{$sm['slug_objekat']}}/{{$sm['slug_smestaj']}}">{{$sm['naziv_smestaja']}}</a></h3>
+                            <p>
+                                Objekat: <a href="/{{$sm['slug_objekat']}}">{{$sm['naziv_objekta']}}</a><br>
+                                Grad: {{$sm['naziv_grada']}}<br>
+                                Kapacitet: {{$sm['naziv_kapaciteta']}}
+                                @if($sm['dodaci']) <br>Dodaci: {{$sm['dodaci']}} @endif
+                            </p>
+                            <p>
+                                <button
+                                        class="btn btn-info m"
+                                        data-toggle="modal"
+                                        data-target="#rezervacija"
+                                        data-id="{{$sm['id']}}"
+                                        data-naziv_objekta="{{$sm['naziv_objekta']}}"
+                                        data-dodaci="{{$sm['dodaci']}}"
+                                        data-broj_osoba="{{$sm['broj_osoba']}}"
+                                        data-naziv_kapaciteta="{{$sm['naziv_kapaciteta']}}"
+                                        data-naziv_smestaja="{{$sm['naziv_smestaja']}}">
+                                    <span class="glyphicon glyphicon-check"></span> Rezerviši!
+                                </button>
+                                @if(Auth::check())
+                                    <button type="button" class="btn btn-{{$sm['zelja']?'danger':'info'}} _tooltip zelja" @if($sm['zelja']) data-zelja="{{$sm['zelja']}}" title="Izbaci iz liste zelja" @else data-zelja="false" title="Dodaj u listu želja" @endif
+                                    data-zid="{{$sm['id']}}" data-toggle="tooltip" data-placement="bottom"><i class="glyphicon glyphicon-heart"></i></button>
+                                @else
+                                    <a  href="/login" class="btn btn-info _tooltip" title="Dodaj u listu želja" data-toggle="tooltip" data-placement="bottom">
+                                        <i class="glyphicon glyphicon-heart"></i>
+                                    </a>
+                                @endif
+                            </p>
+                        </div>
+                    </div>
+                </div>
             @endforeach
         @else
             <h3>Nema rezultata za dati upit</h3>
@@ -127,7 +145,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                    <span class="close" data-dismiss="modal" style="position: absolute;right: 20px;cursor:
+                            <span class="close" data-dismiss="modal" style="position: absolute;right: 20px;cursor:
 pointer;font-weight: bold;font-size:40px;top:-10px">&times;</span>
                             <h3 style="text-align:center"><i class="glyphicon glyphicon-edit" style="font-size: 100%"></i> Rezerviši smestaj</h3>
                         </div>
@@ -140,12 +158,12 @@ pointer;font-weight: bold;font-size:40px;top:-10px">&times;</span>
                                             {{---DATUM-PRIJAVE--}}
                                             <div class="form-group has-icon-left form-control-email">
                                                 <label class="sr-only" for="inputPrijava">Datum prijave</label>
-                                                <input type="text" class="form-control form-control-lg" id="inputPrijava1" placeholder="Datum prijave" name="datum_prijave">
+                                                <input type="text" class="form-control form-control-lg datepicker" id="inputPrijava1" placeholder="Datum prijave" name="datum_prijave" value="{{isset($pretraga['datum_prijave'])?$pretraga['datum_prijave']:null}}">
                                             </div>
                                             {{---DATUM-ODJAVE--}}
                                             <div class="form-group has-icon-left form-control-email">
                                                 <label class="sr-only" for="inputOdjava">Datum prijave</label>
-                                                <input type="text" class="form-control form-control-lg" id="inputOdjava1" placeholder="Datum odjave" name="datum_odjave">
+                                                <input type="text" class="form-control form-control-lg datepicker" id="inputOdjava1" placeholder="Datum odjave" name="datum_odjave" value="{{isset($pretraga['datum_odjave'])?$pretraga['datum_odjave']:null}}">
                                             </div>
                                             <div class="form-group">
                                                 <div class="col-sm-12">
@@ -154,35 +172,32 @@ pointer;font-weight: bold;font-size:40px;top:-10px">&times;</span>
                                                 </div>
                                             </div>
                                         </div>
-
                                         <div class="col-md-6">
                                             @if(!Auth::check())
                                                 <div id="izlogovan">
-                                                    <a id="imam_nalog_btn" value='hide/show' class="btn btn-lg btn-default _tooltip"  title="Ulogujte se" data-toggle="tooltip" ><i class="glyphicon glyphicon-user"></i>&nbsp Imam nalog</a>
-                                                    <a id="reg_btn"  value='hide/show'class="btn btn-lg btn-default _tooltip"  title="Registrujte se" data-toggle="tooltip" data-placement="bottom"><i class="glyphicon glyphicon-registration-mark"></i>&nbsp Nisam registrovan</a>
+                                                    <a id="imam_nalog_btn" value='hide/show' class="btn btn-lg btn-default _tooltip" title="Ulogujte se" data-toggle="tooltip" ><i class="glyphicon glyphicon-user"></i>&nbsp Imam nalog</a>
+                                                    <a id="reg_btn" value='hide/show' class="btn btn-lg btn-default _tooltip" title="Registrujte se" data-toggle="tooltip" data-placement="bottom"><i class="glyphicon glyphicon-registration-mark"></i>&nbsp Nisam registrovan</a>
                                                 </div>
                                             @else
                                                 <div id="ulogovan">
-                                                    {!! Form::label('imel','Ime')!!}:<div id="lime">{{$korisnik[0]['ime']}}</div> <br>
-                                                    {!! Form::label('prezimel','Prezime')!!}: <div id="lprezime">{{$korisnik[0]['prezime']}}</div> <br>
-                                                    {!! Form::label('emaill','Email')!!}: <div id="lemail">{{$korisnik[0]['email']}}</div> <br>
+                                                    {!! Form::label('imel','Ime')!!}: <span id="lime">{{$korisnik['ime']}}</span> <br>
+                                                    {!! Form::label('prezimel','Prezime')!!}: <span id="lprezime">{{$korisnik['prezime']}}</span> <br>
+                                                    {!! Form::label('emaill','Email')!!}: <span id="lemail">{{$korisnik['email']}}</span> <br>
                                                 </div>
                                             @endif
                                             <div id="lulogovan">
-                                                {!! Form::label('ime','Ime')!!}:<div id="lime"></div><br>
-                                                {!! Form::label('ime','Prezime')!!}:<div id="lprezime"></div><br>
-                                                {!! Form::label('ime','Email')!!}:<div id="lemail"></div>
+                                                {!! Form::label('ime','Ime')!!}: <span id="lime"></span><br>
+                                                {!! Form::label('ime','Prezime')!!}: <span id="lprezime"></span><br>
+                                                {!! Form::label('ime','Email')!!}: <span id="lemail"></span>
                                             </div>
-                                            <style>
-                                                #lulogovan{display:none;}
-                                            </style>
                                         </div>
                                     </div>
                                     <div class="row">
-                                    <div id="imam_nalog" >
-                                        <div class="row">
+                                    <div id="imam_nalog">
+                                        <div class="col-sm-12 form-horizontal mt30">
+                                            <div id="greskaLogin"></div>
                                             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                                                <label class="col-md-4 control-label">E-Mail Address</label>
+                                                <label class="col-md-4 control-label">E-Mail Adresa</label>
                                                 <div class="col-md-6">
                                                     <input type="email" class="form-control" name="email" value="{{ old('email') }}">
                                                 </div>
@@ -197,7 +212,7 @@ pointer;font-weight: bold;font-size:40px;top:-10px">&times;</span>
                                                 <div class="col-md-6 col-md-offset-4">
                                                     <div class="checkbox">
                                                         <label>
-                                                            <input type="checkbox" name="remember"> Remember Me
+                                                            <input type="checkbox" name="remember"> Zapamti me
                                                         </label>
                                                     </div>
                                                 </div>
@@ -205,40 +220,37 @@ pointer;font-weight: bold;font-size:40px;top:-10px">&times;</span>
                                             <div class="form-group">
                                                 <div class="col-md-6 col-md-offset-4">
                                                     <button id="login" class="btn btn-primary">
-                                                        <i class="fa fa-btn fa-sign-in"></i>Login
+                                                        <i class="fa fa-btn fa-sign-in"></i>Prijava
                                                     </button>
-                                                    <a class="btn btn-link" href="{{ url('/password/reset') }}">Forgot Your Password?</a>
+                                                    <a class="btn btn-link" href="{{ url('/password/reset') }}">Zaboravili ste password?</a>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <style>
-                                        #imam_nalog{display:none;}
-                                    </style>
-                                    <div id="reg">
-                                        <div class="col-sm-12 ">{!!Form::label('ime', 'Ime:')!!}</div>
-                                        <div class="col-sm-12 form-group">{!!Form::text('ime',null,['class'=>'form-control','placeholder'=>'Unesite ime'])!!}</div>
+                                    <div id="reg" class="col-sm-12 mt30 form-horizontal">
+                                        <div class="col-sm-4">{!!Form::label('ime', 'Ime:')!!}</div>
+                                        <div class="col-sm-8 form-group">{!!Form::text('ime',null,['class'=>'form-control','placeholder'=>'Unesite ime'])!!}</div>
 
-                                        <div class="col-sm-12 ">{!!Form::label('prezime', 'Prezime:')!!}</div>
-                                        <div class="col-sm-12 form-group">{!!Form::text('prezime',null,['class'=>'form-control','placeholder'=>'Unesite prezime'])!!}</div>
+                                        <div class="col-sm-4">{!!Form::label('prezime', 'Prezime:')!!}</div>
+                                        <div class="col-sm-8 form-group">{!!Form::text('prezime',null,['class'=>'form-control','placeholder'=>'Unesite prezime'])!!}</div>
 
-                                        <div class="col-sm-12 ">{!!Form::label('email', 'E-mail:')!!}</div>
-                                        <div class="col-sm-12 form-group">{!!Form::text('email1',null,['class'=>'form-control','placeholder'=>'Unesite e-mail adresu'])!!}</div>
+                                        <div class="col-sm-4">{!!Form::label('email', 'E-mail:')!!}</div>
+                                        <div class="col-sm-8 form-group">{!!Form::email('email1',null,['class'=>'form-control','placeholder'=>'Unesite e-mail adresu'])!!}</div>
 
-                                        <div class="col-sm-12 ">{!!Form::label('password', 'Šifra:')!!}</div>
-                                        <div class="col-sm-12 form-group">{!!Form::password('password',['id'=>'password','class'=>'form-control','placeholder'=>'Unesite šifru'])!!}</div>
+                                        <div class="col-sm-4">{!!Form::label('password', 'Šifra:')!!}</div>
+                                        <div class="col-sm-8 form-group">{!!Form::password('password',['id'=>'password','class'=>'form-control','placeholder'=>'Unesite šifru'])!!}</div>
 
-                                        <div class="col-sm-12 ">{!!Form::label('password_confirmation', 'Potvrda šifre:')!!}</div>
-                                        <div class="col-sm-12 form-group">{!!Form::password('password_confirmation',['id'=>'password_confirmation','class'=>'form-control','placeholder'=>'Potvrdite šifru'])!!}</div>
+                                        <div class="col-sm-4">{!!Form::label('password_confirmation', 'Potvrda šifre:')!!}</div>
+                                        <div class="col-sm-8 form-group">{!!Form::password('password_confirmation',['id'=>'password_confirmation','class'=>'form-control','placeholder'=>'Potvrdite šifru'])!!}</div>
 
-                                        <div class="col-sm-12 ">{!!Form::label('adresa', 'Adresa:')!!}</div>
-                                        <div class="col-sm-12 form-group">{!!Form::text('adresa',null,['class'=>'form-control','placeholder'=>'Unesite adresu'])!!}</div>
+                                        <div class="col-sm-4">{!!Form::label('adresa', 'Adresa:')!!}</div>
+                                        <div class="col-sm-8 form-group">{!!Form::text('adresa',null,['class'=>'form-control','placeholder'=>'Unesite adresu'])!!}</div>
 
-                                        <div class="col-sm-12 ">{!!Form::label('telefon', 'Kontakt telefon:')!!}</div>
-                                        <div class="col-sm-12 form-group">{!!Form::text('telefon',null,['class'=>'form-control','placeholder'=>'Unesite telefon'])!!}</div>
+                                        <div class="col-sm-4">{!!Form::label('telefon', 'Kontakt telefon:')!!}</div>
+                                        <div class="col-sm-8 form-group">{!!Form::text('telefon',null,['class'=>'form-control','placeholder'=>'Unesite telefon'])!!}</div>
 
-                                        <div class="col-sm-12">{!!Form::label('grad','Grad:')!!}</div>
-                                        <div class="col-sm-12 form-group">{!!Form::select('grad',$gradovi,1,['id'=>'gradr','class'=>'form-control','placeholder'=>'Izaberite grad'])!!}</div>
+                                        <div class="col-sm-4">{!!Form::label('grad','Grad:')!!}</div>
+                                        <div class="col-sm-8 form-group">{!!Form::select('grad',$gradovi,1,['id'=>'gradr','class'=>'form-control','placeholder'=>'Izaberite grad'])!!}</div>
 
                                         <div class="col-sm-12"><div id="poruka_neuspesna_reg"></div></div>
 
@@ -250,10 +262,6 @@ pointer;font-weight: bold;font-size:40px;top:-10px">&times;</span>
                                             </div>
                                         </div>
                                     </div>
-                                    <style>
-                                        #reg{display:none;}
-                                    </style>
-
                                 </div>
                                 </div>
                             </div>
@@ -272,6 +280,11 @@ pointer;font-weight: bold;font-size:40px;top:-10px">&times;</span>
 <figure id="demo_video" hidden></figure>
 @endsection
 @section('end-script')
+
+    <style>
+        #imam_nalog,#reg,#lulogovan{display:none}
+        .mt30{margin-top:30px}
+    </style>
     <script>
         var __token='{{csrf_token()}}';
     </script>

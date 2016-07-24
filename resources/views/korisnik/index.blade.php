@@ -1,5 +1,8 @@
 @extends('korisnik.master')
 @section('container')
+    <!-- bootstrap datepicker -->
+    <link rel="stylesheet" href="/templejt/admin-lte-v233/plugins/datepicker/datepicker3.css">
+
     <?php $korisnik=Auth::user(); ?>
     <div class="row">
         {{---PROFILE::START--}}
@@ -264,37 +267,64 @@
                         {{csrf_field()}}
                         <div class="form-group">
                             <label for="inputName" class="col-sm-2 control-label">Ime</label>
-                            <div class="col-sm-10">
+                            <div class="col-sm-9 input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-user"></i>
+                                </div>
                                 {!! Form::text('ime',null,['class'=>'form-control','id'=>'inputName','placeholder'=>'Ime']) !!}
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="inputSurname" class="col-sm-2 control-label">Prezime</label>
-                            <div class="col-sm-10">
+                            <div class="col-sm-9 input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-user"></i>
+                                </div>
                                 {!! Form::text('prezime',null,['class'=>'form-control','id'=>'inputSurname','placeholder'=>'Prezime']) !!}
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="inputAbout" class="col-sm-2 control-label">Ukratko o meni</label>
-                            <div class="col-sm-10">
+                            <div class="col-sm-9 input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-sticky-note-o"></i>
+                                </div>
                                 {!! Form::textarea('bio',null,['class'=>'form-control','id'=>'inputAbout','placeholder'=>'Ukratko o meni']) !!}
                             </div>
                         </div>
                         <div class="form-group">
+                            <label class="col-sm-2 control-label">Rođendan</label>
+                            <div class="input-group date col-sm-9">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                <input type="text" class="form-control pull-right" id="datepicker">
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label for="inputTags" class="col-sm-2 control-label">Tagovi</label>
-                            <div class="col-sm-10">
+                            <div class="col-sm-9 input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-tags"></i>
+                                </div>
                                 {!! Form::text('tagovi',null,['class'=>'form-control','id'=>'inputTags','placeholder'=>'Tagovi']) !!}
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="inputTags" class="col-sm-2 control-label">Šifra</label>
-                            <div class="col-sm-10">
+                            <div class="col-sm-9 input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-key"></i>
+                                </div>
                                 {!! Form::password('password',['class'=>'form-control','id'=>'inputTags','placeholder'=>'Nova šifra']) !!}
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="inputPassConfirm" class="col-sm-2 control-label">Potvrda šifre</label>
-                            <div class="col-sm-10">
+                            <div class="col-sm-9 input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-key"></i>
+                                </div>
                                 {!! Form::password('password_confirmation',['class'=>'form-control','id'=>'inputPassConfirm','placeholder'=>'Potvrda nove šifre']) !!}
                             </div>
                         </div>
@@ -311,4 +341,15 @@
         </div>
         {{---activity-tabs::end--}}
     </div>
+@endsection
+@section('end-script')
+    <!-- bootstrap datepicker -->
+    <script src="/templejt/admin-lte-v233/plugins/datepicker/bootstrap-datepicker.js"></script>
+    <script>
+        //Date picker
+        $('#datepicker').datepicker({
+            format:'yyyy-mm-dd',
+            autoclose: true
+        });
+    </script>
 @endsection
