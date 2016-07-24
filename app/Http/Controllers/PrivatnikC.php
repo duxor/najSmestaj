@@ -10,12 +10,14 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Grad;
 
 class PrivatnikC extends Controller{
     public function __construct(){
         $this->middleware('PravaPristupaMid:4,1');
     }
     public function getIndex(){
-        return view('privatnik.index');
+        $gradovi=Grad::lists('naziv','id');
+        return view('privatnik.index')->with(['gradovi'=>$gradovi]);
     }
 }
