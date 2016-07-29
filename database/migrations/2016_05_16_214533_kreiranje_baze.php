@@ -188,11 +188,22 @@ class KreiranjeBaze extends Migration{
             $table->unsignedBigInteger('objekat_id');
             $table->unsignedBigInteger('grad_id');
         });
-
-
-
+        Schema::create('poruke', function(Blueprint $table)
+        {
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('korisnik_id');//primalac
+            $table->foreign('korisnik_id')->references('id')->on('korisnik');
+            $table->unsignedBigInteger('sender_id')->nullable();//sender
+            $table->foreign('sender_id')->references('id')->on('korisnik');
+            $table->text('poruka');
+            $table->tinyInteger('procitano')->default(0);
+            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->nullable();
+        });
     }
     public function down(){
+       //
+        Schema::drop('poruke');
         Schema::drop('destinacija_upotreba');
         Schema::drop('destinacija');
         Schema::drop('svrha_putovanja');

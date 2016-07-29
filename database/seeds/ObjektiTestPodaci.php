@@ -28,9 +28,9 @@ class ObjektiTestPodaci extends Seeder
                 'galerija'=>'Galerija1',
                 'telefon'=>'00000001516',
                 'email'=>'email1@gmail.com',
-                'x'=>1,
-                'y'=>1,
-                'z'=>1
+                'x'=>'43.724025396230644' ,
+                'y'=>'20.68722015246749',
+                'z'=>17
             ],
             [
                 'korisnik_id'=>5,
@@ -45,9 +45,9 @@ class ObjektiTestPodaci extends Seeder
                 'galerija'=>'Galerija2',
                 'telefon'=>'00000001asdas516',
                 'email'=>'email2@gmail.com',
-                'x'=>2,
-                'y'=>2,
-                'z'=>2
+                'x'=>'44.789632547614076',
+                'y'=>'20.439205169677734',
+                'z'=>17
             ],
             [
                 'korisnik_id'=>4,
@@ -62,9 +62,9 @@ class ObjektiTestPodaci extends Seeder
                 'galerija'=>'Galerija3',
                 'telefon'=>'00000001asadsdas516',
                 'email'=>'email3@gmail.com',
-                'x'=>3,
-                'y'=>3,
-                'z'=>3
+                'x'=>'42.55261398606666',
+                'y'=>'21.910791099071503',
+                'z'=>17
             ],
         ]);
     }

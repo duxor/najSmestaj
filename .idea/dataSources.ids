@@ -73,6 +73,9 @@
       <column name="email" sqlType="VARCHAR" precision="80" scale="0" nullable="true" jdbcType="12"/>
       <column name="adresa" sqlType="VARCHAR" precision="250" scale="0" nullable="true" jdbcType="12"/>
       <column name="telefon" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="bio" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="tagovi" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="rodjendan" sqlType="TIMESTAMP" precision="19" scale="0" nullable="true" jdbcType="93"/>
       <column name="prava_pristupa_id" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5" def="Mg=="/>
       <column name="grad_id" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5" def="MQ=="/>
       <column name="confirmed" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6" def="MA=="/>
@@ -85,6 +88,8 @@
       <foreign-key name="korisnik_prava_pristupa_id_foreign" columns="prava_pristupa_id" ref-table="najsmestaj_prava_pristupa" ref-schema="" ref-catalog="najsmestaj" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
       <exported-key name="like_korisnik_id_foreign" table="najsmestaj_like" schema="" catalog="najsmestaj" columns="korisnik_id"/>
       <exported-key name="objekat_korisnik_id_foreign" table="najsmestaj_objekat" schema="" catalog="najsmestaj" columns="korisnik_id"/>
+      <exported-key name="poruke_korisnik_id_foreign" table="najsmestaj_poruke" schema="" catalog="najsmestaj" columns="korisnik_id"/>
+      <exported-key name="poruke_sender_id_foreign" table="najsmestaj_poruke" schema="" catalog="najsmestaj" columns="sender_id"/>
       <exported-key name="rezervacija_korisnik_id_foreign" table="najsmestaj_rezervacija" schema="" catalog="najsmestaj" columns="korisnik_id"/>
       <index name="korisnik_grad_id_foreign" unique="false" columns="grad_id"/>
       <index name="korisnik_prava_pristupa_id_foreign" unique="false" columns="prava_pristupa_id"/>
@@ -128,10 +133,10 @@
       <column name="created_at" sqlType="TIMESTAMP" precision="19" scale="0" nullable="false" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA="/>
       <column name="updated_at" sqlType="TIMESTAMP" precision="19" scale="0" nullable="true" jdbcType="93"/>
       <primary-key name="PRIMARY" columns="id"/>
-      <foreign-key name="objekat_vrsta_objekta_id_foreign" columns="vrsta_objekta_id" ref-table="najsmestaj_vrsta_objekta" ref-schema="" ref-catalog="najsmestaj" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
       <foreign-key name="objekat_grad_id_foreign" columns="grad_id" ref-table="najsmestaj_grad" ref-schema="" ref-catalog="najsmestaj" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
       <foreign-key name="objekat_korisnik_id_foreign" columns="korisnik_id" ref-table="najsmestaj_korisnik" ref-schema="" ref-catalog="najsmestaj" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
       <foreign-key name="objekat_templejt_id_foreign" columns="templejt_id" ref-table="najsmestaj_templejt" ref-schema="" ref-catalog="najsmestaj" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="objekat_vrsta_objekta_id_foreign" columns="vrsta_objekta_id" ref-table="najsmestaj_vrsta_objekta" ref-schema="" ref-catalog="najsmestaj" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
       <exported-key name="smestaj_objekat_id_foreign" table="najsmestaj_smestaj" schema="" catalog="najsmestaj" columns="objekat_id"/>
       <index name="objekat_grad_id_foreign" unique="false" columns="grad_id"/>
       <index name="objekat_korisnik_id_foreign" unique="false" columns="korisnik_id"/>
@@ -144,6 +149,20 @@
       <column name="created_at" sqlType="TIMESTAMP" precision="19" scale="0" nullable="false" jdbcType="93"/>
       <index name="password_resets_email_index" unique="false" columns="email"/>
       <index name="password_resets_token_index" unique="false" columns="token"/>
+    </table>
+    <table name="najsmestaj_poruke" schema="" catalog="najsmestaj" type="TABLE">
+      <column name="id" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="korisnik_id" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="sender_id" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="poruka" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="procitano" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6" def="MA=="/>
+      <column name="created_at" sqlType="TIMESTAMP" precision="19" scale="0" nullable="false" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA="/>
+      <column name="updated_at" sqlType="TIMESTAMP" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="poruke_korisnik_id_foreign" columns="korisnik_id" ref-table="najsmestaj_korisnik" ref-schema="" ref-catalog="najsmestaj" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="poruke_sender_id_foreign" columns="sender_id" ref-table="najsmestaj_korisnik" ref-schema="" ref-catalog="najsmestaj" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="poruke_korisnik_id_foreign" unique="false" columns="korisnik_id"/>
+      <index name="poruke_sender_id_foreign" unique="false" columns="sender_id"/>
     </table>
     <table name="najsmestaj_prava_pristupa" schema="" catalog="najsmestaj" type="TABLE">
       <column name="id" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
@@ -166,8 +185,8 @@
       <column name="created_at" sqlType="TIMESTAMP" precision="19" scale="0" nullable="false" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA="/>
       <column name="updated_at" sqlType="TIMESTAMP" precision="19" scale="0" nullable="true" jdbcType="93"/>
       <primary-key name="PRIMARY" columns="id"/>
-      <foreign-key name="rezervacija_smestaj_id_foreign" columns="smestaj_id" ref-table="najsmestaj_smestaj" ref-schema="" ref-catalog="najsmestaj" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
       <foreign-key name="rezervacija_korisnik_id_foreign" columns="korisnik_id" ref-table="najsmestaj_korisnik" ref-schema="" ref-catalog="najsmestaj" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="rezervacija_smestaj_id_foreign" columns="smestaj_id" ref-table="najsmestaj_smestaj" ref-schema="" ref-catalog="najsmestaj" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
       <index name="rezervacija_korisnik_id_foreign" unique="false" columns="korisnik_id"/>
       <index name="rezervacija_smestaj_id_foreign" unique="false" columns="smestaj_id"/>
     </table>
@@ -182,11 +201,12 @@
       <column name="foto" sqlType="VARCHAR" precision="250" scale="0" nullable="true" jdbcType="12"/>
       <column name="galerija" sqlType="VARCHAR" precision="250" scale="0" nullable="true" jdbcType="12"/>
       <column name="aktivan" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6" def="MQ=="/>
+      <column name="cena" sqlType="DOUBLE" precision="8" scale="2" nullable="true" jdbcType="8"/>
       <column name="created_at" sqlType="TIMESTAMP" precision="19" scale="0" nullable="false" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA="/>
       <column name="updated_at" sqlType="TIMESTAMP" precision="19" scale="0" nullable="true" jdbcType="93"/>
       <primary-key name="PRIMARY" columns="id"/>
-      <foreign-key name="smestaj_vrsta_kapaciteta_id_foreign" columns="vrsta_kapaciteta_id" ref-table="najsmestaj_vrsta_kapaciteta" ref-schema="" ref-catalog="najsmestaj" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
       <foreign-key name="smestaj_objekat_id_foreign" columns="objekat_id" ref-table="najsmestaj_objekat" ref-schema="" ref-catalog="najsmestaj" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="smestaj_vrsta_kapaciteta_id_foreign" columns="vrsta_kapaciteta_id" ref-table="najsmestaj_vrsta_kapaciteta" ref-schema="" ref-catalog="najsmestaj" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
       <foreign-key name="smestaj_vrsta_smestaja_id_foreign" columns="vrsta_smestaja_id" ref-table="najsmestaj_vrsta_smestaja" ref-schema="" ref-catalog="najsmestaj" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
       <exported-key name="like_smestaj_id_foreign" table="najsmestaj_like" schema="" catalog="najsmestaj" columns="smestaj_id"/>
       <exported-key name="rezervacija_smestaj_id_foreign" table="najsmestaj_rezervacija" schema="" catalog="najsmestaj" columns="smestaj_id"/>
